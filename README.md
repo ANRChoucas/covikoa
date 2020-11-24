@@ -21,7 +21,7 @@ covikoa/
 
 - `code/`:
 
-  - `code/CoViKoa/`: the Java code that allows to load the different vocabularies, that accepts the creation of OAC individuals and that allows to execute CoViKoa rules (one can play with it interactively in a Python interpreter after running the script that is in the `py-wrapper` directory -- this directory also contains the code for the HTTP server).
+  - `code/CoViKoa/`: the Java code that allows to load the different vocabularies and the targeted Semantic Data Model and that allows to execute CoViKoa rules (one can play with it interactively in a Python interpreter after running the script that is in the `py-wrapper` directory -- this directory also contains the code for the HTTP server).
 
   - `code/CoViKoa-client/`: the JavaScript code that allows to consume the geovisual representation in the KB.
 
