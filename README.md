@@ -172,7 +172,7 @@ python3 -m pip install -r code/CoViKoa/py-wrapper/requirements.txt
 - Run the application on port 8000 :
 
 ```
-cd code/CoViKoa/ && python3 py-wrapper/server.py ../case-study-1.toml
+python3 code/CoViKoa/py-wrapper/server.py case-study-3.toml
 ```
 
 - Go on http://0.0.0.0:8000/ using any modern web-browser to see the example map.
