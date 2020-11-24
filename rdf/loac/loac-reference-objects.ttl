@@ -1,0 +1,110 @@
+@prefix : <http://purl.org/loac#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix term: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+
+:ReferenceObject a owl:Class ;
+                 rdfs:subClassOf geo:Feature .
+
+:RefObjectCategory a owl:Class .
+
+:hasCategory a owl:ObjectProperty ;
+             rdfs:domain :ReferenceObject ;
+             rdfs:range :RefObjectCategory .
+
+:hasParentCategory a owl:ObjectProperty, owl:TransitiveProperty ;
+                   rdfs:range :RefObjectCategory ;
+                   rdfs:domain :RefObjectCategory .
+
+:hasRefObject a owl:ObjectProperty ;
+              rdfs:domain :RefObjectCategory ;
+              rdfs:range :ReferenceObject ;
+              owl:inverseOf :hasCategory .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :ReferenceObject :RefObjectCategory ) .
+
+:NATURAL a :RefObjectCategory ;
+    rdfs:label "Trucs du milieu naturel.." ;
+    rdfs:comment """
+      ..pour créer de la profondeur dans la hiérarchie d'objets
+      et tester la transitivité de la propriété oac:hasParentCategory..."""@fr .
+
+:HYDRO a :RefObjectCategory ;
+    rdfs:label "Objets relatifs à l'hydrologie."@fr ;
+    :hasParentCategory :NATURAL .
+
+:LAKE a :RefObjectCategory ;
+    rdfs:label "Lacs et plans d'eau"@fr ;
+    :hasParentCategory :HYDRO .
+
+:RIVER a :RefObjectCategory ;
+    rdfs:label "Rivières et ruisseaux"@fr ;
+    :hasParentCategory :HYDRO .
+
+:RESERVOIR a :RefObjectCategory ;
+    rdfs:label "Réservoirs"@fr ;
+    :hasParentCategory :HYDRO .
+
+:RELIEF a :RefObjectCategory ;
+    rdfs:label "Éléments de reliefs"@fr ;
+    :hasParentCategory :NATURAL .
+
+:PEAK a :RefObjectCategory ;
+    rdfs:label "Pics et sommets"@fr ;
+    :hasParentCategory :RELIEF .
+
+:COL a :RefObjectCategory ;
+    rdfs:label "Cols"@fr ;
+    :hasParentCategory :RELIEF .
+
+:ROADS-PATHS-PISTES a :RefObjectCategory ;
+    rdfs:label "Voies de communications diverses."@fr ;
+    :hasParentCategory :INSTHUMAN .
+
+:ROAD a :RefObjectCategory ;
+    rdfs:label "Routes"@fr ;
+    :hasParentCategory :ROADS-PATHS-PISTES .
+
+:PATHWAY a :RefObjectCategory ;
+    rdfs:label "Chemins et sentiers"@fr ;
+    :hasParentCategory :ROADS-PATHS-PISTES .
+
+:PISTE a :RefObjectCategory ;
+    rdfs:label "Pistes de ski"@fr ;
+    :hasParentCategory :ROADS-PATHS-PISTES .
+
+:CITIES a :RefObjectCategory ;
+    rdfs:label "Objets représentant les villes et villages selon leur taille."@fr .
+
+:TOWN a :RefObjectCategory ;
+    rdfs:label "Grandes villes"@fr ;
+    :hasParentCategory :CITIES .
+
+:CITY a :RefObjectCategory ;
+    rdfs:label "Petites-moyennes villes"@fr ;
+    :hasParentCategory :CITIES .
+
+:VILLAGE a :RefObjectCategory ;
+    rdfs:label "Villages"@fr ;
+    :hasParentCategory :CITIES .
+
+:INSTHUMAN a :RefObjectCategory ;
+    rdfs:label "Installations humaines diverses."@fr .
+
+:POWERLINE a :RefObjectCategory ;
+    rdfs:label "Lignes électriques"@fr ;
+    :hasParentCategory :INSTHUMAN .
+
+:SKILIFT a :RefObjectCategory ;
+    rdfs:label "Remontées mécaniques"@fr ;
+    :hasParentCategory :INSTHUMAN .
+
+[] a owl:AllDifferent ;
+   owl:distinctMembers ( :SKILIFT :POWERLINE :INSTHUMAN :VILLAGE :CITY :TOWN :CITIES :PISTE :PATHWAY :ROAD :ROADS-PATHS-PISTES :COL :PEAK :RELIEF :RESERVOIR :RIVER :LAKE :HYDRO :NATURAL ) .

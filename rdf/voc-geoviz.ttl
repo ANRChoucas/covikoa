@@ -1,0 +1,166 @@
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix term: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+
+
+<http://example.com/covikoa-geoviz> a owl:Ontology ;
+                                    term:creator "Matthieu Viry" ;
+                                    term:issued "2020-09-30"^^xsd:date ;
+                                    owl:versionInfo "0.1.0" ;
+                                    term:license "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^term:URI ;
+                                    vann:preferredNamespacePrefix "gviz" ;
+                                    vann:preferredNamespaceUri "http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#"^^xsd:string ;
+                                    rdfs:comment """ The CoViKoa-geoviz ontology is a generic, extensible, high-level vocabulary describing what a geovisualization user interface can be."""@en .
+
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+<http://purl.org/dc/terms/issued> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+gviz:GeoVisualApplication a owl:Class ;
+                          rdfs:label "GeoVisual Application"@en, "Application de Geovisualisation"@fr ;
+                          rdfs:comment "Describes a geo-visualization software application, implying the interface to view and interact with geospatial data for a given purpose."@en,
+"Decrit une application logicielle de geovisualiation, sous-entendu l'interface permettant de visualiser et d'interagir avec des donnees geospatiales pour une finalite donnee."@fr .
+
+gviz:GeoVisualIntermediateRepresentation a owl:Class ;
+                             rdfs:label "GeoVisual Intermediate Representation"@en, "Representation Intermediaire Geovisuelle"@fr ;
+                             rdfs:comment "Describes a geospatial feature for which we want to obtain a portrayal for a given component."@en .
+
+gviz:GeoVisualComponent a owl:Class ;
+                        rdfs:label "GeoVisual Component"@en, "Composant Geovisuel"@fr ;
+                        rdfs:comment "Describes a component aimed at geo-visualization."@en .
+
+gviz:Map2dComponent a owl:Class ;
+                    rdfs:subClassOf gviz:GeoVisualComponent ;
+                    rdfs:comment """Describes of geovisual component that consists of a 2d map, such as those that can be built with OpenLayers or Leaflet for example."""@en .
+
+gviz:Map3dComponent a owl:Class ;
+                    rdfs:subClassOf gviz:GeoVisualComponent ;
+                    rdfs:comment """Describes of geovisual component that consists of a 3d map, such as those that can be built with iTowns or Cesium for example."""@en .
+
+gviz:LegendComponent a owl:Class ;
+                     rdfs:subClassOf gviz:GeoVisualComponent  ;
+                     rdfs:comment """Describes legend component that can be linked to another geovisual component, typically the 2d map or the 3d map, to synchronize the informations shown."""@en .
+
+gviz:PortrayalOption a owl:Class ;
+    rdfs:label "Portrayal Option"@en , "Representation graphique possible"@fr ;
+    rdfs:comment "Describes a possible portrayal for an individual represented (via gviz:represents) by a gviz:GeoVisualIntermediateRepresentation."@en .
+
+gviz:InteractionPortrayal a owl:Class ;
+    rdfs:label "InteractionPortrayal"@en ;
+    rdfs:comment """
+    Describes the possible portrayal for an individual represented (via gviz:represents) by a gviz:GeoVisualIntermediateRepresentation
+    and triggered for a specific interaction."""@en .
+
+gviz:Interaction a owl:Class ;
+    rdfs:label "Interaction"@en , "Interaction"@fr ;
+    rdfs:comment "Describes a possible interaction with a component and the representations it presents."@en .
+
+<https://gis.lu.se/ont/data_portrayal/symbol#Symbol> a owl:Class .
+
+<https://gis.lu.se/ont/data_portrayal/symbolizer#Symbolizer> a owl:Class .
+
+#################################################################
+#    Properties
+#################################################################
+
+gviz:hasGeoVisualComponent a owl:ObjectProperty ;
+                           rdfs:label "has GeoVisual Component"@en, "a Composant Geovisuel"@fr ;
+                           rdfs:domain gviz:GeoVisualApplication ;
+                           rdfs:range gviz:GeoVisualComponent .
+
+gviz:allowsInteraction a owl:ObjectProperty ;
+                       rdfs:label "allows Interaction"@en , "permet Interaction"@fr ;
+                       rdfs:domain gviz:GeoVisualComponent ;
+                       rdfs:range gviz:Interaction .
+
+gviz:onInteraction a owl:ObjectProperty ;
+                   rdfs:label "on Interaction"@en, "lors de l'Interaction"@fr ;
+                   rdfs:domain gviz:InteractionPortrayal ;
+                   rdfs:range gviz:Interaction .
+
+gviz:represents a owl:ObjectProperty ;
+                rdfs:label "represents"@en, "represente"@fr ;
+                rdfs:domain gviz:GeoVisualIntermediateRepresentation ;
+                rdfs:comment """
+                    This is the property which is used to link a GeoVisualIntermediateRepresentation to the corresponding
+                    concept in the targeted Semantic Data Model."""@en .
+
+gviz:presentsGVR a owl:ObjectProperty  ;
+                 rdfs:label "presents GeoVisualIntermediateRepresentation"@en , "presente GeoVisualIntermediateRepresentation"@fr ;
+                 rdfs:domain gviz:GeoVisualComponent ;
+                 rdfs:range gviz:GeoVisualIntermediateRepresentation .
+
+gviz:denotesGVR a owl:ObjectProperty ;
+                rdfs:label "denotes GeoVisualIntermediateRepresentation"@en , "denote GeoVisualIntermediateRepresentation"@fr ;
+                rdfs:domain <https://gis.lu.se/ont/data_portrayal/symbol#Symbol> ;
+                rdfs:range owl:Class ;
+                rdfs:comment """
+                    This is the property which is used on a symb:Symbol to link it to the IR
+                    of a concept to be portrayed (with this symbol and the symbolizer it defines)."""@en .
+
+gviz:linkedTo a owl:ObjectProperty ;
+              rdfs:label "linked to"@en , "lie a"@fr ;
+              rdfs:domain gviz:GeoVisualComponent ;
+              rdfs:range gviz:GeoVisualComponent ;
+              rdfs:comment """
+              Describes a synchronization link between two components.
+              This is typically used to describe that a specific Legend is linked to a specific 2D Map.
+              It could also be used to link a 2D Map and a 3D Map for example."""@en .
+
+gviz:hasPortrayal rdf:type owl:ObjectProperty ;
+                  rdfs:label "has portrayal"@en , "a representation"@fr ;
+                  rdfs:domain gviz:GeoVisualIntermediateRepresentation ;
+                  rdfs:range gviz:PortrayalOption .
+
+gviz:hasInteractionPortrayal a owl:ObjectProperty ;
+                   rdfs:label "has interaction portrayal"@en , "a representation liee a une interaction"@fr ;
+                   rdfs:domain gviz:GeoVisualIntermediateRepresentation ;
+                   rdfs:range gviz:InteractionPortrayal .
+
+gviz:hasPortrayalSymbolizer rdf:type owl:ObjectProperty ;
+                            rdfs:label "has portrayal symbolizer"@en , "a symboliseur pour cette representation"@fr ;
+                            rdfs:domain gviz:PortrayalOption ;
+                            rdfs:range <https://gis.lu.se/ont/data_portrayal/symbolizer#Symbolizer> .
+
+gviz:appearsIn rdf:type owl:ObjectProperty ;
+               rdfs:label "appears in"@en , "apparait dans"@fr ;
+               rdfs:domain gviz:PortrayalOption ;
+               rdfs:range gviz:GeoVisualComponent .
+
+gviz:displayIndex rdf:type owl:DatatypeProperty ;
+                  rdfs:label "display index"@en , "index d'affichage"@fr ;
+                  rdfs:range xsd:integer ;
+                  rdfs:comment """
+                    Describe the index on which the features portrayed by these parameters have to appear.
+                    The displayIndex is defined as the inverse of the z-index, so 0 means top layer and 9999 means the lowest bottom layer."""@en .

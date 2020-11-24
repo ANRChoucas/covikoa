@@ -1,0 +1,166 @@
+@prefix : <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@base <http://example.com/covikoa-context> .
+
+
+<http://example.com/covikoa-context> rdf:type owl:Ontology ;
+                                     rdfs:label "CoViKoa visualisation context ontology"@en ;
+                                     <http://purl.org/dc/terms/license> "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^<http://purl.org/dc/terms/URI> ;
+                                     <http://purl.org/dc/terms/issued> "2020-09-30"^^xsd:date ;
+                                     <http://purl.org/dc/terms/creator> "Matthieu VIRY" ;
+                                     <http://purl.org/dc/terms/description> """
+      This ontology is for visualisation context, i.e. the context of use, described by several concepts such as :
+      the user preferences, possible visual impairment, choice of day/night display mode, datasets already displayed, etc."""@en .
+
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+###  http://purl.org/dc/terms/issued
+<http://purl.org/dc/terms/issued> rdf:type owl:AnnotationProperty .
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:hasUserContext rdf:type owl:ObjectProperty ;
+                rdfs:domain :VisualisationContext ;
+                rdfs:range :UserContext .
+
+:hasColorVisionDeficiency rdf:type owl:ObjectProperty ;
+                          rdfs:domain :UserContext ;
+                          rdfs:range :ColorVisionDeficiency .
+
+:displaysGVR rdf:type owl:ObjectProperty ;
+             rdfs:domain :VisualisationContext ;
+             rdfs:range gviz:GeoVisualRepresentation ;
+             rdfs:comment """
+                 Points to existing geovisual representation (in our KB) displayed by the client."""@en .
+
+:hasPreferences rdf:type owl:ObjectProperty ;
+                rdfs:domain :UserContext ;
+                rdfs:range :InterfacePreferences .
+
+:hasMap rdf:type owl:ObjectProperty ;
+        rdfs:domain :VisualisationContext ;
+        rdfs:range :ClientMapObject .
+
+:hasComponent rdf:type owl:ObjectProperty ;
+              rdfs:domain :VisualisationContext .
+
+:hasDisplaySRS rdf:type owl:ObjectProperty ;
+               rdfs:domain :ClientMapObject ;
+               rdfs:range <http://example.com/srs#SpatialReferenceSystem> .
+
+:hasMappingLibrary rdf:type owl:ObjectProperty ;
+                   rdfs:domain :ClientMapObject ;
+                   rdfs:range :MappingLibrary .
+
+:hasVisualisationContext rdf:type owl:ObjectProperty ;
+                         rdfs:domain gviz:GeoVisualApplication ;
+                         rdfs:range :VisualisationContext .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:hasDayNightMode rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :InterfacePreferences ;
+                 rdfs:range [
+                   rdf:type rdfs:Datatype ;
+                   owl:oneOf ( "DayMode"^^xsd:string "NightMode"^^xsd:string ) ;
+                 ] .
+
+:widthPx rdf:type owl:DatatypeProperty ;
+            rdfs:domain :ClientMapObject ;
+            rdfs:range xsd:integer .
+
+:heightPx rdf:type owl:DatatypeProperty ;
+             rdfs:domain :ClientMapObject ;
+             rdfs:range xsd:integer .
+
+:mapExtent rdf:type owl:ObjectProperty ;
+           rdfs:domain :ClientMapObject ;
+           rdfs:range geo:Geometry .
+
+#################################################################
+#    Classes
+#################################################################
+
+<http://example.com/srs#SpatialReferenceSystem> rdf:type owl:Class .
+
+
+:VisualisationContext rdf:type owl:Class ;
+      rdfs:comment """
+        The context in which the client is doing the geovisualisation task.
+        It is described by a various parameters :
+          - the user part (color blindness, displaying preferences)
+          - the map part (which mapping library, which projection, etc.)
+          - the data & portrayal part (which documents are currently displayed and how)
+        """@en .
+
+:UserContext rdf:type owl:Class ;
+     rdfs:comment """
+       The specific part of the visualisation context that is user-induced
+       (such as its UI preference or being affected by a color
+       vision impairment, for example)."""@en .
+
+:ColorVisionDeficiency rdf:type owl:Class ;
+    rdfs:comment """ ColorVisionDeficiency is
+      one of the two concepts allowing to describe the UserContext.
+      If the UserContext is said having a ColorVisionDeficiency,
+      the infered portrayal rule will use adapted color schemes."""@en .
+
+
+:InterfacePreferences rdf:type owl:Class ;
+    rdfs:comment """ InterfacePreferences is
+      one of the two concepts allowing to describe the UserContext.
+      It currently only allows to describe explicitly that the user
+      want a "night-themed" or a "day-themed" interface."""@en .
+
+:ClientMapObject rdf:type owl:Class ;
+     rdfs:comment """
+       Part of the visualisation context. Describes a `map` element used for displaying information to the user."""@en .
+
+:MappingLibrary rdf:type owl:Class ;
+     rdfs:comment """
+       Part of the visualisation context. Describe an interactive mapping library (such as Leaflet.js)."""@en .
+
+:MappingLibrary2D rdf:type owl:Class ;
+     rdfs:subClassOf :MappingLibrary ;
+     rdfs:comment """
+       Describe a library usable for interactive 2D visualization of geospatial data."""@en .
+
+:MappingLibrary3D rdf:type owl:Class ;
+     rdfs:subClassOf :MappingLibrary ;
+     rdfs:comment """
+       Describe a library usable for interactive 3D visualization of geospatial data."""@en .
+
+:Monochromacy rdf:type owl:Class ;
+              rdfs:subClassOf :ColorVisionDeficiency .
+
+:Dichromacy rdf:type owl:Class ;
+              rdfs:subClassOf :ColorVisionDeficiency .
+
+:AnomalousTrichromacy rdf:type owl:Class ;
+              rdfs:subClassOf :ColorVisionDeficiency .

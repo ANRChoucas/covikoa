@@ -1,0 +1,392 @@
+@prefix : <http://example.com/covikoa-derivation-model-shape#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix cvk-ir: <http://example.com/cvk-ir#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+
+# This file contains shapes allowing to validate a user-written Derivation Model.
+# It contains useful informations about what is expected to be a well-formed Derivation Model for CoViKoa.
+
+:
+    a owl:Ontology ;
+    owl:imports sh: ;
+    sh:declare [
+                   sh:prefix "gviz" ;
+                   sh:namespace "http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "cvkr" ;
+                   sh:namespace "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "owl" ;
+                   sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "rdfs" ;
+                   sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+               ] .
+
+:DerivationModelIsAnOntology
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model have to be defined as a owl:Ontology"""@en ;
+    sh:targetNode owl:Ontology ;
+    sh:property [
+                    sh:path [ sh:inversePath rdf:type ] ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "The Derivation Model have to be defined as a owl:Ontology"@en ;
+                ] .
+
+:DerivationModelDefinePrefixesIifConditionFilterExists
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model have to be defined as a owl:Ontology and it have to declare prefix(es) to be used in the ConditionFilter values."""@en ;
+    sh:target [ a sh:SPARQLTarget ;
+                sh:prefixes : ;
+                sh:select """
+        SELECT ?this
+        WHERE {
+            ?this a owl:Ontology .
+            ?cf a cvkr:ConditionFilter .
+        }
+        """ ] ;
+    sh:property [
+                    sh:path sh:declare ;
+                    sh:minCount 1 ;
+                    sh:message "The Derivation Model have to be defined as a owl:Ontology and it have to declare prefix(es) to be used in the ConditionFilter values."@en ;
+                ] .
+
+:ModelGeoVisualApplicationShape
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model must contain only one subclass of gviz:GeoVisualApplication."""@en ;
+    sh:targetNode gviz:GeoVisualApplication ;
+    sh:property [
+                    sh:path [ sh:inversePath rdfs:subClassOf ] ;
+                    sh:minCount 2 ;
+                    sh:maxCount 2 ;
+                    sh:message "The Derivation Model must contain only one class itself subclassing gviz:GeoVisualApplication"@en ;
+                ] .
+
+:GeoVisualApplicationShape
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model must contain only one gviz:GeoVisualApplication"""@en ;
+    sh:targetNode gviz:GeoVisualApplication ;
+    sh:property [
+                    sh:path [ sh:inversePath rdf:type ] ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "The Derivation Model must contain only one individual of type gviz:GeoVisualApplication"@en ;
+                ] .
+
+:GeoVisualApplicationHasComponentShape
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model must have one individual of type gviz:GeoVisualApplication with the following constraints."""@en ;
+    sh:targetClass gviz:GeoVisualApplication ;
+    sh:property [
+                    sh:path gviz:hasGeoVisualComponent ;
+                    sh:minCount 1 ;
+                    sh:message "The individual of type gviz:GeoVisualApplication should link to at least one gviz:Map2dComponent"@en ;
+                    sh:class gviz:Map2dComponent ;
+                ] ;
+    sh:property [
+                    sh:path gviz:represents ;
+                    sh:maxCount 1 ;
+                    sh:message "The individual of type gviz:GeoVisualApplication can only represents one specific individual of the Semantic Data Model"@en ;
+                ] .
+
+:LegendComponentShape
+    a sh:NodeShape ;
+    rdfs:comment """LegendComponent have to be linked to another GeoVisualComponent."""@en ;
+    sh:targetClass gviz:LegendComponent ;
+    sh:property [
+                    sh:path gviz:linkedTo ;
+                    sh:minCount 1 ;
+                    sh:message "The individual of type gviz:LegendComponent should link to at least one gviz:Map2dComponent or gviz:Map3dComponent"@en ;
+                ] .
+
+
+:GeoVisualComponentShape
+    a sh:NodeShape ;
+    rdfs:comment """The Derivation Model must contain at least one gviz:Map2dComponent"""@en ;
+    sh:targetNode gviz:Map2dComponent ;
+    sh:property [
+        sh:path [ sh:inversePath rdf:type ] ;
+        sh:minCount 1 ;
+        sh:message "The Derivation Model must contain at least one individual of type gviz:Map2dComponent"@en ;
+    ] .
+
+:ModelGeoVisualIntermediateRepresentationShape
+    a sh:NodeShape ;
+    rdfs:comment """The derivation model should define some class(es) subclassing gviz:GeoVisualIntermediateRepresentation"""@en ;
+    sh:targetNode gviz:GeoVisualIntermediateRepresentation ;
+    sh:property [
+                    sh:path [ sh:inversePath rdfs:subClassOf ] ;
+                    sh:severity sh:Warning ;
+                    sh:minCount 1 ;
+                    sh:message "The derivation model should define some class(es) subclassing gviz:GeoVisualIntermediateRepresentation."@en ;
+                ] .
+
+# Validation for the owl:class subclassing gviz:GeoVisualIntermediateRepresentation
+# written to describe the concept from the SDM to be portrayed
+:GeoVisualIntermediateRepresentationShape
+    a sh:NodeShape ;
+    sh:target :targetGVR ;
+    sh:property [
+                    sh:path cvkr:pathFromGVA ;
+                    sh:maxCount 1 ;
+                    sh:message """
+                        Each class subclassing gviz:GeoVisualIntermediateRepresentation can only use 0 or 1 time the property 'cvkr:pathFromGVA'.
+                        Note that it expects a rdf:list of property allowing to reach the concept represented by this gviz:GeoVisualIntermediateRepresentation from
+                        the concept represented by the gviz:GeoVisualApplication, in the same fashion as if it was an owl:PropertyChainAxiom.
+                        """@en ;
+
+                ] ;
+    sh:property [
+                    sh:path gviz:represents ;
+                    sh:minCount 1 ;
+                    sh:message "Each class subclassing gviz:GeoVisualIntermediateRepresentation must use at least once the 'gviz:represents' property."@en ;
+
+                ] .
+
+:targetGVR
+    a sh:SPARQLTarget ;
+    sh:prefixes : ;
+    sh:select """
+        SELECT ?this
+        WHERE {
+            ?this a owl:Class ;
+                rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation .
+            FILTER(?this != owl:Nothing) .
+        }
+        """ .
+
+# Validation for instances of cvkr:ConditionFilter
+:ConditionFilterShape
+    a sh:NodeShape ;
+    rdfs:comment """cvkr:ConditionFilter must have one label and one value."""@en ;
+    sh:targetClass cvkr:ConditionFilter ;
+    sh:property [
+                    sh:path rdfs:label ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each individual of type cvkr:ConditionFilter is expected to have a label with the property 'rdfs:label'."@en ;
+                ] ;
+    sh:property [
+                    sh:path rdf:value ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message """
+                    Each individual of type cvkr:ConditionFilter is expected to have a value with the property 'rdf:value'.
+                    This value is expected to contain a SPARQL query, pull interesting individuals from the Semantic Data Model,
+                    and binding its result to a variable named '?somethingRepresentable'.
+                    """@en ;
+                    sh:pattern "SELECT\\s[DISTINCT\\s]*\\?somethingRepresentable" ;
+                ] .
+
+# Validation for instance of cvkr:MatchingPattern
+:MatchingPatternShape
+    a sh:NodeShape ;
+    rdfs:comment """cvkr:MatchingPattern must use exactly one time the 'cvkr:patternProperty' property or one time the 'cvkr:patternPropertyChain' property."""@en ;
+    sh:targetClass cvkr:MatchingPattern ;
+    sh:or (
+              [
+                  sh:path cvkr:patternProperty ;
+                  sh:minCount 1 ;
+                  sh:maxCount 1 ;
+                  sh:message "Each individual of type cvkr:MatchingPattern is expected to define a matching property, either with `cvkr:patternProperty` or with `cvkr:patternPropertyChain`."@en ;
+              ]
+              [
+                  sh:path cvkr:patternPropertyChain ;
+                  sh:minCount 1 ;
+                  sh:maxCount 1 ;
+                  sh:message "Each individual of type cvkr:MatchingPattern is expected to define a matching property, either with `cvkr:patternProperty` or with `cvkr:patternPropertyChain`."@en ;
+              ]
+          ) .
+
+# Validation for instances of symb:Symbol
+:SymboleDenotesSomethingShape
+    a sh:NodeShape ;
+    rdfs:comment "Each symbol is expected to denotes some class defined in the Derivation Model and it expected to be associated to one or more symbolizer."@en ;
+    sh:targetClass symb:Symbol ;
+    sh:property [
+                    sh:path gviz:denotesGVR ;
+                    sh:minCount 1 ;
+                    sh:message "Each `symb:Symbol` is supposed to by linked with the property `gviz:denotesGVR` to the Intermediate Represention (defined in the Derivation Model) of a concept from the Semantic Data Model."@en ;
+                ] ;
+    sh:property [
+                    sh:path symblzr:hasSymbolizer ;
+                    sh:minCount 1 ;
+                    sh:message "Each `symb:Symbol` is supposed to by linked with the property `symblzr:hasSymbolizer` to one or more symbolizer(s)."@en ;
+                ] ;
+    sh:property [
+                    sh:path gviz:displayIndex ;
+                    sh:maxCount 1 ;
+                    sh:datatype xsd:integer ;
+                    sh:message "Each `symb:Symbol` can only have one gviz:displayIndex (and this property is optionnal)."@en ;
+                ] ;
+    sh:property [
+                    sh:path cvkr:hasMatchingPattern ;
+                    sh:maxCount 1 ;
+                    sh:class cvkr:MatchingPattern ;
+                    sh:message "Each `symb:Symbol` can only be linked to one cvkr:MatchingPattern."@en ;
+                ] ;
+    sh:property [
+                    sh:path cvkr:hasConditionFilter ;
+                    sh:maxCount 1 ;
+                    sh:message "Each `symb:Symbol` can only refer to one cvkr:ConditionFilter using the `cvkr:hasConditionFilter` property."@en ;
+                ] ;
+    sh:property [
+                    sh:path cvkr:transformOperation ;
+                    sh:maxCount 1 ;
+                    sh:message """
+                        Each `symb:Symbol` can only use 0 or 1 time the property 'cvkr:transformOperation'.
+                        Note also that the geometry to be used is already attached to the variable '?thisGeometry'
+                        so it is expected that the instruction in question will use '?thisGeometry'."""@en ;
+                ] ;
+    sh:property [
+                    sh:path cvkr:preTransformOperation ;
+                    sh:maxCount 1 ;
+                    sh:message "Each `symb:Symbol` can only use 0 or 1 time the property 'cvkr:preTransformOperation', and this property should only be used if cvkr:transformOperation is also used on the same symb:Symbol."@en ;
+                ] .
+
+# Basically here we define the minimal subset of elements/properties from 'graphic'
+# vocabulary that must be defined for each type of symbolizer:
+# - Polygon Symbolizer must define Fill (with a fill color) and Stroke (with a stroke color and optionnaly a stroke width)
+# - Line Symbolizer must define Stroke (with a stroke color and optionnaly a stroke width)
+# - Point Symbolizer must define Shape (an subclass of graphic:Shape such as graphic:Circle), Fill (with a fill color)
+#   and Stroke (with a stroke color and optionnaly a stroke width).
+:fillColorPropertyShape a sh:PropertyShape ;
+           sh:path graphic:fillColor ;
+           sh:minCount 1 ;
+           sh:maxCount 1 .
+
+:strokeColorPropertyShape a sh:PropertyShape ;
+                  sh:path graphic:strokeColor ;
+                  sh:minCount 1 ;
+                  sh:maxCount 1 .
+
+:strokeWidthPropertyShape a sh:PropertyShape ;
+                  sh:path graphic:strokeWidth ;
+                  sh:maxCount 1 ;
+                  sh:datatype xsd:decimal .
+
+:StrokePropertyShape a sh:PropertyShape ;
+                     sh:path graphic:hasStroke ;
+                     sh:minCount 1 ;
+                     sh:maxCount 1 ;
+                     sh:property :strokeColorPropertyShape , :strokeWidthPropertyShape .
+
+:FillPropertyShape a sh:NodeShape ;
+                   sh:path graphic:hasFill ;
+                   sh:minCount 1 ;
+                   sh:maxCount 1 ;
+                   sh:property :fillColorPropertyShape .
+
+# Note: we could also inform the user (using sh:Info severity level) about other properties he/she can use
+# (ie. that are defined in 'graphic' vocabulary and that are read by CoViKoa-client).
+:PolygonSymbolizerShape
+    a sh:NodeShape ;
+    sh:targetClass symblzr:PolygonSymbolizer ;
+    sh:property :FillPropertyShape ;
+    sh:property :StrokePropertyShape .
+
+:LineSymbolizerShape
+    a sh:NodeShape ;
+    sh:targetClass symblzr:LineSymbolizer ;
+    sh:property :StrokePropertyShape .
+
+:PointSymbolizerShape
+    a sh:NodeShape ;
+    sh:targetClass symblzr:PointSymbolizer ;
+    sh:property [
+                    sh:path graphic:hasShape ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                ] ;
+    sh:property :FillPropertyShape ;
+    sh:property :StrokePropertyShape .
+
+
+# Here we want to validate the sequence path, given as a list of properties,
+# for two elements in the Derivation Model
+
+:TargetOfPathFromGvaIsRdfList
+    a sh:NodeShape ;
+    sh:targetObjectsOf cvkr:pathFromGVA ;
+    sh:class rdf:List .
+
+:TargetOfPathFromGvaIsRdfListContainingProperties
+    a sh:NodeShape ;
+    sh:targetObjectsOf cvkr:patternPropertyChain ;
+    sh:property [
+                    sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+                    sh:nodeKind sh:IRI ; # We could be more strict by using `sh:class owl:ObjectProperty` ;
+                    sh:minCount 1 ;
+                ] .
+
+:TargetOfPatternPropertyChainIsRdfList
+    a sh:NodeShape ;
+    sh:targetObjectsOf cvkr:patternPropertyChain ;
+    sh:class rdf:List .
+
+:TargetOfPatternPropertyChainIsRdfListContainingProperties
+    a sh:NodeShape ;
+    sh:targetObjectsOf cvkr:patternPropertyChain ;
+    sh:property [
+                    sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+                    sh:nodeKind sh:IRI ;  # We could be more strict by using `sh:class owl:ObjectProperty` ;
+                    sh:minCount 1 ;
+                ] .
+
+# We now want to validate that the 'Scale' vocabulary is correctly used
+# (values have to be in the expected datatype and 'min' scale value
+# have to be inferior or equal to the 'max' value).
+:ScaleShape
+    a sh:NodeShape ;
+    sh:targetClass scale:Scale ;
+    sh:property [
+                    sh:path scale:hasMaxScaleDenominator ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:datatype xsd:float ;
+                ] ;
+    sh:property [
+                    sh:path scale:hasMinScaleDenominator ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:datatype xsd:float ;
+                    sh:lessThanOrEquals scale:hasMaxScaleDenominator ;
+                ] .
+
+:PreTransformOperationOnlyOnSymbolsWithTransformOperation
+    a sh:NodeShape ;
+    rdfs:comment """Verify that a symb:Symbol using cvkr:preTransformOperation also uses cvkr:transformOperation."""@en ;
+    sh:targetClass symb:Symbol ;
+    sh:path cvkr:preTransformOperation ;
+    sh:sparql [
+                  a sh:SPARQLConstraint ;
+                  sh:message "Each symb:Symbol using cvkr:preTransformOperation should also uses cvkr:transformOperation."@en ;
+                  sh:prefixes : ;
+                  sh:select """
+			SELECT $this ?v1
+			WHERE {
+				$this $PATH ?v1 .
+				FILTER (
+				    NOT EXISTS {
+				        $this cvkr:transformOperation ?_ .
+				    }
+				)
+			}
+			""" ] .
+
+

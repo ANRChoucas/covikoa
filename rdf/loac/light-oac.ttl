@@ -1,0 +1,200 @@
+@prefix : <http://purl.org/loac#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix term: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+
+<http://purl.org/loac> a owl:Ontology ;
+                       term:creator "Matthieu Viry"^^xsd:string , "Marlène Villanova-Oliver"^^xsd:string ;
+                       term:issued "2020-11-01"^^xsd:date ;
+                       vann:preferredNamespacePrefix "loac"^^xsd:string ;
+                       vann:preferredNamespaceUri "http://purl.org/loac#"^^xsd:string ;
+                       owl:versionInfo "0.1.0"^^xsd:string ;
+                       rdfs:label "Light Choucas Alert Ontology" ;
+                       term:title "Light Choucas Alert Ontology (LOAC)" ;
+                       term:license "http://creativecommons.org/licenses/by/4.0/"^^term:URI ;
+                       rdfs:seeAlso <http://purl.org/oac> ;
+                       rdfs:comment """
+The Light Choucas Alert Ontology (LOAC) is a lightweighted version of the OAC ontology (http://purl.org/oac) defined in
+the ANR project CHOUCAS (ANR-16-CE23-0018 / http://choucas.ign.fr).
+
+It models the domain of the processing of an alert to search for the location of a victim in the mountains,
+and more precisely the preliminary search, carried out in front of a cartographic support by the rescuers
+and made on the basis of the informations provided by the person who contacted the rescuers (the caller).
+
+Contact: Matthieu Viry (matthieu.viry@univ-grenoble-alpes.fr)
+"""@en .
+
+
+
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+vann:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+term:creator rdf:type owl:AnnotationProperty .
+
+term:issued rdf:type owl:AnnotationProperty .
+
+term:license rdf:type owl:AnnotationProperty .
+
+term:title rdf:type owl:AnnotationProperty .
+
+
+:Alert a owl:Class ;
+       rdfs:label "Alert"@en, "Alerte"@fr ;
+       rdfs:comment "The alert refers to the victim search process, from the caller's call to the location of the victim."@en .
+
+:Hypothesis a owl:Class ;
+            rdfs:label "Hypothesis"@en, "Hypothese"@fr ;
+            rdfs:comment "A research hypothesis is the inclusion of all or part of the clues in order to obtain an Probable Location Area for the victim. Several hypotheses can be carried out during a single alert."@en .
+
+:Clue a owl:Class ;
+      rdfs:label "Clue"@en, "Indice"@fr ;
+      rdfs:comment "It is a localization element given in natural language by the caller. This localization element will be decomposed in order to identify the Site, the Target, the type of Location Relation and the possible modifiers that will allow the calculation of a Compatible Localization Area."@en .
+
+:Victim a owl:Class ;
+        rdfs:label "Victim"@en, "Victime"@fr ;
+        rdfs:comment "It is the lost person whose location is unknown. It is not necessarily the same person who gives the alert and transmits the clues."@en .
+
+:CompatibleLocationArea a owl:Class ;
+                        rdfs:subClassOf geo:Feature ;
+                        rdfs:label "Compatible Location Area"@en, "Zone de Localisation Compatible"@fr ;
+                        rdfs:comment "This is the area that corresponds to a clue. Each clue necessarily produces a Compatible Location Area (CLA)."@en .
+
+:ProbableLocationArea a owl:Class ;
+                      rdfs:subClassOf geo:Feature ;
+                      rdfs:label "Probable Location Area"@en, "Zone de Localisation Probable"@fr ;
+                      rdfs:comment "This is the area where the victim is likely to be located. It is obtained by merging/combining the different Compatible Location Areas (CLA) of an hypothesis."@en .
+
+:InitialSearchArea a owl:Class ;
+                   rdfs:subClassOf geo:Feature ;
+                   rdfs:label "Initial Search Area"@en, "Zone de Recherche Initiale"@fr ;
+                   rdfs:comment "This is the area, defined at the beginning of the Alert by the rescuer, corresponding to the part of the territory in which the search will take place (could by default correspond to the area of the department for example)."@en .
+
+:ReferenceObject a owl:Class ;
+                 rdfs:subClassOf geo:Feature ;
+                 rdfs:label "Reference Object"@en, "Objet de Reference"@fr ;
+                 rdfs:comment "These are elements of the territory that are mobilized as a reference by the caller when providing the various clues."@en .
+
+:RefObjectCategory a owl:Class ;
+                   rdfs:label "Category of Reference Object"@en, "Categorie d'Objet de Reference"@fr ;
+                   rdfs:comment "This is the category to which the reference objects belong (allows you to model categories such as PEAK, LAKE, ROAD, PATH, etc.)."@en .
+
+:LocationRelation a owl:Class ;
+                  rdfs:label "Location Relation"@en, "Relation de Localisation"@fr ;
+                  rdfs:comment "Describes a type of locational relationship, such as \"being close\" or \"seeing\" between the site (typically the victim) and the target (the object or type of object to which he or shes refers)."@en .
+
+:Confidence a owl:Class ;
+            rdfs:label "Confidence"@en, "Confiance"@fr ;
+            rdfs:comment "This is the level of confidence (grasped by the rescuer) taking into account the trust that the caller places in the information that he communicates to the rescuer."@en .
+
+geo:Feature a owl:Class ;
+            rdfs:isDefinedBy "http://www.opengis.net/spec/geosparql/1.0" .
+
+geo:Geometry a owl:Class ;
+             rdfs:isDefinedBy "http://www.opengis.net/spec/geosparql/1.0" .
+
+<https://www.w3.org/2006/time#TemporalEntity> a owl:Class ;
+                                              rdfs:isDefinedBy "https://www.w3.org/2006/time#2016" .
+
+:hasHypothesis a owl:ObjectProperty ;
+               rdfs:domain :Alert ;
+               rdfs:range :Hypothesis .
+
+:hasClue a owl:ObjectProperty ;
+         rdfs:domain :Hypothesis ;
+         rdfs:range :Clue .
+
+:hasInitialSearchArea a owl:ObjectProperty ;
+                      rdfs:domain :Hypothesis ;
+                      rdfs:range :InitialSearchArea .
+
+:hasProbableLocationArea a owl:ObjectProperty ;
+                         rdfs:domain :Hypothesis ;
+                         rdfs:range :ProbableLocationArea .
+
+:hasCompatibleLocationArea a owl:ObjectProperty ;
+                           rdfs:domain :Clue ;
+                           rdfs:range :CompatibleLocationArea .
+
+:isCLAforClue a owl:ObjectProperty ;
+              rdfs:label "is CLA for Clue"@en, "est ZLC pour l'indice"@fr ;
+              rdfs:domain :CompatibleLocationArea ;
+              rdfs:range :Clue ;
+              owl:inverseOf :hasCompatibleLocationArea .
+
+:contains a owl:ObjectProperty ;
+          rdfs:domain :InitialSearchArea ;
+          rdfs:range :ReferenceObject ;
+          rdfs:comment "Used to establish a link between an Initial Search Area and the reference objects it contains spatially."@en .
+
+:isContainedIn a owl:ObjectProperty ;
+               rdfs:domain :ReferenceObject ;
+               rdfs:range :InitialSearchArea ;
+               owl:inverseOf :contains .
+
+:shouldContain a owl:ObjectProperty ;
+               rdfs:domain :ProbableLocationArea ;
+               rdfs:range :Victim ;
+               rdfs:comment "Describes the fact that, with regard to the clues and their corresponding compatible areas considered in a hypothesis, the probable location area should spatially contain the victim."@en .
+
+:merges a owl:ObjectProperty ;
+        rdfs:domain :ProbableLocationArea ;
+        rdfs:range :CompatibleLocationArea ;
+        rdfs:comment "The Probable Location Area is formed by merging the considered Compatible Location Areas."@en .
+
+:hasParentCategory a owl:ObjectProperty, owl:TransitiveProperty ;
+                   rdfs:range :RefObjectCategory ;
+                   rdfs:domain :RefObjectCategory ;
+                   rdfs:comment "Describes the parent category of a reference object category. These parent categories are not linked to objects but only to categories."@en .
+
+:hasRefObject a owl:ObjectProperty ;
+              rdfs:domain :RefObjectCategory ;
+              rdfs:range :ReferenceObject ;
+              owl:inverseOf :hasCategory .
+
+:hasLocationRelation a owl:ObjectProperty ;
+                     rdfs:domain :Clue ;
+                     rdfs:range :LocationRelation .
+
+:hasTarget a owl:ObjectProperty ;
+           rdfs:domain :LocationRelation ;
+           rdfs:range :ReferenceObject ;
+           rdfs:comment "Describes the target of a location relationship (usually the object it refers to, such as \"a lake\" in \"I see a lake\")"@en .
+
+:hasSite a owl:ObjectProperty ;
+         rdfs:domain :LocationRelation ;
+         rdfs:range :Victim ;
+         rdfs:comment "Describes the site of a location relationship. This is typically the victim, for example, when he or she describes his or her location by saying \"I see a lake\"."@en .
+
+:hasCategory a owl:ObjectProperty ;
+             rdfs:domain :ReferenceObject ;
+             rdfs:range :RefObjectCategory .
+
+:hasConfidence a owl:ObjectProperty ;
+               rdfs:domain :Clue ;
+               rdfs:range :Confidence ;
+               rdfs:comment "Describes the confidence the rescuer has in a given clue."@en .
+
+:hasInstantOrDuration a owl:ObjectProperty ;
+                      rdfs:domain :Clue ;
+                      rdfs:range <https://www.w3.org/2006/time#TemporalEntity> ;
+                      rdfs:comment "Relates to the temporal entity that makes it possible to describe the moment (instant, or temporal interval having a duration) at which the clue in question is valid."@en .
+
+:hasNaturalLanguageClue a owl:DatatypeProperty ;
+                        rdfs:domain :Clue ;
+                        rdfs:range xsd:string ;
+                        rdfs:comment "Links a clue to the corresponding speech fragment (recorded in natural language) of the caller."@en .
+
+geo:hasGeometry a owl:ObjectProperty ;
+                rdfs:isDefinedBy "http://www.opengis.net/spec/geosparql/1.0" ;
+                rdfs:domain geo:Feature ;
+                rdfs:range geo:Geometry .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :ReferenceObject :RefObjectCategory ) .
