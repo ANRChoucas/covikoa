@@ -98,8 +98,9 @@ CONSTRUCT {
 cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
     a sh:NodeShape ;
     rdfs:comment """Prepare the SHACL derivation rules which will be used to create the intermediate representation of the
-                    individuals from the semantic data model to be portrayed."""@en ;
-    sh:targetClass owl:Class ;
+                    individuals from the semantic data model to be portrayed
+                    when there is no "entrypoint" defined."""@en ;
+    sh:targetClass gviz:GeoVisualApplication ;
     sh:rule [                a sh:SPARQLRule ;
                              sh:construct """
 		    prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -113,19 +114,36 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
             prefix ir: <http://example.com/cvk-ir#>
 
             CONSTRUCT {
-                cvkr:OACDeriveOAVM
+                ?uriThisRule
                     a sh:NodeShape, cvkr:DerivationRule ;
                     sh:targetSubjectsOf gviz:represents ;
                     sh:rule [ a sh:SPARQLRule ;
                               sh:construct ?ruleContent ;
                             ] .
             } WHERE {
+                ?protoapp rdfs:subClassOf gviz:GeoVisualApplication .
 
-                $this rdfs:subClassOf gviz:GeoVisualApplication .
-                ?app a $this .
+                ?app a ?protoapp .
+
                 FILTER (NOT EXISTS {
                     ?app gviz:represents ?entrypoint .
-                } ) .
+                })
+
+                ?conceptGVR a owl:Class ;
+                   rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+                   gviz:represents ?concept .
+
+                # BIND(URI(CONCAT("cvkr:DerivationRule-",STR(?conceptGVR), STRUUID())) as ?uriThisRule) .
+                BIND(
+                  URI(
+                    CONCAT(
+                      "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
+                      replace(STR(?conceptGVR), STR("http://example.com/cvk-ir#"), ""),
+                      "-DerivationRule-",
+                      STRUUID()
+                    )
+                  ) as ?uriThisRule) .
+
                 ?_ a cvkr:PrefixToInject ;
                     rdf:value ?pfxs .
 
@@ -133,26 +151,27 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
-prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> \n\"\"\",
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix owl: <http://www.w3.org/2002/07/owl#> \n\"\"\",
 str(?pfxs), \"\"\"
 
 CONSTRUCT {
-    ?thisIndiv a ?_this ;
+    ?thisIndiv a $this ;
        gviz:represents ?u .
     ?compo gviz:presentsGVR ?thisIndiv .
 } WHERE {
-    ?_this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-       gviz:represents ?somethingDerivable .
-    ?u a ?somethingDerivable .
+    $this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+       gviz:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
+    ?u a \"\"\", "<", STR(?concept), ">", \"\"\" .
     NOT EXISTS { ?_ gviz:represents ?u . }
-    $this gviz:hasGeoVisualComponent ?compo .
+    ?app gviz:hasGeoVisualComponent ?compo .
     ?compo a gviz:Map2dComponent .
     BIND(URI(CONCAT("urn:id:",STRUUID())) as ?thisIndiv) .
 }
                 \"\"\") as ?ruleContent ).
             }
     """ ;
-            ] .
+      ] .
 
 
 cvkr:RuleGenerationEnrichmentRulesNoPatternToMatch
