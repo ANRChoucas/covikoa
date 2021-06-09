@@ -45,7 +45,6 @@ cvkr:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
                    cvkr:pathFromGVALiteral ?pathFromGVA ;
                    gviz:represents ?concept .
 
-                # BIND(URI(CONCAT("cvkr:DerivationRule-",STR(?conceptGVR), STRUUID())) as ?uriThisRule) .
                 BIND(
                   URI(
                     CONCAT(
@@ -62,7 +61,6 @@ cvkr:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
                 BIND(CONCAT(\"\"\"
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
 prefix owl: <http://www.w3.org/2002/07/owl#> \n\"\"\",
 str(?pfxs), \"\"\"
@@ -87,7 +85,6 @@ CONSTRUCT {
             }
     """ ;
             ] .
-
 
 # TODO ? If the application defines an individual as entryPoint but does not provide the path to reach it..
 #cvkr:RuleGenerationDerivationRuleWithEntrypointButNoPathToGVA
@@ -121,19 +118,20 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
                               sh:construct ?ruleContent ;
                             ] .
             } WHERE {
-                ?protoapp rdfs:subClassOf gviz:GeoVisualApplication .
-
-                ?app a ?protoapp .
+                ?app rdf:type/rdfs:subClassOf gviz:GeoVisualApplication .
 
                 FILTER (NOT EXISTS {
                     ?app gviz:represents ?entrypoint .
                 })
 
-                ?conceptGVR a owl:Class ;
-                   rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-                   gviz:represents ?concept .
+                {
+                    SELECT DISTINCT ?conceptGVR ?concept WHERE {
+                        ?conceptGVR a owl:Class ;
+                           rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+                           gviz:represents ?concept .
+                    }
+                }
 
-                # BIND(URI(CONCAT("cvkr:DerivationRule-",STR(?conceptGVR), STRUUID())) as ?uriThisRule) .
                 BIND(
                   URI(
                     CONCAT(
@@ -150,7 +148,6 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
                 BIND(CONCAT(\"\"\"
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
 prefix owl: <http://www.w3.org/2002/07/owl#> \n\"\"\",
 str(?pfxs), \"\"\"
