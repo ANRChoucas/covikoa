@@ -6,10 +6,10 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
-@base <http://example.com/covikoa-context> .
+@base <http://lig-tdcge.imag.fr/steamer/covikoa/context> .
 
 
-<http://example.com/covikoa-context> rdf:type owl:Ontology ;
+<http://lig-tdcge.imag.fr/steamer/covikoa/context> rdf:type owl:Ontology ;
                                      rdfs:label "CoViKoa visualisation context ontology"@en ;
                                      <http://purl.org/dc/terms/license> "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^<http://purl.org/dc/terms/URI> ;
                                      <http://purl.org/dc/terms/issued> "2020-09-30"^^xsd:date ;
@@ -53,7 +53,7 @@
 
 :displaysGVR rdf:type owl:ObjectProperty ;
              rdfs:domain :VisualisationContext ;
-             rdfs:range gviz:GeoVisualRepresentation ;
+             rdfs:range gviz:GeoVisualIntermediateRepresentation ;
              rdfs:comment """
                  Points to existing geovisual representation (in our KB) displayed by the client."""@en .
 

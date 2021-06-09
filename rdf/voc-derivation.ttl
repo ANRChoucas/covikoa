@@ -17,7 +17,7 @@
 @base <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
 
 
-<http://example.com/covikoa-derivation> a owl:Ontology ;
+<http://lig-tdcge.imag.fr/steamer/covikoa/derivation> a owl:Ontology ;
                                         term:creator "Matthieu Viry" ;
                                         term:license "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^term:URI ;
                                         term:issued "2020-09-30"^^xsd:date ;

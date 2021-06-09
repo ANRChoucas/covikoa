@@ -9,7 +9,7 @@
 @base <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
 
 
-<http://example.com/covikoa-geoviz> a owl:Ontology ;
+<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz> a owl:Ontology ;
                                     term:creator "Matthieu Viry" ;
                                     term:issued "2020-09-30"^^xsd:date ;
                                     owl:versionInfo "0.1.0" ;
