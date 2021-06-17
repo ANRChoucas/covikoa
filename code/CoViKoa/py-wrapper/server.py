@@ -7,7 +7,7 @@ import toml
 import uvicorn
 from os.path import abspath, dirname, join as join_path
 from pathlib import Path
-from fastapi import FastAPI, Form, HTTPException, Query
+from fastapi import FastAPI, Form, HTTPException, Query, Response
 from fastapi.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 from starlette.responses import JSONResponse  # FileResponse, HTMLResponse,
@@ -29,13 +29,14 @@ app.add_middleware(
 
 # [Reference](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/#query-via-get)
 @app.get('/CoViKoa')
-async def get_kb(query: Union[str, None]):
+async def get_kb(query: Optional[str] = None):
     if query:
-        res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
-        return JSONResponse(json.loads(res), status_code=200)
+        # Process the query if a query string is given
+        return dispatch_query(query)
     else:
-        # TODO: return the whole KB ("materialized") if no query string otherwise process the QS
-        pass
+        # Otherwise return the whole KB ("materialized")
+        content = handlerInstance.writeDataModel()
+        return Response(content=content, media_type="text/turtle")
 
 
 # [Reference](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/#query-via-post-urlencoded)
@@ -44,8 +45,7 @@ async def get_kb(query: Union[str, None]):
 async def query_or_update(query: Optional[str] = Form(None), update: Optional[str] = Form(None)) -> JSONResponse:
     # if query and update : # TODO: having a request with both a query and an update is probably not allowed
     if query:
-        res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
-        return JSONResponse(json.loads(res), status_code=200)
+        return dispatch_query(query)
     if update:
         res = handlerInstance.updateDataModel(update)
         res = json.loads(res)
@@ -56,8 +56,7 @@ async def query_or_update(query: Optional[str] = Form(None), update: Optional[st
 # [Reference](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/#query-via-get)
 @app.get('/CoViKoa/query')
 async def handle_get_query(query: str = Query(...)):
-    res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
-    return JSONResponse(json.loads(res), status_code=200)
+    return dispatch_query(query)
 
 
 # Update operation is not allowed using the GET method
@@ -74,8 +73,7 @@ async def handle_get_update():
 # [Reference](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/#query-via-post-urlencoded)
 @app.post('/CoViKoa/query')
 async def handle_post_query(query: str = Form(...)) -> JSONResponse:
-    res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
-    return JSONResponse(json.loads(res), status_code=200)
+    return dispatch_query(query)
 
 
 # [Reference](https://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/#update-via-post-urlencoded)
@@ -97,6 +95,21 @@ def shutdown_event():
     if geosparqlFusekiProcess:
         geosparqlFusekiProcess.terminate()
         geosparqlFusekiProcess.kill()
+
+# Dispatch the sparql query depending on if its a "describe",
+# a "construct" or a "select" query
+def dispatch_query(query: str):
+    _query = query.lower()
+
+    if 'describe ' in _query:
+        res = handlerInstance.queryDataModelDescribe(query)
+        return Response(content=res, media_type="text/turtle")
+    elif 'construct ' in _query:
+        res = handlerInstance.queryDataModelConstruct(query)
+        return Response(content=res, media_type="text/turtle")
+    else:
+        res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
+        return JSONResponse(json.loads(res), status_code=200)
 
 # Static files for the demo app
 app.mount(
