@@ -1,9 +1,13 @@
-.ol-map {
-  width: 100%;
-  height:400px;
-}
-
 html {
   box-sizing: border-box;
   display: block;
+}
+
+body {
+  display: flex;
+}
+
+.ol-map {
+  width: 100%;
+  height:800px;
 }

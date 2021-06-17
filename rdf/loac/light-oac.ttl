@@ -73,7 +73,7 @@ term:title rdf:type owl:AnnotationProperty .
 
 :InitialSearchArea a owl:Class ;
                    rdfs:subClassOf geo:Feature ;
-                   rdfs:label "Initial Search Area"@en, "Zone de Recherche Initiale"@fr ;
+                   rdfs:label "Initial Search Area"@en, "Zone Initiale de Recherche"@fr ;
                    rdfs:comment "This is the area, defined at the beginning of the Alert by the rescuer, corresponding to the part of the territory in which the search will take place (could by default correspond to the area of the department for example)."@en .
 
 :ReferenceObject a owl:Class ;

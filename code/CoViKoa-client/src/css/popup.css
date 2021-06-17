@@ -1,0 +1,87 @@
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+}
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+.ol-popup-closer:after {
+  content: "✖";
+}
+
+.ol-popup #popup-content {
+  margin-top: 5px;
+}
+
+.ol-popup table.table-info {
+  border-spacing: 1px;
+  border-radius: 6px;
+  border: solid 1px gray;
+}
+
+.ol-popup table.table-info td {
+  vertical-align: top;
+  min-width: 100px;
+  max-width: 320px;
+  color: black;
+  height: 17px;
+  padding: 3px;
+}
+
+.ol-popup table.table-info > tbody > tr:nth-child(even) {
+  background: #e2ecee;
+}
+
+.ol-popup table.table-info > tbody > tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.ol-popup table.table-info td.field-name {
+  color: #535050;
+  padding-right: 7px;
+  font-weight: normal;
+  min-width: 60px;
+  max-width: 260px;
+}
+
+.ol-popup table.table-info .field-value {
+  outline: none;
+  word-wrap: break-word;
+}
+
+.ol-popup .uri-feature {
+  font-size: 14px;
+  text-align: center;
+  margin: 3px;
+}

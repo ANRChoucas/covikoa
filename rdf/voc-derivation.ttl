@@ -112,6 +112,10 @@
     is used during the rule generation.
     """@en .
 
+:AbsentProperty a owl:Class ;
+    rdfs:label "AbsentProperty"@en ;
+    rdfs:comment """TODO"""@en .
+
 :CoViKoaGeneration a owl:Class ;
     rdfs:subClassOf prov:Generation ;
     rdfs:label "CoViKoaGeneration"@en ;
@@ -188,6 +192,30 @@
     Describes the target object to be matched on some property,
     defined by the cvkr:MatchingPattern of the symbol referring to this symboliser."""@en .
 
+:propertyIsLessThanOrEqualTo a owl:DatatypeProperty ;
+                             rdfs:domain symblzr:Symbolizer ;
+                             rdfs:range [ a rdfs:Datatype ;
+                                          owl:unionOf (xsd:integer xsd:float xsd:decimal) ;
+                               ] .
+
+:propertyIsLessThan a owl:DatatypeProperty ;
+                    rdfs:domain symblzr:Symbolizer ;
+                    rdfs:range [ a rdfs:Datatype ;
+                                 owl:unionOf (xsd:integer xsd:float xsd:decimal) ;
+                      ] .
+
+:propertyIsGreaterThanOrEqualTo a owl:DatatypeProperty ;
+                                rdfs:domain symblzr:Symbolizer ;
+                                rdfs:range [ a rdfs:Datatype ;
+                                             owl:unionOf (xsd:integer xsd:float xsd:decimal) ;
+                                  ] .
+
+:propertyIsGreaterThan a owl:DatatypeProperty ;
+                       rdfs:domain symblzr:Symbolizer ;
+                       rdfs:range [ a rdfs:Datatype ;
+                                    owl:unionOf (xsd:integer xsd:float xsd:decimal) ;
+                         ] .
+
 :patternProperty a owl:ObjectProperty ;
     rdfs:domain :MatchingPattern ;
     rdfs:range rdf:Property ;
@@ -251,6 +279,10 @@
 
         This property is intended to be used when writing the Derivation Model (on new classes that subclass gviz:GeoVisualIntermediateRepresentation).
     """@en .
+
+:onComponent a owl:ObjectProperty ;
+             rdfs:domain symb:Symbol ;
+             rdfs:range gviz:GeoVisualComponent .
 
 #################################################################
 #    Data Properties

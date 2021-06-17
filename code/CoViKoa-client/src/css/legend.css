@@ -1,0 +1,7 @@
+div.ol-legend.ol-unselectable.ol-control {
+  padding-top: 10px;
+}
+
+div.ol-legend.ol-unselectable.ol-control.ol-collapsed {
+  padding-top: 2px;
+}

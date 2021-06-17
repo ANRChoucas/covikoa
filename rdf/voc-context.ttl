@@ -80,6 +80,10 @@
                          rdfs:domain gviz:GeoVisualApplication ;
                          rdfs:range :VisualisationContext .
 
+:hasBaseMap rdf:type owl:ObjectProperty ;
+            rdfs:domain :ClientMapObject ;
+            rdfs:range :BaseMapProvider .
+
 #################################################################
 #    Data properties
 #################################################################
@@ -156,6 +160,9 @@
      rdfs:comment """
        Describe a library usable for interactive 3D visualization of geospatial data."""@en .
 
+:BaseMap rdf:type owl:Class ;
+         rdfs:comment """Describe the reference to a specific cartographic base-map (such as Stamen Toner, OpenTopoMap, etc.)."""@en .
+
 :Monochromacy rdf:type owl:Class ;
               rdfs:subClassOf :ColorVisionDeficiency .
 
@@ -164,3 +171,25 @@
 
 :AnomalousTrichromacy rdf:type owl:Class ;
               rdfs:subClassOf :ColorVisionDeficiency .
+
+:openTopoMapBaseMap a :BaseMap ;
+                    :templateUrl "https://a.tile.opentopomap.org/{z}/{x}/{y}.png" ;
+                    :attribution """Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org/">SRTM</a> | Map style: © <a href="https://opentopomap.org/">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)""" .
+
+
+:stamenTonerBaseMap a :BaseMap ;
+                    :templateUrl "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png" ;
+                    :attribution """"Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://www.openstreetmap.org/">OpenStreetMap</a> under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.""" .
+
+
+:stamenWatercolorBaseMap a :BaseMap ;
+                         :templateUrl "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png" ;
+                         :attribution """Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.""" .
+
+
+:osmDefaultBaseMap a :BaseMap ;
+                    :templateUrl "https://tile.openstreetmap.org/{z}/{x}/{y}.png" ;
+                    :attribution """© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors""" .
+
+
+

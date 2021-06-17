@@ -119,7 +119,11 @@ gviz:represents a owl:ObjectProperty ;
 gviz:presentsGVR a owl:ObjectProperty  ;
                  rdfs:label "presents GeoVisualIntermediateRepresentation"@en , "presente GeoVisualIntermediateRepresentation"@fr ;
                  rdfs:domain gviz:GeoVisualComponent ;
-                 rdfs:range gviz:GeoVisualIntermediateRepresentation .
+                 rdfs:range gviz:GeoVisualIntermediateRepresentation ;
+                 rdfs:comment """
+                    This is the property which is used to link a GeoVisualComponent to the gviz:GeoVisualIntermediateRepresentation
+                    that are depicted on him. Note that multiple GeoVisualComponents (Map2dComponent) can be linked to a GeoVisualIntermediateRepresentation when
+                    the same entity appears on multiple map. See the gviz:appearsIn property to know which gviz:PortrayalOption have to be shown on which GeoVisualComponent."""@en .
 
 gviz:denotesGVR a owl:ObjectProperty ;
                 rdfs:label "denotes GeoVisualIntermediateRepresentation"@en , "denote GeoVisualIntermediateRepresentation"@fr ;
@@ -156,7 +160,8 @@ gviz:hasPortrayalSymbolizer rdf:type owl:ObjectProperty ;
 gviz:appearsIn rdf:type owl:ObjectProperty ;
                rdfs:label "appears in"@en , "apparait dans"@fr ;
                rdfs:domain gviz:PortrayalOption ;
-               rdfs:range gviz:GeoVisualComponent .
+               rdfs:range gviz:GeoVisualComponent ;
+               rdfs:comment """Describe the fact that a gviz:PortrayalOption appears on a specific gviz:GeoVisualComponent."""@en .
 
 gviz:displayIndex rdf:type owl:DatatypeProperty ;
                   rdfs:label "display index"@en , "index d'affichage"@fr ;

@@ -68,7 +68,6 @@ str(?pfxs), \"\"\"
 CONSTRUCT {
     ?thisIndiv a $this ;
        gviz:represents ?u .
-    ?compo gviz:presentsGVR ?thisIndiv .
 } WHERE {
     $this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
        gviz:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
@@ -77,8 +76,7 @@ CONSTRUCT {
     \"\"\",
     \"\"\"<\"\"\", STR(?entrypoint), \"\"\">\"\"\", STR(?pathFromGVA), \"\"\"?u .\"\"\",
     \"\"\"
-    ?app gviz:hasGeoVisualComponent ?compo .
-    ?compo a gviz:Map2dComponent .
+
     BIND(URI(CONCAT("urn:id:",STRUUID())) as ?thisIndiv) .
 }
                 \"\"\") as ?ruleContent ).
@@ -155,21 +153,17 @@ str(?pfxs), \"\"\"
 CONSTRUCT {
     ?thisIndiv a $this ;
        gviz:represents ?u .
-    ?compo gviz:presentsGVR ?thisIndiv .
 } WHERE {
     $this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
        gviz:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
     ?u a \"\"\", "<", STR(?concept), ">", \"\"\" .
     NOT EXISTS { ?_ gviz:represents ?u . }
-    ?app gviz:hasGeoVisualComponent ?compo .
-    ?compo a gviz:Map2dComponent .
     BIND(URI(CONCAT("urn:id:",STRUUID())) as ?thisIndiv) .
 }
                 \"\"\") as ?ruleContent ).
             }
     """ ;
       ] .
-
 
 cvkr:RuleGenerationEnrichmentRulesNoPatternToMatch
     a sh:NodeShape ;
@@ -214,6 +208,11 @@ cvkr:RuleGenerationEnrichmentRulesNoPatternToMatch
                         rdf:value ?contentConditionFilter ;
                     ] .
                 }
+
+                OPTIONAL {
+                    $this cvkr:onComponent ?compo .
+                }
+
                 # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
                 BIND(
                     IF(
@@ -258,9 +257,21 @@ CONSTRUCT {
         prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
         prov:qualifiedGeneration ?gen ;
         scale:hasScale ?scale ;
+        gviz:appearsIn ?component ;
     ] .
+    ?component gviz:presentsGVR $this .
 } WHERE {
     NOT EXISTS { $this gviz:hasPortrayal [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
+    BIND(<\"\"\", STR($this), \"\"\"> as ?symb) .
+
+    ?symb gviz:denotesGVR ?thisKind ;
+          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
+    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } ) .\"\"\",
+IF(BOUND(?nameConditionFilter),
+CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
+\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
+),
+\"\"\"
     $this a ?thisKind ;
           gviz:represents ?somethingRepresentable .
 \"\"\",
@@ -271,16 +282,6 @@ IF(BOUND(?preTransformOperation), CONCAT(\"\"\"\n    \"\"\", ?preTransformOperat
 IF(BOUND(?transformOperation), CONCAT(\"\"\"\n    BIND(\"\"\", ?transformOperation, \"\"\" as ?newGeom)\"\"\"), \"\"\"\"\"\"),
 
 \"\"\"
-    ?symb gviz:denotesGVR ?thisKind ;
-          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
-    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } )
-    FILTER(?symb = <\"\"\", STR($this), \"\"\"> ) .\"\"\",
-IF(BOUND(?nameConditionFilter),
-CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
-\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
-),
-\"\"\"
-
     BIND(cvkr:UnPackGeomType(?somethingRepresentable) as ?geomType) .
     FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#forType> ?geomType ; ]. } )
 
@@ -289,13 +290,18 @@ CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameCo
     OPTIONAL { ?symb cvkr:onValidScale ?scale . }
 
     BIND(IF(BOUND(?newGeom), ?newGeom, ?thisGeometry) as ?resGeom) .
-    BIND(cvkr:GetCurrentGenerationNode() as ?gen) .
+    BIND(cvkr:GetCurrentGenerationNode() as ?gen) . \"\"\",
+IF(BOUND(?compo),
+    CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
+    \"\"\"\n        ?app gviz:hasGeoVisualComponent ?component .\n        ?component a gviz:Map2dComponent .\n\"\"\"
+),
+\"\"\"
 }
 \"\"\"
                 ) as ?constructValue) .
             }
     """ ;
-            ] .
+      ] .
 
 
 cvkr:RuleGenerationEnrichmentRulesWithPatternToMatch
@@ -337,6 +343,10 @@ cvkr:RuleGenerationEnrichmentRulesWithPatternToMatch
                         rdfs:label ?nameConditionFilter ;
                         rdf:value ?contentConditionFilter ;
                     ] .
+                }
+
+                OPTIONAL {
+                    $this cvkr:onComponent ?compo .
                 }
 
                 # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
@@ -383,9 +393,21 @@ CONSTRUCT {
         prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
         prov:qualifiedGeneration ?gen ;
         scale:hasScale ?scale ;
+        gviz:appearsIn ?component ;
     ] .
+    ?component gviz:presentsGVR $this .
 } WHERE {
     NOT EXISTS { $this gviz:hasPortrayal [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
+    BIND(<\"\"\", STR($this), \"\"\"> as ?symb) .
+
+    ?symb gviz:denotesGVR ?thisKind ;
+          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
+    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } ) .\"\"\",
+IF(BOUND(?nameConditionFilter),
+CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
+\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
+),
+\"\"\"
     $this a ?thisKind ;
           gviz:represents ?somethingRepresentable .
 \"\"\",
@@ -395,37 +417,53 @@ IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditi
 IF(BOUND(?preTransformOperation), CONCAT(\"\"\"    \"\"\", ?preTransformOperation, \"\"\" .\"\"\"), \"\"\"\"\"\"),
 IF(BOUND(?transformOperation), CONCAT(\"\"\"    BIND(\"\"\", ?transformOperation, \"\"\" as ?newGeom)\"\"\"), \"\"\"\"\"\"),
 \"\"\"
-    ?symb gviz:denotesGVR ?thisKind ;
-          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
-    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } )
-    FILTER(?symb = <\"\"\", STR($this), \"\"\"> ) .\"\"\",
-IF(BOUND(?nameConditionFilter),
-CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
-\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
-),
-\"\"\"
+
+    {
+        # Symbolizers with a cvkr:patternObject
+        ?symblz cvkr:patternObject ?_tobj .
+        ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj .
+        FILTER(?qobj = ?_tobj).
+    } UNION {
+        # Symbolizers where cvkr:patternObject is cvkr:AbsentProperty
+        ?symblz cvkr:patternObject cvkr:AbsentProperty .
+        ?somethingRepresentable a <\"\"\", STR(?someConcept), \"\"\"> .
+        FILTER(NOT EXISTS { ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj . })
+    } UNION {
+        # Symbolizers that use cvkr:propertyIs(Less|Greater)Than[OrEqualTo]
+        OPTIONAL { ?symblz cvkr:propertyIsLessThanOrEqualTo ?comp_less_equal . }
+        OPTIONAL { ?symblz cvkr:propertyIsLessThan ?comp_less . }
+        OPTIONAL { ?symblz cvkr:propertyIsGreaterThanOrEqualTo ?comp_greater_equal . }
+        OPTIONAL { ?symblz cvkr:propertyIsGreaterThan ?comp_greater . }
+        FILTER(BOUND(?comp_less_equal) || BOUND(?comp_less) || BOUND(?comp_greater_equal) || BOUND(?comp_greater))
+        ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj .
+        BIND(IF(BOUND(?comp_less_equal), ?comp_less_equal, 9999999999) AS ?_comp_less_equal).
+        BIND(IF(BOUND(?comp_less), ?comp_less, 9999999999) AS ?_comp_less).
+        BIND(IF(BOUND(?comp_greater_equal), ?comp_greater_equal, -9999999999) AS ?_comp_greater_equal).
+        BIND(IF(BOUND(?comp_greater), ?comp_greater, -9999999999) AS ?_comp_greater).
+        FILTER(?qobj < ?_comp_less && ?qobj <= ?_comp_less_equal && ?qobj > ?_comp_greater && ?qobj >= ?_comp_greater_equal).
+    }
+
     BIND(cvkr:UnPackGeomType(?somethingRepresentable) as ?geomType) .
-
     FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#forType> ?geomType ; ]. } )
-
-    ?symb cvkr:hasMatchingPattern [ cvkr:patternPropertyLiteral ?_patprop ] .
-    ?symblz cvkr:patternObject ?_tobj .
-
-    ?somethingRepresentable\"\"\", STR(?patternPropLiteral), \"\"\" ?qobj .
-    FILTER(?qobj = ?_tobj).
 
     OPTIONAL { ?symb gviz:displayIndex ?_di . }
     BIND(IF(BOUND(?_di), ?_di, 500) as ?di) .
     OPTIONAL { ?symb cvkr:onValidScale ?scale . }
 
     BIND(IF(BOUND(?newGeom), ?newGeom, ?thisGeometry) as ?resGeom) .
-    BIND(cvkr:GetCurrentGenerationNode() as ?gen) .
+    BIND(cvkr:GetCurrentGenerationNode() as ?gen) .\"\"\",
+IF(BOUND(?compo),
+    CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
+    \"\"\"\n        ?app gviz:hasGeoVisualComponent ?component .\n        ?component a gviz:Map2dComponent .\n\"\"\"
+),
+\"\"\"
 }
 \"\"\"
                 ) as ?constructValue) .
             }
     """ ;
-            ] .
+      ] .
+
 
 cvkr:GenerateRuleForMapExtent
     a sh:NodeShape ;

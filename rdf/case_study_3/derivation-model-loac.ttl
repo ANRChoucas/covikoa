@@ -64,8 +64,9 @@
 :HypothesisMap a gviz:Map2dComponent ; ## <- our GeoVisualComponent
                cvkr:hasDefaultExtent loac:InitialSearchArea .
 
-:HypothesisMapLegend a gviz:LegendComponent ;
-                gviz:linkedTo :HypothesisMap .
+# No legend here, see case study 4 for an example of legend...
+#:HypothesisMapLegend a gviz:LegendComponent ;
+#                gviz:linkedTo :HypothesisMap .
 
 :AppHypothesisChoucas a :AppChoucasHypo ; ## <- it implements making a concrete GeoVisualApplication for diplaying a specific hypothesis of an alert
     gviz:represents loac:hypo1 ; ## <- this is the entry point in the target semantic data model, the hypothesis, and all its related knowledge, we want to geovisualize (it allows us to generate rules that only produces the IR of the data related to it)

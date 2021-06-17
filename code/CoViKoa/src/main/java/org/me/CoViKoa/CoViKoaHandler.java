@@ -243,15 +243,50 @@ public class CoViKoaHandler {
         return qLineResult;
     }
 
+    private String queryModelTurtleString(Model model, String queryString, String typeExec) {
+        try {
+            QueryExecution qexec = QueryExecutionFactory.create(queryString, model);
+            Model resultModel = null;
+            if (typeExec == "describe") {
+                resultModel = qexec.execDescribe();
+            } else if (typeExec == "construct") {
+                resultModel = qexec.execConstruct();
+            }
+            StringWriter stringWriter = new StringWriter();
+            resultModel.write(stringWriter, FileUtils.langTurtle);
+            return stringWriter.toString();
+        } catch (QueryException e) {
+            e.printStackTrace();
+            return "{\"response\":\"Error\",\"message\":\"Unexpected error while querying the DataModel\"}";
+        }
+    }
+
+    public String queryDataModelDescribe(String queryString) {
+        return queryModelTurtleString(this.dataModel, queryString, "describe");
+    }
+
+    public String queryDataModelConstruct(String queryString) {
+        return queryModelTurtleString(this.dataModel, queryString, "construct");
+    }
+
+    public String writeDataModel() {
+        StringWriter stringWriter = new StringWriter();
+        this.dataModel.write(stringWriter, FileUtils.langTurtle);
+        return stringWriter.toString();
+    }
+
     public String queryDataModelJSON(String queryString) {
         return queryModelJSON(this.dataModel, queryString);
     }
+
     public String queryNewTriplesJSON(String queryString) {
         return queryModelJSON(this.newTriples, queryString);
     }
+
     public List<String> queryDataModel(String queryString) {
         return queryModelToList(this.dataModel, queryString);
     }
+
     public List<String> queryNewTriples(String queryString) {
         return queryModelToList(this.newTriples, queryString);
     }

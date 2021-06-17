@@ -33,7 +33,7 @@ public class RulesGenerator {
     public static void main(String[] args) throws FileNotFoundException {
         org.apache.jena.query.ARQ.init();
 
-        RulesGenerator a = new RulesGenerator("rdf/case_study_1/derivation-model-loac.ttl");
+        RulesGenerator a = new RulesGenerator("rdf/case_study_4/derivation-model-nuts2.ttl");
         try {
             Utils.saveModel(a.generatedRules, "/tmp/result-rules-generation.ttl");
             Utils.saveModel(a.derivationModel, "/tmp/result-derivation-model.ttl");
@@ -311,7 +311,7 @@ public class RulesGenerator {
                 "\n" +
                 "SELECT ?c \n" +
                 "WHERE {\n" +
-                "   ?c cvkr:transformOperation ?_ .\n" +
+                "    ?c cvkr:transformOperation ?_ .\n" +
                 "}");
         QueryExecution qexec1 = QueryExecutionFactory.create(q1, derivationModel);
         ResultSet resultSet = qexec1.execSelect();
