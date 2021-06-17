@@ -1,0 +1,19 @@
+title = "Case study with Nuts2 data"
+
+covikoa-vocabularies = [
+  "./rdf/voc-hh-graphic.ttl",
+  "./rdf/voc-hh-symbol.ttl",
+  "./rdf/voc-hh-symbolizer.ttl",
+  # "./rdf/voc-hh-scale.ttl", # Not needed
+  "./rdf/voc-context.ttl", 
+  "./rdf/voc-geoviz.ttl",
+  "./rdf/voc-derivation.ttl",
+]
+
+target-semantic-data-model-files = [
+  "./rdf//case_study_4/nuts2-2013.ttl",
+]
+
+derivation-model = "./rdf/case_study_4/derivation-model-nuts2.ttl"
+
+

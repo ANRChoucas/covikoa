@@ -1,0 +1,148 @@
+@prefix : <http://example.com/cvk-ir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix loac: <http://purl.org/loac#> .
+@prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix ns2: <http://example.com/ns2#> .
+# Describe a vocabulary, build from CoViKoa-Geoviz,
+# covikoa-derivation and from the Semantic Data Model to visualize :
+# Here we want to visualise a loosely modelled dataset describing Nuts 2 features.
+# This time the point is not so much to use the semantic of the model but rather to demonstrate
+# how we can describe a choropleth portrayal with CoViKoa
+
+# We declare the prefix / namespace corresponding to the Semantic Data Model we are targeting (ns2)
+# so that we can reuse it directly in the literal value of any ConditionFilter that may be defined later.
+:
+    a owl:Ontology ;
+    sh:declare [
+
+                   sh:prefix "ns2" ;
+                   sh:namespace "http://example.com/ns2#"^^xsd:anyURI ;
+               ] .
+
+:AppChoroNuts a owl:Class ; ## <- We want to make an interactive choropleth map of nuts features
+    rdfs:subClassOf gviz:GeoVisualApplication .
+
+:NutsUnitOAVM a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    gviz:represents ns2:NutsUnit .
+
+:NutsMap a gviz:Map2dComponent ;
+         cvkr:hasDefaultExtent ns2:NutsUnit .
+
+:NutsMapLegend a gviz:LegendComponent ;
+                     gviz:linkedTo :NutsMap .
+
+:AppChoroNutsUnemp a :AppChoroNuts ; ## <- it implements making a concrete GeoVisualApplication for displaying a map and its legend
+    gviz:hasGeoVisualComponent :NutsMap, :NutsMapLegend ;
+    cvc:hasVisualisationContext :DefaultVizContext .
+
+
+# Symbolizers for each data class + symbolizer for no-data
+:SymbolizerNutsUnemp1 a symblzr:PolygonSymbolizer ;
+                      rdfs:label "]0.0,4.0]" ;
+                      cvkr:propertyIsLessThanOrEqualTo 4.0 ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(254,235,226,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp2 a symblzr:PolygonSymbolizer ;
+                      rdfs:label "]4.0,10.4]" ;
+                      cvkr:propertyIsLessThanOrEqualTo 10.4 ;
+                      cvkr:propertyIsGreaterThan 4.0 ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(251,180,185,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp3 a symblzr:PolygonSymbolizer ;
+                      rdfs:label "]10.4,16.6]" ;
+                      cvkr:propertyIsLessThanOrEqualTo 16.6 ;
+                      cvkr:propertyIsGreaterThan 10.4 ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(247,104,161,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnemp4 a symblzr:PolygonSymbolizer ;
+                      rdfs:label "]16.6,24.2]" ;
+                      cvkr:propertyIsLessThanOrEqualTo 24.2 ;
+                      cvkr:propertyIsGreaterThan 16.6 ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(197,27,138,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp5 a symblzr:PolygonSymbolizer ;
+                      rdfs:label "]24.2,34.8]" ;
+                      cvkr:propertyIsLessThanOrEqualTo 34.8 ;
+                      cvkr:propertyIsGreaterThan 24.2 ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(122,1,119,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnempNoData a symblzr:PolygonSymbolizer ;
+                      rdfs:label "No data" ;
+                      cvkr:patternObject cvkr:AbsentProperty ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(206,206,206,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+# The property we want to read, the unemployment rate
+:patternUnemp a cvkr:MatchingPattern ;
+              cvkr:patternProperty ns2:unemploymentRate .
+
+
+# The choropleth symbolisation made from all these symbolizers
+:SymbolNuts a symb:Symbol ;
+            rdfs:label "Unemployment Rate (NUTS2 units, %)" ;
+            gviz:denotesGVR :NutsUnitOAVM ;
+            gviz:allowsInteraction gviz:identify ;
+            cvkr:hasMatchingPattern :patternUnemp ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnemp1 ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnemp2 ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnemp3 ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnemp4 ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnemp5 ;
+            symblzr:hasSymbolizer :SymbolizerNutsUnempNoData .
+
+
+# We want a map of dimension 1200x900 with a stamen watercolor basemap,
+# this will only be used by the client to construct the appropriate map
+:DefaultVizContext a cvc:VisualisationContext ;
+                   cvc:hasMap [ a cvc:ClientMapObject ;
+                                owl:sameAs :NutsMap  ;
+                                cvc:widthPx 1200 ;
+                                cvc:heightPx 900 ;
+                                cvc:hasBaseMap cvc:stamenWatercolorBaseMap ;
+                     ] .
