@@ -9,13 +9,14 @@ covikoa/
 │   ├── CoViKoa/                          <- Java code for CoViKoa reasoning system
 |   |   └── python-wrapper/               <- Code for the Python wrapper and the HTTP server
 │   ├── CoViKoa-client/                   <- JS code for CoViKoa client (using OpenLayers)
-│   └── ServiceGeosparqlObjetTerritoire/  <- Java code for the "remote" triplestore used in the case studies
+│   └── ServiceGeosparqlObjetTerritoire/  <- Java code for the "remote" triplestore used in case studies 1-3
 │
 └── rdf/                                  <- Proposed ontologies (+ reused ontologies)
     ├── case_study_1/                     <- Data & derivation model for case study #1
     ├── case_study_2/                     <- Data & derivation model for case study #2
     ├── case_study_3/                     <- Data & derivation model for case study #3
-    └── loac/                             <- Light Choucas Alert Ontology
+    ├── case_study_4/                     <- Data & derivation model for case study #4
+    └── loac/                             <- Light Choucas Alert Ontology (for case studies 1-3)
 
 ```
 
