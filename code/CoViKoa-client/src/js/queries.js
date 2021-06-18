@@ -10,13 +10,18 @@ prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
 prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 
-SELECT DISTINCT ?geovizcomponent ?app ?w ?h ?geomInitialExtent ?basemapTemplateUrl ?basemapAttribution
+SELECT DISTINCT ?geovizcomponent ?app ?w ?h ?geomInitialExtent ?basemapTemplateUrl ?basemapAttribution ?otherGvc
 WHERE {
 #  ?protoapp a owl:Class ;
 #     rdfs:subClassOf gviz:GeoVisualApplication .
 #  FILTER(?protoapp != gviz:GeoVisualApplication).
   ?app gviz:hasGeoVisualComponent ?geovizcomponent .
   ?geovizcomponent a gviz:Map2dComponent .
+
+  OPTIONAL {
+    ?geovizcomponent gviz:linkedTo ?otherGvc .
+    ?otherGvc a gviz:Map2dComponent .
+  }
 
   OPTIONAL {
     ?app cvc:hasVisualisationContext ?context .

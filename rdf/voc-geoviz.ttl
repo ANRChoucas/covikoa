@@ -133,14 +133,14 @@ gviz:denotesGVR a owl:ObjectProperty ;
                     This is the property which is used on a symb:Symbol to link it to the IR
                     of a concept to be portrayed (with this symbol and the symbolizer it defines)."""@en .
 
-gviz:linkedTo a owl:ObjectProperty ;
+gviz:linkedTo a owl:ObjectProperty , owl:SymmetricProperty ;
               rdfs:label "linked to"@en , "lie a"@fr ;
               rdfs:domain gviz:GeoVisualComponent ;
               rdfs:range gviz:GeoVisualComponent ;
               rdfs:comment """
               Describes a synchronization link between two components.
-              This is typically used to describe that a specific Legend is linked to a specific 2D Map.
-              It could also be used to link a 2D Map and a 3D Map for example."""@en .
+              This is typically used to describe that a specific Legend is linked to a specific 2D Map, that two 2D maps
+              are synchronised or even that a 2D Map and a 3D Map are synchronised for example."""@en .
 
 gviz:hasPortrayal rdf:type owl:ObjectProperty ;
                   rdfs:label "has portrayal"@en , "a representation"@fr ;

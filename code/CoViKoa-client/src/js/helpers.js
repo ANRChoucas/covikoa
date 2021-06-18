@@ -1,3 +1,5 @@
+import WKT from 'ol/format/WKT';
+
 /**
  *
  *
@@ -30,3 +32,12 @@ const makePropertyName = (name) => {
   }
   return newName;
 };
+
+// All the geometries will be fetched in WKT
+export const wktFormat = new WKT();
+
+export const getValue = (item, key, defaultValue = null) => (
+  item[key] && item[key].value ? item[key].value : defaultValue);
+
+export const getResoFromScale = (z, max_resolution = 40075016.68557849 / 256) => (
+  max_resolution / (2 ** z));
