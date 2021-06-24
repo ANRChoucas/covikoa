@@ -11,6 +11,7 @@
 
 <http://lig-tdcge.imag.fr/steamer/covikoa/context> rdf:type owl:Ontology ;
                                      rdfs:label "CoViKoa visualisation context ontology"@en ;
+                                     owl:versionInfo "0.1.0" ;
                                      <http://purl.org/dc/terms/license> "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^<http://purl.org/dc/terms/URI> ;
                                      <http://purl.org/dc/terms/issued> "2020-09-30"^^xsd:date ;
                                      <http://purl.org/dc/terms/creator> "Matthieu VIRY" ;

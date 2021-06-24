@@ -27,7 +27,7 @@ import static org.me.CoViKoa.AggregateGeomFunction.*;
  * (using SHACL internally).
  *
  * @author Matthieu Viry
- * @version 0.0.1
+ * @version 0.1.0
  */
 public class CoViKoaHandler {
     private final static Logger logger = LoggerFactory.getLogger(CoViKoaHandler.class);
