@@ -147,15 +147,16 @@
 :SymbolizerVillage a symblzr:PointSymbolizer ;
     cvkr:patternObject loac:VILLAGE ;
     cvkr:patternObject loac:CITY ;  # <- works fine to have multiple for the same Symbolizer
-    graphic:hasShape [ a graphic:Circle ;
-                      graphic:radius 4 ;
-                    ] ;
-    graphic:hasStroke [ a graphic:Stroke ;
-                       graphic:strokeColor "rgba(0,0,0,1)"^^graphic:cssColorLiteral ;
-                     ] ;
-    graphic:hasFill [ a graphic:Fill ;
-                     graphic:fillColor "rgba(70,70,70,0.5)"^^graphic:cssColorLiteral ;
-                   ] .
+    graphic:hasMark [ a graphic:Mark ;
+        graphic:hasWellKnownName graphic:circle ;
+        graphic:hasStroke [ a graphic:Stroke ;
+             graphic:strokeColor "rgba(0,0,0,1)"^^graphic:cssColorLiteral ;
+        ] ;
+        graphic:hasFill [ a graphic:Fill ;
+            graphic:fillColor "rgba(70,70,70,0.5)"^^graphic:cssColorLiteral ;
+        ] ;
+    ] ;
+    graphic:size "4"^^xsd:decimal .
 
 :SymbolizerRoad a symblzr:LineSymbolizer ;
                 cvkr:patternObject loac:ROAD ;
@@ -199,16 +200,16 @@
 # with the label "ObjectOfInterestInISA")
 ###################################################################
 :SymbolizerReferenceFeatureHighlightPt a symblzr:PointSymbolizer ;
-    graphic:hasShape [ a graphic:Circle ;
-                      graphic:radius 5 ;
-                    ] ;
-    graphic:hasStroke [ a graphic:Stroke ;
-                       graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
-                     ] ;
-    graphic:hasFill [ a graphic:Fill ;
-                     graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
-                   ] .
-
+   graphic:hasMark [ a graphic:Mark ;
+                     graphic:hasWellKnownName graphic:circle ;
+                     graphic:hasStroke [ a graphic:Stroke ;
+                                         graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+                       ] ;
+                     graphic:hasFill [ a graphic:Fill ;
+                                       graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+                       ] ;
+     ] ;
+   graphic:size "5"^^xsd:decimal .
 
 :SymbolizerReferenceFeatureHighlightLine a symblzr:LineSymbolizer ;
      graphic:hasStroke [ a graphic:Stroke ;

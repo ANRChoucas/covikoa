@@ -47,7 +47,8 @@
 
 :AppChoroNutsUnemp a :AppChoroNuts ; ## <- it implements making a concrete GeoVisualApplication for displaying a map and its legend
     gviz:hasGeoVisualComponent :NutsMap, :NutsMapLegend ;
-    cvc:hasVisualisationContext :DefaultVizContext .
+    cvc:hasVisualisationContext :DefaultVizContext ;
+    rdfs:label "NUTS2 data-visualisation"@en . # <- we can use a label here, it will be transferred to the corresponding webpage title
 
 
 # Symbolizers for each data class + symbolizer for no-data
@@ -128,6 +129,7 @@
             rdfs:label "Unemployment Rate (NUTS2 units, %)" ;
             gviz:denotesGVR :NutsUnitOAVM ;
             gviz:allowsInteraction gviz:identify ;
+
             cvkr:hasMatchingPattern :patternUnemp ;
             symblzr:hasSymbolizer :SymbolizerNutsUnemp1 ;
             symblzr:hasSymbolizer :SymbolizerNutsUnemp2 ;

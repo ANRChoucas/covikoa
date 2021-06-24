@@ -4,7 +4,7 @@ import View from 'ol/View';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, XYZ } from 'ol/source';
 import Synchronize from 'ol-ext/interaction/Synchronize';
-import { NS_GRAPHIC, NS_SYMBOLIZER } from './consts';
+import { NS_SYMBOLIZER } from './consts';
 import { getResoFromScale, getValue, wktFormat } from './helpers';
 import makeStyle from './style';
 
@@ -92,7 +92,7 @@ export const makeLayerAndPortrayal = (res_list, map) => {
   );
   // Actually build the `portrayals` array
   portrayal_uniques.forEach((v) => {
-    let [symbolizerId, minValidScale, maxValidScale, displayIndex] = v.split('|');
+    let [symbolizerId, minValidScale, maxValidScale, displayIndex] = v.split('|'); // eslint-disable-line
     if (minValidScale === '' && maxValidScale === '') {
       minValidScale = null;
       maxValidScale = null;
@@ -110,8 +110,10 @@ export const makeLayerAndPortrayal = (res_list, map) => {
     const res_item = {};
     // All the geometries for this portrayal
     res_item.geometries = [...new Set(this_portrayal.map((d) => d.geom.value))];
-
+    // Id of the intermediate representation
     res_item.ids = [...new Set(this_portrayal.map((d) => d.gvr.value))];
+    // Id of the actual individual
+    res_item.idsIndiv = [...new Set(this_portrayal.map((d) => d.indiv.value))];
 
     // Compute the z-index from the displayIndex if any
     if (displayIndex) {
@@ -132,19 +134,12 @@ export const makeLayerAndPortrayal = (res_list, map) => {
     const allowsIdentify = !!getValue(this_portrayal[0], 'identify', false);
     res_item.allowsIdentify = allowsIdentify;
 
-    // ...
+    // Store the symbolizer(s) for this set of features
     res_item[namePortrayal] = { type: type_symbolizer };
-
     this_portrayal.forEach((el) => {
-      const style_prop_iri = el.whatProp.value;
-      const style_prop_name = style_prop_iri.replace(NS_GRAPHIC, '');
-      res_item[namePortrayal][style_prop_name] = {};
-      this_portrayal.filter((d) => d.whatProp.value === style_prop_iri).forEach((r) => {
-        const prop_iri = r.prop2.value;
-        const prop_name = prop_iri.replace(NS_GRAPHIC, '');
-        res_item[namePortrayal][style_prop_name][prop_name] = r.value.value;
-      });
+      res_item[namePortrayal].specJSON = el.propJson.value;
     });
+
     portrayals.push(res_item);
   });
 
@@ -161,6 +156,7 @@ export const makeLayerAndPortrayal = (res_list, map) => {
       features.forEach((ft, i) => {
         ft.setId(portr.ids[i]);
         ft.setProperties({ _allowsIdentify: portr.allowsIdentify });
+        ft.setProperties({ _idTargetIndividual: portr.idsIndiv[i] });
       });
 
       const styleObject = makeStyle(portr[k_style]);

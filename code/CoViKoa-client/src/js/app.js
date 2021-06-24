@@ -20,6 +20,15 @@ const onload = async () => {
   const gva_context_results = (
     await reqQuery(QUERY_URL, queryContextGVA)).results.bindings;
 
+  // Maybe there is a title to be used for this page..
+  if (
+    gva_context_results.length
+    && gva_context_results[0].appLabel
+    && gva_context_results[0].appLabel.value
+  ) {
+    document.title = gva_context_results[0].appLabel.value;
+  }
+
   // Maybe there is multiple map so we build an array of them ...
   global.State.maps = gva_context_results.map((result) => makeMapElement(result));
 

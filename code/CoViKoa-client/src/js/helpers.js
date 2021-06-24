@@ -1,26 +1,5 @@
 import WKT from 'ol/format/WKT';
 
-/**
- *
- *
- *
- *
- */
-export const extractFeatureProperties = (ft) => {
-  const properties = ft.getProperties();
-  const newProperties = Object.keys(properties)
-    .filter((k) => !(['_hasProperties', 'geometry', '_allowsIdentify'].includes(k)))
-    .map((k) => {
-      const d = {
-        propertyName: k.startsWith('http') ? makePropertyName(k) : k,
-        propertyIRI: k,
-        value: properties[k],
-      };
-      return d;
-    });
-  return newProperties;
-};
-
 const makePropertyName = (name) => {
   let newName;
   const ix1 = name.lastIndexOf('#');
@@ -31,6 +10,27 @@ const makePropertyName = (name) => {
     newName = name.slice(ix2 + 1);
   }
   return newName;
+};
+
+/**
+ *
+ *
+ *
+ *
+ */
+export const extractFeatureProperties = (ft) => {
+  const properties = ft.getProperties();
+  const newProperties = Object.keys(properties)
+    .filter((k) => !(['_hasProperties', 'geometry', '_allowsIdentify', '_idTargetIndividual'].includes(k)))
+    .map((k) => {
+      const d = {
+        propertyName: k.startsWith('http') ? makePropertyName(k) : k,
+        propertyIRI: k,
+        value: properties[k],
+      };
+      return d;
+    });
+  return newProperties;
 };
 
 // All the geometries will be fetched in WKT

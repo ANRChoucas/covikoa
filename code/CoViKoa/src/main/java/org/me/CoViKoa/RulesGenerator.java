@@ -1,11 +1,15 @@
 package org.me.CoViKoa;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.apache.jena.atlas.json.JsonBuilder;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.update.UpdateAction;
 import org.apache.jena.update.UpdateException;
 import org.apache.jena.util.FileUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.topbraid.jenax.util.JenaUtil;
@@ -17,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -87,6 +92,10 @@ public class RulesGenerator {
         // Prepare the cvkr:transformOperation, defined using function expression in the Derivation Model
         // for their later injection
         this.rewriteTransformOperation(derivationModel);
+
+        // Rewrite the specification of each symbolizer in the derivation model
+        // in JSON format (somewhat voluntarily similar to "geostyler" format)
+        this.rewriteSymbolizers(derivationModel);
 
         // Actually generate the rules from the derivation model
         generatedRules = JenaUtil.createDefaultModel();
@@ -302,6 +311,277 @@ public class RulesGenerator {
         }
     }
 
+    public static void rewriteSymbolizers(Model derivationModel) {
+        rewritePointSymbolizers(derivationModel);
+        rewriteLineSymbolizers(derivationModel);
+        rewritePolygonSymbolizers(derivationModel);
+    }
+
+    private static void rewritePointSymbolizers(Model derivationModel) {
+        Query q = QueryFactory.create("" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>\n" +
+                "PREFIX graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>\n" +
+                "SELECT ?s ?sizePoint ?mark ?markName ?markStrokeColor ?markStrokeWidth ?markStrokeDashArray ?markStrokeDashOffset ?markFillColor ?extGraphic ?extGraphicExternalResource ?extGraphicFormat WHERE {\n" +
+                "  ?s a symblzr:PointSymbolizer .\n" +
+                "  OPTIONAL { ?s graphic:size ?sizePoint . }\n" +
+                "  {\n" +
+                "    ?s graphic:hasMark ?mark .\n" +
+                "    OPTIONAL { ?mark graphic:hasWellKnownName [ rdfs:label ?markName ] . }\n" +
+                "    OPTIONAL {\n" +
+                "      ?mark graphic:hasStroke ?markStroke .\n" +
+                "      OPTIONAL { ?markStroke graphic:strokeColor ?markStrokeColor .}\n" +
+                "      OPTIONAL { ?markStroke graphic:strokeWidth ?markStrokeWidth .}\n" +
+                "      OPTIONAL { ?markStroke graphic:strokeDashArray ?markStrokeDashArray .}\n" +
+                "      OPTIONAL { ?markStroke graphic:strokeDashOffset ?markStrokeDashOffset .}\n" +
+                "    }\n" +
+                "    OPTIONAL {\n" +
+                "      ?mark graphic:hasFill ?markFill .\n" +
+                "      OPTIONAL { ?markFill graphic:fillColor ?markFillColor . }\n" +
+                "    }\n" +
+                "  } UNION {\n" +
+                "    ?s graphic:hasExternalGraphic ?extGraphic .\n" +
+                "    OPTIONAL { ?extGraphic graphic:onlineResource ?extGraphicExternalResource . }\n" +
+                "    OPTIONAL { ?extGraphic graphic:format ?extGraphicFormat . }\n" +
+                "  }\n" +
+                "}");
+
+        QueryExecution qexec = QueryExecutionFactory.create(q, derivationModel);
+        ResultSet resultSet = qexec.execSelect();
+
+        HashMap<String, String> results = new HashMap<String, String>();
+        while (resultSet.hasNext()) {
+            JSONObject obj = new JSONObject();
+            QuerySolution soln = resultSet.nextSolution();
+            String targetSymbolizer = "<" + soln.get("s").toString() + ">";
+            if (soln.get("mark") != null) {
+                obj.put("kind", "Mark");
+                if (soln.get("sizePoint") != null) {
+                    obj.put("radius", soln.getLiteral("sizePoint").getDouble());
+                }
+                if (soln.get("markFillColor") != null) {
+                    obj.put("color", soln.getLiteral("markFillColor").getString());
+                }
+                if (soln.get("markStrokeColor") != null) {
+                    obj.put("strokeColor", soln.getLiteral("markStrokeColor").getString());
+                }
+                if (soln.get("markStrokeWidth") != null) {
+                    obj.put("strokeWidth", soln.getLiteral("markStrokeWidth").getString());
+                }
+                if (soln.get("markName") != null) {
+                    obj.put("wellKnownName", soln.getLiteral("markName").getString());
+                } else {
+                    obj.put("wellKnownName", "circle");
+                }
+            } else if (soln.get("extGraphic") != null) {
+                obj.put("kind", "Icon");
+                if (soln.get("sizePoint") != null) {
+                    obj.put("size", soln.getLiteral("sizePoint").getDouble());
+                }
+                if (soln.get("extGraphicExternalResource") != null) {
+                    obj.put("image", soln.getLiteral("extGraphicExternalResource").getString());
+                }
+            }
+            results.put(targetSymbolizer, obj.toJSONString());
+        }
+        updateSymbolizers(results, derivationModel);
+    }
+
+    private static void rewriteLineSymbolizers(Model derivationModel) {
+        Query q = QueryFactory.create("" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>\n" +
+                "prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>\n" +
+                "\n" +
+                "SELECT ?s ?stroke ?strokeColor ?strokeWidth ?strokeDashArray ?strokeDashOffset ?mark ?markName ?markStrokeColor ?markStrokeWidth ?markStrokeDashArray ?markStrokeDashOffset ?markFillColor ?extGraphic ?extGraphicExternalResource ?extGraphicFormat  WHERE {\n" +
+                "  ?s a symblzr:LineSymbolizer .\n" +
+                "  ?s graphic:hasStroke ?stroke .\n" +
+                "  OPTIONAL { ?stroke graphic:strokeColor ?strokeColor .}\n" +
+                "  OPTIONAL { ?stroke graphic:strokeWidth ?strokeWidth .}\n" +
+                "  OPTIONAL { ?stroke graphic:strokeDashArray ?strokeDashArray .}\n" +
+                "  OPTIONAL { ?stroke graphic:strokeDashOffset ?strokeDashOffset .}\n" +
+                "  OPTIONAL {\n" +
+                "    ?stroke graphic:hasGraphicStroke ?graphicStroke .\n" +
+                "    {\n" +
+                "      ?graphicStroke graphic:hasMark ?mark .\n" +
+                "      OPTIONAL { ?mark graphic:hasWellKnownName [ rdfs:label ?markName ] . }\n" +
+                "      OPTIONAL {\n" +
+                "        ?mark graphic:hasStroke ?markStroke .\n" +
+                "        OPTIONAL { ?markStroke graphic:strokeColor ?markStrokeColor .}\n" +
+                "        OPTIONAL { ?markStroke graphic:strokeWidth ?markStrokeWidth .}\n" +
+                "        OPTIONAL { ?markStroke graphic:strokeDashArray ?markStrokeDashArray .}\n" +
+                "        OPTIONAL { ?markStroke graphic:strokeDashOffset ?markStrokeDashOffset .}\n" +
+                "      }\n" +
+                "      OPTIONAL {\n" +
+                "        ?mark graphic:hasFill ?markFill .\n" +
+                "        OPTIONAL { ?markFill graphic:fillColor ?markFillColor . }\n" +
+                "      }\n" +
+                "    } UNION {\n" +
+                "      ?graphicStroke graphic:hasExternalGraphic ?extGraphic .\n" +
+                "      OPTIONAL { ?extGraphic graphic:onlineResource ?extGraphicExternalResource . }\n" +
+                "      OPTIONAL { ?extGraphic graphic:format ?extGraphicFormat . }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}\n");
+
+        QueryExecution qexec = QueryExecutionFactory.create(q, derivationModel);
+        ResultSet resultSet = qexec.execSelect();
+
+        HashMap<String, String> results = new HashMap<String, String>();
+        while (resultSet.hasNext()) {
+            JSONObject obj = new JSONObject();
+            QuerySolution soln = resultSet.nextSolution();
+            String targetSymbolizer = "<" + soln.get("s").toString() + ">";
+            obj.put("kind", "Line");
+            if (soln.get("strokeColor") != null) {
+                obj.put("color", soln.getLiteral("strokeColor").getString());
+            }
+            if (soln.get("strokeWidth") != null) {
+                obj.put("width", soln.getLiteral("strokeWidth").getDouble());
+            }
+            if (soln.get("strokeDashArray") != null) {
+                String v = soln.getLiteral("strokeDashArray").getString();
+                JSONArray a = new JSONArray();
+                Arrays.stream(v.split(" "))
+                        .mapToInt(Integer::parseInt)
+                        .forEach((int _v) -> { a.add(_v); });
+                obj.put("dashArray", a);
+            }
+            if (soln.get("strokeDashOffset") != null) {
+                obj.put("dashOffset", soln.getLiteral("strokeDashOffset").getDouble());
+            }
+            // Is there a graphic stroke ?
+            if (soln.get("mark") != null) {
+                // Nested object for the mark
+                JSONObject objgraphicstroke = new JSONObject();
+                objgraphicstroke.put("kind", "Mark");
+                if (soln.get("sizePoint") != null) {
+                    objgraphicstroke.put("radius", soln.getLiteral("sizePoint").getDouble());
+                }
+                if (soln.get("markFillColor") != null) {
+                    objgraphicstroke.put("color", soln.getLiteral("markFillColor").getString());
+                }
+                if (soln.get("markStrokeColor") != null) {
+                    objgraphicstroke.put("strokeColor", soln.getLiteral("markStrokeColor").getString());
+                }
+                if (soln.get("markName") != null) {
+                    objgraphicstroke.put("wellKnownName", soln.getLiteral("markName").getString());
+                } else {
+                    objgraphicstroke.put("wellKnownName", "circle");
+                }
+                obj.put("graphicStroke", objgraphicstroke);
+            } else if (soln.get("extGraphic") != null) {
+                // Nested object for the external resources
+                JSONObject objgraphicstroke = new JSONObject();
+                objgraphicstroke.put("kind", "Icon");
+                if (soln.get("sizePoint") != null) {
+                    objgraphicstroke.put("size", soln.getLiteral("sizePoint").getDouble());
+                }
+                if (soln.get("extGraphicExternalResource") != null) {
+                    objgraphicstroke.put("image", soln.getLiteral("extGraphicExternalResource").getString());
+                }
+                obj.put("graphicStroke", objgraphicstroke);
+            }
+            results.put(targetSymbolizer, obj.toJSONString());
+        }
+        updateSymbolizers(results, derivationModel);
+    }
+
+    private static void rewritePolygonSymbolizers(Model derivationModel) {
+        Query q = QueryFactory.create("" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>\n" +
+                "prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>\n" +
+                "\n" +
+                "SELECT ?s ?fillColor ?stroke ?strokeColor ?strokeWidth ?strokeDashArray ?strokeDashOffset ?mark ?markName ?markStrokeColor ?markStrokeWidth ?markStrokeDashArray ?markStrokeDashOffset ?markFillColor ?extGraphic ?extGraphicExternalResource ?extGraphicFormat  WHERE {\n" +
+                "  ?s a symblzr:PolygonSymbolizer .\n" +
+                "  OPTIONAL {\n" +
+                "    ?s graphic:hasStroke ?stroke .\n" +
+                "    OPTIONAL { ?stroke graphic:strokeColor ?strokeColor .}\n" +
+                "    OPTIONAL { ?stroke graphic:strokeWidth ?strokeWidth .}\n" +
+                "    OPTIONAL { ?stroke graphic:strokeDashArray ?strokeDashArray .}\n" +
+                "    OPTIONAL { ?stroke graphic:strokeDashOffset ?strokeDashOffset .}\n" +
+                "    OPTIONAL {\n" +
+                "      ?stroke graphic:hasGraphicStroke ?graphicStroke .\n" +
+                "      {\n" +
+                "        ?graphicStroke graphic:hasMark ?mark .\n" +
+                "        OPTIONAL { ?mark graphic:hasWellKnownName/rdfs:label ?markName . }\n" +
+                "        OPTIONAL {\n" +
+                "          ?mark graphic:hasStroke ?markStroke .\n" +
+                "          OPTIONAL { ?markStroke graphic:strokeColor ?markStrokeColor .}\n" +
+                "          OPTIONAL { ?markStroke graphic:strokeWidth ?markStrokeWidth .}\n" +
+                "          OPTIONAL { ?markStroke graphic:strokeDashArray ?markStrokeDashArray .}\n" +
+                "          OPTIONAL { ?markStroke graphic:strokeDashOffset ?markStrokeDashOffset .}\n" +
+                "        }\n" +
+                "        OPTIONAL {\n" +
+                "          ?mark graphic:hasFill ?markFill .\n" +
+                "          OPTIONAL { ?markFill graphic:fillColor ?markFillColor . }\n" +
+                "        }\n" +
+                "      } UNION {\n" +
+                "        ?graphicStroke graphic:hasExternalGraphic ?extGraphic .\n" +
+                "        OPTIONAL { ?extGraphic graphic:onlineResource ?extGraphicExternalResource . }\n" +
+                "        OPTIONAL { ?extGraphic graphic:format ?extGraphicFormat . }\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "  OPTIONAL {\n" +
+                "    ?s graphic:hasFill ?fill .\n" +
+                "    OPTIONAL { ?fill graphic:fillColor ?fillColor .}\n" +
+                "  }\n" +
+                "}");
+
+        QueryExecution qexec = QueryExecutionFactory.create(q, derivationModel);
+        ResultSet resultSet = qexec.execSelect();
+
+        HashMap<String, String> results = new HashMap<String, String>();
+        while (resultSet.hasNext()) {
+            JSONObject obj = new JSONObject();
+            QuerySolution soln = resultSet.nextSolution();
+            String targetSymbolizer = "<" + soln.get("s").toString() + ">";
+            obj.put("kind", "Fill");
+            if (soln.get("fillColor") != null) {
+                obj.put("color", soln.getLiteral("fillColor").getString());
+            }
+            if (soln.get("strokeColor") != null) {
+                obj.put("outlineColor", soln.getLiteral("strokeColor").getString());
+            }
+            if (soln.get("strokeWidth") != null) {
+                obj.put("outlineWidth", soln.getLiteral("strokeWidth").getDouble());
+            }
+            if (soln.get("strokeDashArray") != null) {
+                String v = soln.getLiteral("strokeDashArray").getString();
+                JSONArray a = new JSONArray();
+                Arrays.stream(v.split(" "))
+                        .mapToDouble(Double::parseDouble)
+                        .forEach((double _v) -> { a.add(_v); });
+                obj.put("outlineDashArray", a);
+            }
+            if (soln.get("strokeDashOffset") != null) {
+                obj.put("outlineDashOffset", soln.getLiteral("strokeDashOffset").getDouble());
+            }
+            results.put(targetSymbolizer, obj.toJSONString());
+        }
+
+        updateSymbolizers(results, derivationModel);
+    }
+
+    private static void updateSymbolizers(HashMap<String, String> results, Model derivationModel) {
+        // Store the JSON serialisation of the symbolizer
+        for (String symbolizerUri : results.keySet()) {
+            UpdateAction.parseExecute("" +
+                    "PREFIX cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>\n" +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>\n" +
+                    "" +
+                    "INSERT DATA {\n" +
+                    "    " + symbolizerUri + " symblzr:asJSON \"\"\"" + results.get(symbolizerUri).replace("\\", "") + "\"\"\"^^xsd:string ." +
+                    "} " +
+                    "", derivationModel);
+        }
+    }
     // Here we transform the value of cvkr:transformOperation (from a "SHACL-AF function expression"-like)
     // to a literal value and store it in the Derivation Model for later injection
     // during rule generation.

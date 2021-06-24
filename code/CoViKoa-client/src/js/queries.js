@@ -10,7 +10,7 @@ prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
 prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 
-SELECT DISTINCT ?geovizcomponent ?app ?w ?h ?geomInitialExtent ?basemapTemplateUrl ?basemapAttribution ?otherGvc
+SELECT DISTINCT ?app ?appLabel ?geovizcomponent ?w ?h ?geomInitialExtent ?basemapTemplateUrl ?basemapAttribution ?otherGvc
 WHERE {
 #  ?protoapp a owl:Class ;
 #     rdfs:subClassOf gviz:GeoVisualApplication .
@@ -21,6 +21,10 @@ WHERE {
   OPTIONAL {
     ?geovizcomponent gviz:linkedTo ?otherGvc .
     ?otherGvc a gviz:Map2dComponent .
+  }
+
+  OPTIONAL {
+    ?app rdfs:label ?appLabel .
   }
 
   OPTIONAL {
@@ -77,10 +81,11 @@ prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
 prefix symbolizer: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
 prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
 
-SELECT ?gvr ?geom ?displayIndex ?p ?symbolizer ?typeSymbolizer ?prop1 ?whatProp ?prop2 ?value ?minScale ?maxScale ?labelSymbolizer ?labelSymbolization ?identify
+SELECT ?gvr ?indiv ?geom ?displayIndex ?p ?symbolizer ?typeSymbolizer ?propJson ?value ?minScale ?maxScale ?labelSymbolizer ?labelSymbolization ?identify
 WHERE {
   #<${mapComponentUri}> gviz:presentsGVR ?gvr .
-  ?gvr gviz:hasPortrayal ?p .
+  ?gvr gviz:represents ?indiv ;
+       gviz:hasPortrayal ?p .
   ?p gviz:appearsIn <${mapComponentUri}> .
   ?p gviz:hasPortrayalSymbolizer ?symbolizer .
 
@@ -105,20 +110,12 @@ WHERE {
     ?p geo:hasGeometry [geo:asWKT ?geomNew] .
   }
   OPTIONAL {
-    ?gvr gviz:represents [ geo:hasGeometry [geo:asWKT ?geomOrigin] ] .
+    ?indiv geo:hasGeometry [geo:asWKT ?geomOrigin] .
   }
   BIND(IF(BOUND(?geomNew), ?geomNew, ?geomOrigin) AS ?geom)
 
-  # We want all the graphic properties of the symbolizer
-  OPTIONAL {
-     ?symbolizer ?prop1 [ a ?whatProp ; ?prop2 ?value ] .
-      FILTER(
-         STRSTARTS(STR(?prop1), STR(graphic:))
-         && STRSTARTS(STR(?prop2), STR(graphic:))
-         && STRSTARTS(STR(?whatProp), STR(graphic:))
-      )
-      FILTER(!STRSTARTS(STR(?whatProp), "https://gis.lu.se/ont/data_portrayal/graphic#Graphic"))
-  }
+  # We want all the graphic properties of the symbolizer as JSON
+  ?symbolizer symbolizer:asJSON ?propJson
 
   OPTIONAL {
     ?symbolizer rdfs:label ?labelSymbolizer .

@@ -150,17 +150,18 @@
 ###################################################################
 
 ### Styles corresponding to the ConditionFilter with the label "ObjectOfInterestInISA"
-
 :SymbolizerReferenceFeatureHighlightPt a symblzr:PointSymbolizer ;
-    graphic:hasShape [ a graphic:Circle ;
-                      graphic:radius 5 ;
-                    ] ;
-    graphic:hasStroke [ a graphic:Stroke ;
-                       graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
-                     ] ;
-    graphic:hasFill [ a graphic:Fill ;
-                     graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
-                   ] .
+   graphic:hasMark [ a graphic:Mark ;
+     graphic:hasWellKnownName graphic:circle ;
+     graphic:hasStroke [ a graphic:Stroke ;
+         graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+       ] ;
+     graphic:hasFill [ a graphic:Fill ;
+       graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+       ] ;
+     ] ;
+   graphic:size "5"^^xsd:decimal .
+
 
 :SymbolizerReferenceFeatureHighlightLine a symblzr:LineSymbolizer ;
      graphic:hasStroke [ a graphic:Stroke ;

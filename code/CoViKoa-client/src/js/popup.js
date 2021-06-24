@@ -66,11 +66,12 @@ const displayPopup = (map, ft, coords) => {
   // Get a reference to the popup element
   const { content, overlay } = getPopupElements(map);
 
+  const idIndividual = ft.get('_idTargetIndividual');
   // Create the table of property-value pairs
   // with the full IRI of the property displayable when hovering over
   // its short name...
   content.innerHTML = `
-<p class="uri-feature"><a href="${ft.getId()}">${ft.getId()}</a></p>
+<p class="uri-feature"><a href="${idIndividual}" target="_blank">${idIndividual}</a></p>
 <table class="table-info">
   <tbody>
 ${propertiesToRender

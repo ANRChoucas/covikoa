@@ -1,55 +1,55 @@
 import {
-  Circle as CircleStyle, Fill, Stroke, Style, Text,
+  Circle as CircleStyle, RegularShape, Fill, Stroke, Style,
 } from 'ol/style';
 
-// Given an Object containing the graphic properties
-// in Symbolizer/Graphic vocabularies, transform it to
-// a `Style` object from OpenLayers
+// Given an Object containing the graphic in geostyler(-like) vocabularie
+// transform it to a `Style` object from OpenLayers
 const makeStyle = (s) => {
-  const keys = Object.keys(s);
   let inner_style = {};
-  if (['PointSymbolizer', 'LineSymbolizer', 'PolygonSymbolizer'].indexOf(s.type) > -1) {
-    keys.forEach((k) => {
-      if (k === 'Fill') {
-        const fill_props = Object.keys(s[k]);
-        const inner_fill_style = {};
-        fill_props.forEach((p) => {
-          if (p === 'fillColor') {
-            inner_fill_style.color = s[k][p];
-          }
-        });
-        inner_style.fill = new Fill(inner_fill_style);
-      } else if (k === 'Stroke') {
-        const stroke_props = Object.keys(s[k]);
-        const inner_stroke_style = {};
-        stroke_props.forEach((p) => {
-          if (p === 'strokeColor') {
-            inner_stroke_style.color = s[k][p];
-          } else if (p === 'strokeWidth') {
-            inner_stroke_style.width = s[k][p];
-          } else if (p === 'strokeDashArray') {
-            inner_stroke_style.lineDash = s[k][p].split(' ').map((d) => +d);
-          } else if (p === 'strokeDashOffset') {
-            inner_stroke_style.lineDashOffset = +s[k][p];
-          } else if (p === 'strokeLineCap') {
-            const value = s[k][p];
-            if (['butt', 'round', 'square'].indexOf(value) > -1) {
-              inner_stroke_style.lineCap = value;
-            }
-          } else if (p === 'strokeLineJoin') {
-            const value = s[k][p];
-            if (['bevel', 'round', 'miter'].indexOf(value) > -1) {
-              inner_stroke_style.lineCap = value;
-            }
-          }
-        });
-        inner_style.stroke = new Stroke(inner_stroke_style);
+  const specJSON = JSON.parse(s.specJSON);
+  if (s.type === 'PointSymbolizer') {
+    if (specJSON.kind === 'Mark') {
+      // Fill
+      const inner_fill_style = {};
+      inner_fill_style.color = specJSON.color;
+      inner_style.fill = new Fill(inner_fill_style);
+      // Stroke
+      const inner_stroke_style = {};
+      inner_stroke_style.color = specJSON.strokeColor;
+      inner_stroke_style.width = specJSON.strokeWidth;
+      // inner_stroke_style.lineDash = specJSON.strokeDashArray;
+      // inner_stroke_style.lineDashOffset = specJSON.strokeDashOffset;
+      inner_style.stroke = new Stroke(inner_stroke_style);
+      // Radius / size:
+      inner_style.radius = specJSON.radius;
+      if (specJSON.wellKnownName === 'circle') {
+        inner_style = { image: new CircleStyle(inner_style) };
+      } else if (specJSON.wellKnownName === 'square') {
+        inner_style = {
+          image: new RegularShape({
+            fill: inner_style.fill,
+            stroke: inner_style.stroke,
+            points: 4,
+            radius: 10,
+            angle: Math.PI / 4,
+          }),
+        };
       }
-    });
-    // Handle the shape expected for PointSymbolizer (only Circle for now)
-    if (keys.some((el) => el === 'Shape') && keys.some((el) => el === 'Circle')) {
-      inner_style.radius = s.Circle.radius;
-      inner_style = { image: new CircleStyle(inner_style) };
+    }
+  } else if (s.type === 'LineSymbolizer') {
+    const inner_stroke_style = {};
+    inner_stroke_style.color = specJSON.color;
+    inner_stroke_style.width = specJSON.width;
+    inner_stroke_style.lineDash = specJSON.dashArray;
+    inner_stroke_style.lineDashOffset = specJSON.dashOffset ? +specJSON.dashOffset : undefined;
+    inner_style.stroke = new Stroke(inner_stroke_style);
+  } else if (s.type === 'PolygonSymbolizer') {
+    inner_style.fill = new Fill({ color: specJSON.color });
+    if (specJSON.outlineColor || specJSON.outlineWidth) {
+      const inner_stroke_style = {};
+      inner_stroke_style.color = specJSON.outlineColor;
+      inner_stroke_style.width = specJSON.outlineWidth;
+      inner_style.stroke = new Stroke(inner_stroke_style);
     }
   } else {
     throw new Error('TextSymbolizer are not currently supported');

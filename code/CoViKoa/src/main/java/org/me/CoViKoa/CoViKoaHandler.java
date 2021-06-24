@@ -67,7 +67,7 @@ public class CoViKoaHandler {
         //   - the ARQ engine
         //   - GeoSPARQL functionnalities / spatial index
         //   - register our custom geo aggregation functions
-        org.apache.jena.query.ARQ.init();
+        ARQ.init();
         GeoSPARQLConfig.setupMemoryIndex();
 
         AggregateRegistry.register("http://lig-tdcge.imag.fr/steamer/covikoa/geo-agg#Union", unionAccumulatorFactory, NodeConst.nodeMinusOne);
