@@ -1,5 +1,8 @@
 # CoViKoa (i.e. *Comment on Visualise Quoi*)
 
+This is the code repository corresponding to the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937].
+
+
 ## Folder content
 
 ```
