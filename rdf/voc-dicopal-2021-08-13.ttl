@@ -1,0 +1,3604 @@
+@prefix : <http://purl.org/dicopal#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dct:creator a owl:AnnotationProperty .
+
+dct:description a owl:AnnotationProperty .
+
+dct:identifier a owl:AnnotationProperty .
+
+dct:issued a owl:AnnotationProperty .
+
+dct:license a owl:AnnotationProperty .
+
+dct:title a owl:AnnotationProperty .
+
+<http://purl.org/dicopal#> a owl:Ontology ;
+    dct:creator "Matthieu VIRY (matthieu.viry@univ-grenoble-alpes.fr)" ;
+    dct:description """
+A vocabulary to describe discrete color palettes, used for data visualisation and cartography,
+categorized by the purpose of their schemes (diverging, sequential or categorical)
+and described by their number of steps."""@en ;
+    dct:license "https://www.apache.org/licenses/LICENSE-2.0"^^dct:URI ;
+    dct:title "Color palette ontology"@en ;
+    vann:preferredNamespacePrefix "dcpal" ;
+    vann:preferredNamespaceUri "http://purl.org/dicopal#" ;
+    owl:issued "2021-08-13"^^xsd:date ;
+    owl:versionInfo "0.4.0" .
+
+:Accent_3 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 3 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral .
+
+:Accent_4 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 4 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,153)"^^graphic:cssColorLiteral .
+
+:Accent_5 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 5 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(56,108,176)"^^graphic:cssColorLiteral .
+
+:Accent_6 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 6 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(56,108,176)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(240,2,127)"^^graphic:cssColorLiteral .
+
+:Accent_7 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 7 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(56,108,176)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(240,2,127)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(191,91,23)"^^graphic:cssColorLiteral .
+
+:Accent_8 a :Palette ;
+    :hasScheme :Accent ;
+    :steps 8 ;
+    rdf:_1 "rgb(127,201,127)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(190,174,212)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,192,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(56,108,176)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(240,2,127)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(191,91,23)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,102,102)"^^graphic:cssColorLiteral .
+
+:Acton_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 3 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(196,110,155)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 4 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(146,99,144)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(212,149,184)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 5 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(119,90,134)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(196,110,155)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(212,166,196)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 6 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(102,80,123)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,102,148)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(212,134,173)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(213,178,205)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 7 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(91,72,115)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(146,99,144)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(196,110,155)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(212,149,184)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(215,186,210)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 8 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(84,66,110)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(131,95,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(173,103,149)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(211,127,168)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(211,159,191)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(217,193,215)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Acton_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Acton ;
+    :steps 9 ;
+    rdf:_1 "rgb(46,33,77)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(80,62,106)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(119,90,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(159,101,147)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(196,110,155)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(213,140,177)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(212,166,196)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(218,197,217)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(230,230,240)"^^graphic:cssColorLiteral .
+
+:Bilbao_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 3 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(170,134,101)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 4 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(185,175,139)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,97,85)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 5 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(194,188,166)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(170,134,101)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(147,75,71)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 6 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(200,196,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,159,118)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(163,112,92)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(136,60,59)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 7 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(206,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(185,175,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(170,134,101)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(158,97,85)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(127,51,50)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(211,210,205)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,183,154)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(175,152,112)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(165,119,94)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(153,85,78)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(119,43,43)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:Bilbao_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Bilbao ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,215,211)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(194,188,166)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(181,165,124)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(170,134,101)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(162,107,89)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(147,75,71)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(115,39,38)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,0,1)"^^graphic:cssColorLiteral .
+
+:BlueDarkOrange_12 a :Palette ;
+    :hasScheme :BlueDarkOrange ;
+    :steps 12 ;
+    rdf:_1 "rgb(30,142,153)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(255,142,50)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(204,88,0)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(153,63,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(81,195,204)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,249,255)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(178,252,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(204,254,255)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(229,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(255,229,204)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,202,153)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(255,173,101)"^^graphic:cssColorLiteral .
+
+:BlueDarkOrange_18 a :Palette ;
+    :hasScheme :BlueDarkOrange ;
+    :steps 18 ;
+    rdf:_1 "rgb(0,102,102)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(229,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(255,229,203)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(255,202,153)"^^graphic:cssColorLiteral ;
+    rdf:_13 "rgb(255,173,101)"^^graphic:cssColorLiteral ;
+    rdf:_14 "rgb(255,142,51)"^^graphic:cssColorLiteral ;
+    rdf:_15 "rgb(255,110,0)"^^graphic:cssColorLiteral ;
+    rdf:_16 "rgb(204,85,0)"^^graphic:cssColorLiteral ;
+    rdf:_17 "rgb(153,61,0)"^^graphic:cssColorLiteral ;
+    rdf:_18 "rgb(102,39,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(0,153,153)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(0,204,204)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(0,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(51,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(101,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(153,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(178,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(203,255,255)"^^graphic:cssColorLiteral .
+
+:BlueOrange_10 a :Palette ;
+    :hasScheme :BlueOrange ;
+    :steps 10 ;
+    rdf:_1 "rgb(0,84,255)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(255,85,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(50,153,255)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(101,204,255)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(153,237,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(204,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(255,238,153)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,204,101)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(255,153,50)"^^graphic:cssColorLiteral .
+
+:BlueOrange_12 a :Palette ;
+    :hasScheme :BlueOrange ;
+    :steps 12 ;
+    rdf:_1 "rgb(0,42,255)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(255,153,50)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(255,102,25)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(255,42,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(25,101,255)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(50,153,255)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(153,237,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(101,204,255)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(204,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,238,153)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(255,204,101)"^^graphic:cssColorLiteral .
+
+:BlueOrange_8 a :Palette ;
+    :hasScheme :BlueOrange ;
+    :steps 8 ;
+    rdf:_1 "rgb(0,127,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(76,195,255)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,237,255)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(204,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,238,153)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(255,195,76)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral .
+
+:Blues_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 3 ;
+    rdf:_1 "rgb(222,235,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(158,202,225)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(49,130,189)"^^graphic:cssColorLiteral .
+
+:Blues_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 4 ;
+    rdf:_1 "rgb(239,243,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,215,231)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(33,113,181)"^^graphic:cssColorLiteral .
+
+:Blues_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 5 ;
+    rdf:_1 "rgb(239,243,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,215,231)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(49,130,189)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(8,81,156)"^^graphic:cssColorLiteral .
+
+:Blues_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 6 ;
+    rdf:_1 "rgb(239,243,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(198,219,239)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,202,225)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(49,130,189)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(8,81,156)"^^graphic:cssColorLiteral .
+
+:Blues_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 7 ;
+    rdf:_1 "rgb(239,243,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(198,219,239)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,202,225)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(66,146,198)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(33,113,181)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(8,69,148)"^^graphic:cssColorLiteral .
+
+:Blues_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,251,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(222,235,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(198,219,239)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,202,225)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(66,146,198)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(33,113,181)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(8,69,148)"^^graphic:cssColorLiteral .
+
+:Blues_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Blues ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,251,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(222,235,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(198,219,239)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,202,225)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(107,174,214)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(66,146,198)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(33,113,181)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(8,81,156)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(8,48,107)"^^graphic:cssColorLiteral .
+
+:BrBG_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 10 ;
+    rdf:_1 "rgb(84,48,5)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(0,60,48)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(191,129,45)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(53,151,143)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(1,102,94)"^^graphic:cssColorLiteral .
+
+:BrBG_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 11 ;
+    rdf:_1 "rgb(84,48,5)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(1,102,94)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(0,60,48)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(191,129,45)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(245,245,245)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(53,151,143)"^^graphic:cssColorLiteral .
+
+:BrBG_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 3 ;
+    rdf:_1 "rgb(216,179,101)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(245,245,245)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(90,180,172)"^^graphic:cssColorLiteral .
+
+:BrBG_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 4 ;
+    rdf:_1 "rgb(166,97,26)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(1,133,113)"^^graphic:cssColorLiteral .
+
+:BrBG_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 5 ;
+    rdf:_1 "rgb(166,97,26)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(245,245,245)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(1,133,113)"^^graphic:cssColorLiteral .
+
+:BrBG_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 6 ;
+    rdf:_1 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(216,179,101)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(90,180,172)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(1,102,94)"^^graphic:cssColorLiteral .
+
+:BrBG_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 7 ;
+    rdf:_1 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(216,179,101)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(245,245,245)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(90,180,172)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(1,102,94)"^^graphic:cssColorLiteral .
+
+:BrBG_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 8 ;
+    rdf:_1 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(191,129,45)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(53,151,143)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(1,102,94)"^^graphic:cssColorLiteral .
+
+:BrBG_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BrBG ;
+    :steps 9 ;
+    rdf:_1 "rgb(140,81,10)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(191,129,45)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(223,194,125)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(246,232,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(245,245,245)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(199,234,229)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(128,205,193)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(53,151,143)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(1,102,94)"^^graphic:cssColorLiteral .
+
+:Broc_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 10 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(38,38,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(40,68,119)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(75,118,160)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(139,167,194)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(206,217,229)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(232,232,210)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(197,197,143)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(141,141,86)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(85,85,39)"^^graphic:cssColorLiteral .
+
+:Broc_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 11 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(80,80,35)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(38,38,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(40,65,116)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(63,107,153)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(118,151,183)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(179,197,215)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(235,238,236)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(220,219,184)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(182,182,124)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(129,129,76)"^^graphic:cssColorLiteral .
+
+:Broc_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 3 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(235,238,236)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 4 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(139,167,194)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(197,197,143)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 5 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(91,130,169)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(235,238,236)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(155,155,98)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 6 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(63,107,153)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(179,197,215)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(220,219,184)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(129,129,76)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 7 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(48,92,140)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(139,167,194)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(235,238,236)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(197,197,143)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(114,114,63)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 8 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(42,81,131)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(111,146,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(196,210,224)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(228,228,200)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(174,174,115)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(100,100,52)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:Broc_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Broc ;
+    :steps 9 ;
+    rdf:_1 "rgb(44,26,76)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(41,75,125)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(91,130,169)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(165,187,208)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(235,238,236)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(212,212,170)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(155,155,98)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(93,93,45)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(38,38,0)"^^graphic:cssColorLiteral .
+
+:BuGn_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 3 ;
+    rdf:_1 "rgb(229,245,249)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(153,216,201)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(44,162,95)"^^graphic:cssColorLiteral .
+
+:BuGn_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 4 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,226,226)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(35,139,69)"^^graphic:cssColorLiteral .
+
+:BuGn_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 5 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,226,226)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(44,162,95)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(0,109,44)"^^graphic:cssColorLiteral .
+
+:BuGn_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 6 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,236,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,216,201)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(44,162,95)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(0,109,44)"^^graphic:cssColorLiteral .
+
+:BuGn_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 7 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,236,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,216,201)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(65,174,118)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(0,88,36)"^^graphic:cssColorLiteral .
+
+:BuGn_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,252,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(229,245,249)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,236,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(153,216,201)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,174,118)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,88,36)"^^graphic:cssColorLiteral .
+
+:BuGn_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuGn ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,252,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(229,245,249)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,236,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(153,216,201)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,194,164)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,174,118)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,109,44)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(0,68,27)"^^graphic:cssColorLiteral .
+
+:BuPu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 3 ;
+    rdf:_1 "rgb(224,236,244)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(158,188,218)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(136,86,167)"^^graphic:cssColorLiteral .
+
+:BuPu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 4 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(136,65,157)"^^graphic:cssColorLiteral .
+
+:BuPu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 5 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(136,86,167)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(129,15,124)"^^graphic:cssColorLiteral .
+
+:BuPu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 6 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(191,211,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,188,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(136,86,167)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(129,15,124)"^^graphic:cssColorLiteral .
+
+:BuPu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 7 ;
+    rdf:_1 "rgb(237,248,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(191,211,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,188,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(140,107,177)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(136,65,157)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(110,1,107)"^^graphic:cssColorLiteral .
+
+:BuPu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,252,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,236,244)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(191,211,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,188,218)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(140,107,177)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(136,65,157)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(110,1,107)"^^graphic:cssColorLiteral .
+
+:BuPu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :BuPu ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,252,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,236,244)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(191,211,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,188,218)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(140,150,198)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(140,107,177)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(136,65,157)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(129,15,124)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,0,75)"^^graphic:cssColorLiteral .
+
+:Dark2_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Dark2 ;
+    :steps 3 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral .
+
+:Dark2_4 a :Palette ;
+    :hasScheme :Dark2 ;
+    :steps 4 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,41,138)"^^graphic:cssColorLiteral .
+
+:Dark2_5 a :Palette ;
+    :hasScheme :Dark2 ;
+    :steps 5 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,166,30)"^^graphic:cssColorLiteral .
+
+:Dark2_6 a :Palette ;
+    :hasScheme :Dark2 ;
+    :steps 6 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,166,30)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,171,2)"^^graphic:cssColorLiteral .
+
+:Dark2_7 a :Palette ;
+    :hasScheme :Dark2 ;
+    :steps 7 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,166,30)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,171,2)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,118,29)"^^graphic:cssColorLiteral .
+
+:Dark2_8 a :Palette ;
+    :hasScheme :Dark2 ;
+    :steps 8 ;
+    rdf:_1 "rgb(27,158,119)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,95,2)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,112,179)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(102,166,30)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,171,2)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,118,29)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,102,102)"^^graphic:cssColorLiteral .
+
+:GnBu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 3 ;
+    rdf:_1 "rgb(224,243,219)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(168,221,181)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(67,162,202)"^^graphic:cssColorLiteral .
+
+:GnBu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 4 ;
+    rdf:_1 "rgb(240,249,232)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(186,228,188)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(43,140,190)"^^graphic:cssColorLiteral .
+
+:GnBu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 5 ;
+    rdf:_1 "rgb(240,249,232)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(186,228,188)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(67,162,202)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(8,104,172)"^^graphic:cssColorLiteral .
+
+:GnBu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 6 ;
+    rdf:_1 "rgb(240,249,232)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(168,221,181)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(67,162,202)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(8,104,172)"^^graphic:cssColorLiteral .
+
+:GnBu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 7 ;
+    rdf:_1 "rgb(240,249,232)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(168,221,181)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(78,179,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(43,140,190)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(8,88,158)"^^graphic:cssColorLiteral .
+
+:GnBu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,252,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,243,219)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(168,221,181)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(78,179,211)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(43,140,190)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(8,88,158)"^^graphic:cssColorLiteral .
+
+:GnBu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GnBu ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,252,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,243,219)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(168,221,181)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(123,204,196)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(78,179,211)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(43,140,190)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(8,104,172)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(8,64,129)"^^graphic:cssColorLiteral .
+
+:GreenMagenta_16 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :GreenMagenta ;
+    :steps 16 ;
+    rdf:_1 "rgb(0,80,0)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(255,187,255)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(255,134,255)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(255,80,255)"^^graphic:cssColorLiteral ;
+    rdf:_13 "rgb(241,0,241)"^^graphic:cssColorLiteral ;
+    rdf:_14 "rgb(187,0,187)"^^graphic:cssColorLiteral ;
+    rdf:_15 "rgb(134,0,134)"^^graphic:cssColorLiteral ;
+    rdf:_16 "rgb(80,0,80)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(0,134,0)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(0,187,0)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(0,241,0)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(80,255,80)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(134,255,134)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(187,255,187)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(255,241,255)"^^graphic:cssColorLiteral .
+
+:Greens_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 3 ;
+    rdf:_1 "rgb(229,245,224)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(161,217,155)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(49,163,84)"^^graphic:cssColorLiteral .
+
+:Greens_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 4 ;
+    rdf:_1 "rgb(237,248,233)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(186,228,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(35,139,69)"^^graphic:cssColorLiteral .
+
+:Greens_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 5 ;
+    rdf:_1 "rgb(237,248,233)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(186,228,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(49,163,84)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(0,109,44)"^^graphic:cssColorLiteral .
+
+:Greens_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 6 ;
+    rdf:_1 "rgb(237,248,233)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(199,233,192)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(161,217,155)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(49,163,84)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(0,109,44)"^^graphic:cssColorLiteral .
+
+:Greens_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 7 ;
+    rdf:_1 "rgb(237,248,233)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(199,233,192)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(161,217,155)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(0,90,50)"^^graphic:cssColorLiteral .
+
+:Greens_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,252,245)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(229,245,224)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(199,233,192)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(161,217,155)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,90,50)"^^graphic:cssColorLiteral .
+
+:Greens_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greens ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,252,245)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(229,245,224)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(199,233,192)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(161,217,155)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(116,196,118)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,139,69)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,109,44)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(0,68,27)"^^graphic:cssColorLiteral .
+
+:Greys_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 3 ;
+    rdf:_1 "rgb(240,240,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,189,189)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(99,99,99)"^^graphic:cssColorLiteral .
+
+:Greys_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 4 ;
+    rdf:_1 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,204,204)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(82,82,82)"^^graphic:cssColorLiteral .
+
+:Greys_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 5 ;
+    rdf:_1 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(204,204,204)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(99,99,99)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(37,37,37)"^^graphic:cssColorLiteral .
+
+:Greys_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 6 ;
+    rdf:_1 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,217,217)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(189,189,189)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(99,99,99)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(37,37,37)"^^graphic:cssColorLiteral .
+
+:Greys_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 7 ;
+    rdf:_1 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,217,217)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(189,189,189)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(115,115,115)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(82,82,82)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(37,37,37)"^^graphic:cssColorLiteral .
+
+:Greys_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(240,240,240)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(217,217,217)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(189,189,189)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(115,115,115)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(82,82,82)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(37,37,37)"^^graphic:cssColorLiteral .
+
+:Greys_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Greys ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(240,240,240)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(217,217,217)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(189,189,189)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(150,150,150)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(115,115,115)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(82,82,82)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(37,37,37)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(0,0,0)"^^graphic:cssColorLiteral .
+
+:Okabe_Ito_Categorigal_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Okabe_Ito_Categorigal ;
+    :steps 8 ;
+    rdf:_1 "rgb(0,0,0)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(230,159,0)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(86,180,233)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(0,158,115)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(240,228,66)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(0,114,178)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(213,94,0)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(204,121,167)"^^graphic:cssColorLiteral .
+
+:OrRd_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 3 ;
+    rdf:_1 "rgb(254,232,200)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,187,132)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(227,74,51)"^^graphic:cssColorLiteral .
+
+:OrRd_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 4 ;
+    rdf:_1 "rgb(254,240,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,204,138)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(215,48,31)"^^graphic:cssColorLiteral .
+
+:OrRd_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 5 ;
+    rdf:_1 "rgb(254,240,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,204,138)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(227,74,51)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(179,0,0)"^^graphic:cssColorLiteral .
+
+:OrRd_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 6 ;
+    rdf:_1 "rgb(254,240,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,212,158)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,187,132)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(227,74,51)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(179,0,0)"^^graphic:cssColorLiteral .
+
+:OrRd_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 7 ;
+    rdf:_1 "rgb(254,240,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,212,158)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,187,132)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(239,101,72)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(215,48,31)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(153,0,0)"^^graphic:cssColorLiteral .
+
+:OrRd_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,247,236)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,232,200)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,212,158)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,187,132)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(239,101,72)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(215,48,31)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(153,0,0)"^^graphic:cssColorLiteral .
+
+:OrRd_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :OrRd ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,247,236)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,232,200)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,212,158)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,187,132)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(239,101,72)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(215,48,31)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(179,0,0)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(127,0,0)"^^graphic:cssColorLiteral .
+
+:Oranges_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 3 ;
+    rdf:_1 "rgb(254,230,206)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,107)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(230,85,13)"^^graphic:cssColorLiteral .
+
+:Oranges_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 4 ;
+    rdf:_1 "rgb(254,237,222)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,190,133)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(217,71,1)"^^graphic:cssColorLiteral .
+
+:Oranges_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 5 ;
+    rdf:_1 "rgb(254,237,222)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,190,133)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(230,85,13)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(166,54,3)"^^graphic:cssColorLiteral .
+
+:Oranges_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 6 ;
+    rdf:_1 "rgb(254,237,222)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,208,162)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,107)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,85,13)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(166,54,3)"^^graphic:cssColorLiteral .
+
+:Oranges_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 7 ;
+    rdf:_1 "rgb(254,237,222)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,208,162)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,107)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(241,105,19)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(217,72,1)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(140,45,4)"^^graphic:cssColorLiteral .
+
+:Oranges_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,245,235)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,230,206)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,208,162)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,107)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(241,105,19)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(217,72,1)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(140,45,4)"^^graphic:cssColorLiteral .
+
+:Oranges_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Oranges ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,245,235)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,230,206)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,208,162)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,107)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(241,105,19)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(217,72,1)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(166,54,3)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(127,39,4)"^^graphic:cssColorLiteral .
+
+:PRGn_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 10 ;
+    rdf:_1 "rgb(64,0,75)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(0,68,27)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,112,171)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(90,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(27,120,55)"^^graphic:cssColorLiteral .
+
+:PRGn_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 11 ;
+    rdf:_1 "rgb(64,0,75)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(27,120,55)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(0,68,27)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,112,171)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(90,174,97)"^^graphic:cssColorLiteral .
+
+:PRGn_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 3 ;
+    rdf:_1 "rgb(175,141,195)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(127,191,123)"^^graphic:cssColorLiteral .
+
+:PRGn_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 4 ;
+    rdf:_1 "rgb(123,50,148)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(0,136,55)"^^graphic:cssColorLiteral .
+
+:PRGn_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 5 ;
+    rdf:_1 "rgb(123,50,148)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(0,136,55)"^^graphic:cssColorLiteral .
+
+:PRGn_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 6 ;
+    rdf:_1 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(175,141,195)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(127,191,123)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(27,120,55)"^^graphic:cssColorLiteral .
+
+:PRGn_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 7 ;
+    rdf:_1 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(175,141,195)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(127,191,123)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(27,120,55)"^^graphic:cssColorLiteral .
+
+:PRGn_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 8 ;
+    rdf:_1 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(153,112,171)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(90,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(27,120,55)"^^graphic:cssColorLiteral .
+
+:PRGn_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PRGn ;
+    :steps 9 ;
+    rdf:_1 "rgb(118,42,131)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(153,112,171)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(194,165,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,212,232)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(217,240,211)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,219,160)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(90,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(27,120,55)"^^graphic:cssColorLiteral .
+
+:Paired_10 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 10 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(106,61,154)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(202,178,214)"^^graphic:cssColorLiteral .
+
+:Paired_11 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 11 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(106,61,154)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(202,178,214)"^^graphic:cssColorLiteral .
+
+:Paired_12 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 12 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(106,61,154)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(255,255,153)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(177,89,40)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(202,178,214)"^^graphic:cssColorLiteral .
+
+:Paired_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Paired ;
+    :steps 3 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral .
+
+:Paired_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Paired ;
+    :steps 4 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral .
+
+:Paired_5 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 5 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral .
+
+:Paired_6 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 6 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral .
+
+:Paired_7 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 7 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral .
+
+:Paired_8 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 8 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral .
+
+:Paired_9 a :Palette ;
+    :hasScheme :Paired ;
+    :steps 9 ;
+    rdf:_1 "rgb(166,206,227)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(31,120,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,223,138)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(51,160,44)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,154,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(253,191,111)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(202,178,214)"^^graphic:cssColorLiteral .
+
+:Pastel1_3 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 3 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral .
+
+:Pastel1_4 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 4 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral .
+
+:Pastel1_5 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 5 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,217,166)"^^graphic:cssColorLiteral .
+
+:Pastel1_6 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 6 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,217,166)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,204)"^^graphic:cssColorLiteral .
+
+:Pastel1_7 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 7 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,217,166)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(229,216,189)"^^graphic:cssColorLiteral .
+
+:Pastel1_8 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 8 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,217,166)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(229,216,189)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(253,218,236)"^^graphic:cssColorLiteral .
+
+:Pastel1_9 a :Palette ;
+    :hasScheme :Pastel1 ;
+    :steps 9 ;
+    rdf:_1 "rgb(251,180,174)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,205,227)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,203,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,217,166)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(229,216,189)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(253,218,236)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(242,242,242)"^^graphic:cssColorLiteral .
+
+:Pastel2_3 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 3 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral .
+
+:Pastel2_4 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 4 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,202,228)"^^graphic:cssColorLiteral .
+
+:Pastel2_5 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 5 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,202,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,201)"^^graphic:cssColorLiteral .
+
+:Pastel2_6 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 6 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,202,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,201)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,242,174)"^^graphic:cssColorLiteral .
+
+:Pastel2_7 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 7 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,202,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,201)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,242,174)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(241,226,204)"^^graphic:cssColorLiteral .
+
+:Pastel2_8 a :Palette ;
+    :hasScheme :Pastel2 ;
+    :steps 8 ;
+    rdf:_1 "rgb(179,226,205)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,205,172)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(203,213,232)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,202,228)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,201)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,242,174)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(241,226,204)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(204,204,204)"^^graphic:cssColorLiteral .
+
+:PiYG_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 10 ;
+    rdf:_1 "rgb(142,1,82)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(39,100,25)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(222,119,174)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(127,188,65)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,146,33)"^^graphic:cssColorLiteral .
+
+:PiYG_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 11 ;
+    rdf:_1 "rgb(142,1,82)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(77,146,33)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(39,100,25)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(222,119,174)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(127,188,65)"^^graphic:cssColorLiteral .
+
+:PiYG_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 3 ;
+    rdf:_1 "rgb(233,163,201)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(161,215,106)"^^graphic:cssColorLiteral .
+
+:PiYG_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 4 ;
+    rdf:_1 "rgb(208,28,139)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(77,172,38)"^^graphic:cssColorLiteral .
+
+:PiYG_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 5 ;
+    rdf:_1 "rgb(208,28,139)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(77,172,38)"^^graphic:cssColorLiteral .
+
+:PiYG_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 6 ;
+    rdf:_1 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(233,163,201)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(161,215,106)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(77,146,33)"^^graphic:cssColorLiteral .
+
+:PiYG_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 7 ;
+    rdf:_1 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(233,163,201)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(161,215,106)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(77,146,33)"^^graphic:cssColorLiteral .
+
+:PiYG_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 8 ;
+    rdf:_1 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(222,119,174)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(127,188,65)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(77,146,33)"^^graphic:cssColorLiteral .
+
+:PiYG_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PiYG ;
+    :steps 9 ;
+    rdf:_1 "rgb(197,27,125)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(222,119,174)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(241,182,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,224,239)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,245,208)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(184,225,134)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(127,188,65)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,146,33)"^^graphic:cssColorLiteral .
+
+:PuBuGn_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 3 ;
+    rdf:_1 "rgb(236,226,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(28,144,153)"^^graphic:cssColorLiteral .
+
+:PuBuGn_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 4 ;
+    rdf:_1 "rgb(246,239,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,201,225)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(2,129,138)"^^graphic:cssColorLiteral .
+
+:PuBuGn_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 5 ;
+    rdf:_1 "rgb(246,239,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,201,225)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(28,144,153)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(1,108,89)"^^graphic:cssColorLiteral .
+
+:PuBuGn_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 6 ;
+    rdf:_1 "rgb(246,239,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(28,144,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(1,108,89)"^^graphic:cssColorLiteral .
+
+:PuBuGn_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 7 ;
+    rdf:_1 "rgb(246,239,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(2,129,138)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(1,100,80)"^^graphic:cssColorLiteral .
+
+:PuBuGn_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,247,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(236,226,240)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(2,129,138)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(1,100,80)"^^graphic:cssColorLiteral .
+
+:PuBuGn_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBuGn ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,247,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(236,226,240)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(2,129,138)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(1,108,89)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(1,70,54)"^^graphic:cssColorLiteral .
+
+:PuBu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 3 ;
+    rdf:_1 "rgb(236,231,242)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(43,140,190)"^^graphic:cssColorLiteral .
+
+:PuBu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 4 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,201,225)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(5,112,176)"^^graphic:cssColorLiteral .
+
+:PuBu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 5 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(189,201,225)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(43,140,190)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(4,90,141)"^^graphic:cssColorLiteral .
+
+:PuBu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 6 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(43,140,190)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(4,90,141)"^^graphic:cssColorLiteral .
+
+:PuBu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 7 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(5,112,176)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(3,78,123)"^^graphic:cssColorLiteral .
+
+:PuBu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,247,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(236,231,242)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(5,112,176)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(3,78,123)"^^graphic:cssColorLiteral .
+
+:PuBu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuBu ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,247,251)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(236,231,242)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(208,209,230)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,189,219)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(116,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(54,144,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(5,112,176)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(4,90,141)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(2,56,88)"^^graphic:cssColorLiteral .
+
+:PuOr_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 10 ;
+    rdf:_1 "rgb(127,59,8)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(45,0,75)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(224,130,20)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(128,115,172)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(84,39,136)"^^graphic:cssColorLiteral .
+
+:PuOr_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 11 ;
+    rdf:_1 "rgb(127,59,8)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(84,39,136)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(45,0,75)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(224,130,20)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(128,115,172)"^^graphic:cssColorLiteral .
+
+:PuOr_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 3 ;
+    rdf:_1 "rgb(241,163,64)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,142,195)"^^graphic:cssColorLiteral .
+
+:PuOr_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 4 ;
+    rdf:_1 "rgb(230,97,1)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(94,60,153)"^^graphic:cssColorLiteral .
+
+:PuOr_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 5 ;
+    rdf:_1 "rgb(230,97,1)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(94,60,153)"^^graphic:cssColorLiteral .
+
+:PuOr_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 6 ;
+    rdf:_1 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(241,163,64)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(153,142,195)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(84,39,136)"^^graphic:cssColorLiteral .
+
+:PuOr_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 7 ;
+    rdf:_1 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(241,163,64)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(153,142,195)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(84,39,136)"^^graphic:cssColorLiteral .
+
+:PuOr_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 8 ;
+    rdf:_1 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,130,20)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(128,115,172)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(84,39,136)"^^graphic:cssColorLiteral .
+
+:PuOr_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuOr ;
+    :steps 9 ;
+    rdf:_1 "rgb(179,88,6)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(224,130,20)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,184,99)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,182)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(216,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(178,171,210)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(128,115,172)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(84,39,136)"^^graphic:cssColorLiteral .
+
+:PuRd_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 3 ;
+    rdf:_1 "rgb(231,225,239)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(201,148,199)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(221,28,119)"^^graphic:cssColorLiteral .
+
+:PuRd_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 4 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,181,216)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(206,18,86)"^^graphic:cssColorLiteral .
+
+:PuRd_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 5 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,181,216)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(221,28,119)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(152,0,67)"^^graphic:cssColorLiteral .
+
+:PuRd_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 6 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(212,185,218)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(201,148,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(221,28,119)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(152,0,67)"^^graphic:cssColorLiteral .
+
+:PuRd_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 7 ;
+    rdf:_1 "rgb(241,238,246)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(212,185,218)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(201,148,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(206,18,86)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(145,0,63)"^^graphic:cssColorLiteral .
+
+:PuRd_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 8 ;
+    rdf:_1 "rgb(247,244,249)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(231,225,239)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(212,185,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(201,148,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(206,18,86)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(145,0,63)"^^graphic:cssColorLiteral .
+
+:PuRd_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :PuRd ;
+    :steps 9 ;
+    rdf:_1 "rgb(247,244,249)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(231,225,239)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(212,185,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(201,148,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(223,101,176)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(231,41,138)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(206,18,86)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(152,0,67)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(103,0,31)"^^graphic:cssColorLiteral .
+
+:Purples_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 3 ;
+    rdf:_1 "rgb(239,237,245)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(188,189,220)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(117,107,177)"^^graphic:cssColorLiteral .
+
+:Purples_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 4 ;
+    rdf:_1 "rgb(242,240,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(203,201,226)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(106,81,163)"^^graphic:cssColorLiteral .
+
+:Purples_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 5 ;
+    rdf:_1 "rgb(242,240,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(203,201,226)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(117,107,177)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(84,39,143)"^^graphic:cssColorLiteral .
+
+:Purples_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 6 ;
+    rdf:_1 "rgb(242,240,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(218,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(188,189,220)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(117,107,177)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(84,39,143)"^^graphic:cssColorLiteral .
+
+:Purples_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 7 ;
+    rdf:_1 "rgb(242,240,247)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(218,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(188,189,220)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,125,186)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(106,81,163)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(74,20,134)"^^graphic:cssColorLiteral .
+
+:Purples_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 8 ;
+    rdf:_1 "rgb(252,251,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,237,245)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(218,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(188,189,220)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(128,125,186)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(106,81,163)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(74,20,134)"^^graphic:cssColorLiteral .
+
+:Purples_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Purples ;
+    :steps 9 ;
+    rdf:_1 "rgb(252,251,253)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,237,245)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(218,218,235)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(188,189,220)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(158,154,200)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(128,125,186)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(106,81,163)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(84,39,143)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(63,0,125)"^^graphic:cssColorLiteral .
+
+:RdBu_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 10 ;
+    rdf:_1 "rgb(103,0,31)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(5,48,97)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(67,147,195)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(33,102,172)"^^graphic:cssColorLiteral .
+
+:RdBu_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 11 ;
+    rdf:_1 "rgb(103,0,31)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(33,102,172)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(5,48,97)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(67,147,195)"^^graphic:cssColorLiteral .
+
+:RdBu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 3 ;
+    rdf:_1 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(103,169,207)"^^graphic:cssColorLiteral .
+
+:RdBu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 4 ;
+    rdf:_1 "rgb(202,0,32)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(5,113,176)"^^graphic:cssColorLiteral .
+
+:RdBu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 5 ;
+    rdf:_1 "rgb(202,0,32)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(5,113,176)"^^graphic:cssColorLiteral .
+
+:RdBu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 6 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(33,102,172)"^^graphic:cssColorLiteral .
+
+:RdBu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 7 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(103,169,207)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(33,102,172)"^^graphic:cssColorLiteral .
+
+:RdBu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 8 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(67,147,195)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(33,102,172)"^^graphic:cssColorLiteral .
+
+:RdBu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdBu ;
+    :steps 9 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,247,247)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(209,229,240)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(146,197,222)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(67,147,195)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(33,102,172)"^^graphic:cssColorLiteral .
+
+:RdGy_10 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 10 ;
+    rdf:_1 "rgb(103,0,31)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(26,26,26)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(135,135,135)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,77,77)"^^graphic:cssColorLiteral .
+
+:RdGy_11 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 11 ;
+    rdf:_1 "rgb(103,0,31)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(77,77,77)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(26,26,26)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(135,135,135)"^^graphic:cssColorLiteral .
+
+:RdGy_3 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 3 ;
+    rdf:_1 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,153,153)"^^graphic:cssColorLiteral .
+
+:RdGy_4 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 4 ;
+    rdf:_1 "rgb(202,0,32)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(64,64,64)"^^graphic:cssColorLiteral .
+
+:RdGy_5 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 5 ;
+    rdf:_1 "rgb(202,0,32)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(64,64,64)"^^graphic:cssColorLiteral .
+
+:RdGy_6 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 6 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(153,153,153)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(77,77,77)"^^graphic:cssColorLiteral .
+
+:RdGy_7 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 7 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(239,138,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(153,153,153)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(77,77,77)"^^graphic:cssColorLiteral .
+
+:RdGy_8 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 8 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(135,135,135)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(77,77,77)"^^graphic:cssColorLiteral .
+
+:RdGy_9 a :Palette ;
+    :hasScheme :RdGy ;
+    :steps 9 ;
+    rdf:_1 "rgb(178,24,43)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(214,96,77)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,165,130)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,219,199)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,255,255)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(224,224,224)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(186,186,186)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(135,135,135)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(77,77,77)"^^graphic:cssColorLiteral .
+
+:RdPu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 3 ;
+    rdf:_1 "rgb(253,224,221)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(250,159,181)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(197,27,138)"^^graphic:cssColorLiteral .
+
+:RdPu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 4 ;
+    rdf:_1 "rgb(254,235,226)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(251,180,185)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(174,1,126)"^^graphic:cssColorLiteral .
+
+:RdPu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 5 ;
+    rdf:_1 "rgb(254,235,226)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(251,180,185)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(197,27,138)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(122,1,119)"^^graphic:cssColorLiteral .
+
+:RdPu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 6 ;
+    rdf:_1 "rgb(254,235,226)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,197,192)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(250,159,181)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(197,27,138)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(122,1,119)"^^graphic:cssColorLiteral .
+
+:RdPu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 7 ;
+    rdf:_1 "rgb(254,235,226)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,197,192)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(250,159,181)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(221,52,151)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(174,1,126)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(122,1,119)"^^graphic:cssColorLiteral .
+
+:RdPu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,247,243)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,224,221)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,197,192)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(250,159,181)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(221,52,151)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(174,1,126)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(122,1,119)"^^graphic:cssColorLiteral .
+
+:RdPu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdPu ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,247,243)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,224,221)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,197,192)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(250,159,181)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(247,104,161)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(221,52,151)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(174,1,126)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(122,1,119)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(73,0,106)"^^graphic:cssColorLiteral .
+
+:RdYlBu_10 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 10 ;
+    rdf:_1 "rgb(165,0,38)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(49,54,149)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(116,173,209)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(69,117,180)"^^graphic:cssColorLiteral .
+
+:RdYlBu_11 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 11 ;
+    rdf:_1 "rgb(165,0,38)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(69,117,180)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(49,54,149)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(116,173,209)"^^graphic:cssColorLiteral .
+
+:RdYlBu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 3 ;
+    rdf:_1 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(145,191,219)"^^graphic:cssColorLiteral .
+
+:RdYlBu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 4 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(44,123,182)"^^graphic:cssColorLiteral .
+
+:RdYlBu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 5 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(44,123,182)"^^graphic:cssColorLiteral .
+
+:RdYlBu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 6 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(145,191,219)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(69,117,180)"^^graphic:cssColorLiteral .
+
+:RdYlBu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 7 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(145,191,219)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(69,117,180)"^^graphic:cssColorLiteral .
+
+:RdYlBu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 8 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(116,173,209)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(69,117,180)"^^graphic:cssColorLiteral .
+
+:RdYlBu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :RdYlBu ;
+    :steps 9 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,144)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(224,243,248)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(171,217,233)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(116,173,209)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(69,117,180)"^^graphic:cssColorLiteral .
+
+:RdYlGn_10 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 10 ;
+    rdf:_1 "rgb(165,0,38)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(0,104,55)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,189,99)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(26,152,80)"^^graphic:cssColorLiteral .
+
+:RdYlGn_11 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 11 ;
+    rdf:_1 "rgb(165,0,38)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(26,152,80)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(0,104,55)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(102,189,99)"^^graphic:cssColorLiteral .
+
+:RdYlGn_3 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 3 ;
+    rdf:_1 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(145,207,96)"^^graphic:cssColorLiteral .
+
+:RdYlGn_4 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 4 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(26,150,65)"^^graphic:cssColorLiteral .
+
+:RdYlGn_5 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 5 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(26,150,65)"^^graphic:cssColorLiteral .
+
+:RdYlGn_6 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 6 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(145,207,96)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(26,152,80)"^^graphic:cssColorLiteral .
+
+:RdYlGn_7 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 7 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(145,207,96)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(26,152,80)"^^graphic:cssColorLiteral .
+
+:RdYlGn_8 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 8 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(102,189,99)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(26,152,80)"^^graphic:cssColorLiteral .
+
+:RdYlGn_9 a :Palette ;
+    :hasScheme :RdYlGn ;
+    :steps 9 ;
+    rdf:_1 "rgb(215,48,39)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(217,239,139)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,217,106)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,189,99)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(26,152,80)"^^graphic:cssColorLiteral .
+
+:Reds_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 3 ;
+    rdf:_1 "rgb(254,224,210)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,146,114)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(222,45,38)"^^graphic:cssColorLiteral .
+
+:Reds_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 4 ;
+    rdf:_1 "rgb(254,229,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,174,145)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(203,24,29)"^^graphic:cssColorLiteral .
+
+:Reds_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 5 ;
+    rdf:_1 "rgb(254,229,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,174,145)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(222,45,38)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(165,15,21)"^^graphic:cssColorLiteral .
+
+:Reds_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 6 ;
+    rdf:_1 "rgb(254,229,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,187,161)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,146,114)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(222,45,38)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(165,15,21)"^^graphic:cssColorLiteral .
+
+:Reds_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 7 ;
+    rdf:_1 "rgb(254,229,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,187,161)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,146,114)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(239,59,44)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(203,24,29)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(153,0,13)"^^graphic:cssColorLiteral .
+
+:Reds_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,245,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,224,210)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,187,161)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(252,146,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(239,59,44)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(203,24,29)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(153,0,13)"^^graphic:cssColorLiteral .
+
+:Reds_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Reds ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,245,240)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,224,210)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(252,187,161)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(252,146,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(251,106,74)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(239,59,44)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(203,24,29)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(165,15,21)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(103,0,13)"^^graphic:cssColorLiteral .
+
+:Set1_3 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 3 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral .
+
+:Set1_4 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 4 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral .
+
+:Set1_5 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 5 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,127,0)"^^graphic:cssColorLiteral .
+
+:Set1_6 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 6 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,51)"^^graphic:cssColorLiteral .
+
+:Set1_7 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 7 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,51)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,86,40)"^^graphic:cssColorLiteral .
+
+:Set1_8 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 8 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,51)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,86,40)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(247,129,191)"^^graphic:cssColorLiteral .
+
+:Set1_9 a :Palette ;
+    :hasScheme :Set1 ;
+    :steps 9 ;
+    rdf:_1 "rgb(228,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(55,126,184)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(77,175,74)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(152,78,163)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,127,0)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,51)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(166,86,40)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(247,129,191)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(153,153,153)"^^graphic:cssColorLiteral .
+
+:Set2_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :Set2 ;
+    :steps 3 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral .
+
+:Set2_4 a :Palette ;
+    :hasScheme :Set2 ;
+    :steps 4 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,138,195)"^^graphic:cssColorLiteral .
+
+:Set2_5 a :Palette ;
+    :hasScheme :Set2 ;
+    :steps 5 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,138,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(166,216,84)"^^graphic:cssColorLiteral .
+
+:Set2_6 a :Palette ;
+    :hasScheme :Set2 ;
+    :steps 6 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,138,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(166,216,84)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,217,47)"^^graphic:cssColorLiteral .
+
+:Set2_7 a :Palette ;
+    :hasScheme :Set2 ;
+    :steps 7 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,138,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(166,216,84)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,217,47)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(229,196,148)"^^graphic:cssColorLiteral .
+
+:Set2_8 a :Palette ;
+    :hasScheme :Set2 ;
+    :steps 8 ;
+    rdf:_1 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,98)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(141,160,203)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(231,138,195)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(166,216,84)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,217,47)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(229,196,148)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(179,179,179)"^^graphic:cssColorLiteral .
+
+:Set3_10 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 10 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(188,128,189)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(252,205,229)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(217,217,217)"^^graphic:cssColorLiteral .
+
+:Set3_11 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 11 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(188,128,189)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(252,205,229)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(217,217,217)"^^graphic:cssColorLiteral .
+
+:Set3_12 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 12 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(188,128,189)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(204,235,197)"^^graphic:cssColorLiteral ;
+    rdf:_12 "rgb(255,237,111)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(252,205,229)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(217,217,217)"^^graphic:cssColorLiteral .
+
+:Set3_3 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 3 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral .
+
+:Set3_4 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 4 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral .
+
+:Set3_5 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 5 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral .
+
+:Set3_6 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 6 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral .
+
+:Set3_7 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 7 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral .
+
+:Set3_8 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 8 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(252,205,229)"^^graphic:cssColorLiteral .
+
+:Set3_9 a :Palette ;
+    :hasScheme :Set3 ;
+    :steps 9 ;
+    rdf:_1 "rgb(141,211,199)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,179)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(190,186,218)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(251,128,114)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(128,177,211)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(253,180,98)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(179,222,105)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(252,205,229)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(217,217,217)"^^graphic:cssColorLiteral .
+
+:Spectral_10 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 10 ;
+    rdf:_1 "rgb(158,1,66)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(94,79,162)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(50,136,189)"^^graphic:cssColorLiteral .
+
+:Spectral_11 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 11 ;
+    rdf:_1 "rgb(158,1,66)"^^graphic:cssColorLiteral ;
+    rdf:_10 "rgb(50,136,189)"^^graphic:cssColorLiteral ;
+    rdf:_11 "rgb(94,79,162)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(102,194,165)"^^graphic:cssColorLiteral .
+
+:Spectral_3 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 3 ;
+    rdf:_1 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(153,213,148)"^^graphic:cssColorLiteral .
+
+:Spectral_4 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 4 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(43,131,186)"^^graphic:cssColorLiteral .
+
+:Spectral_5 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 5 ;
+    rdf:_1 "rgb(215,25,28)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(43,131,186)"^^graphic:cssColorLiteral .
+
+:Spectral_6 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 6 ;
+    rdf:_1 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(153,213,148)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(50,136,189)"^^graphic:cssColorLiteral .
+
+:Spectral_7 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 7 ;
+    rdf:_1 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(252,141,89)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(153,213,148)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(50,136,189)"^^graphic:cssColorLiteral .
+
+:Spectral_8 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 8 ;
+    rdf:_1 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(50,136,189)"^^graphic:cssColorLiteral .
+
+:Spectral_9 a :Palette ;
+    :hasScheme :Spectral ;
+    :steps 9 ;
+    rdf:_1 "rgb(213,62,79)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(244,109,67)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,174,97)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,224,139)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(255,255,191)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(230,245,152)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(171,221,164)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(102,194,165)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(50,136,189)"^^graphic:cssColorLiteral .
+
+:YlGnBu_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 3 ;
+    rdf:_1 "rgb(237,248,177)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(127,205,187)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(44,127,184)"^^graphic:cssColorLiteral .
+
+:YlGnBu_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 4 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(161,218,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(34,94,168)"^^graphic:cssColorLiteral .
+
+:YlGnBu_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 5 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(161,218,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(44,127,184)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(37,52,148)"^^graphic:cssColorLiteral .
+
+:YlGnBu_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 6 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(199,233,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(127,205,187)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(44,127,184)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(37,52,148)"^^graphic:cssColorLiteral .
+
+:YlGnBu_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 7 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(199,233,180)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(127,205,187)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(29,145,192)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(34,94,168)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(12,44,132)"^^graphic:cssColorLiteral .
+
+:YlGnBu_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(237,248,177)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(199,233,180)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(127,205,187)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(29,145,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(34,94,168)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(12,44,132)"^^graphic:cssColorLiteral .
+
+:YlGnBu_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGnBu ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,255,217)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(237,248,177)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(199,233,180)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(127,205,187)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(65,182,196)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(29,145,192)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(34,94,168)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(37,52,148)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(8,29,88)"^^graphic:cssColorLiteral .
+
+:YlGn_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 3 ;
+    rdf:_1 "rgb(247,252,185)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(173,221,142)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(49,163,84)"^^graphic:cssColorLiteral .
+
+:YlGn_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 4 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(194,230,153)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(35,132,67)"^^graphic:cssColorLiteral .
+
+:YlGn_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 5 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(194,230,153)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(49,163,84)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(0,104,55)"^^graphic:cssColorLiteral .
+
+:YlGn_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 6 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,240,163)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(173,221,142)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(49,163,84)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(0,104,55)"^^graphic:cssColorLiteral .
+
+:YlGn_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 7 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(217,240,163)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(173,221,142)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(35,132,67)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(0,90,50)"^^graphic:cssColorLiteral .
+
+:YlGn_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,229)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,252,185)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(217,240,163)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(173,221,142)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,132,67)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,90,50)"^^graphic:cssColorLiteral .
+
+:YlGn_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlGn ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,255,229)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(247,252,185)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(217,240,163)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(173,221,142)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(120,198,121)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(65,171,93)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(35,132,67)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(0,104,55)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(0,69,41)"^^graphic:cssColorLiteral .
+
+:YlOrBr_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 3 ;
+    rdf:_1 "rgb(255,247,188)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,196,79)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(217,95,14)"^^graphic:cssColorLiteral .
+
+:YlOrBr_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 4 ;
+    rdf:_1 "rgb(255,255,212)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,217,142)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(204,76,2)"^^graphic:cssColorLiteral .
+
+:YlOrBr_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 5 ;
+    rdf:_1 "rgb(255,255,212)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,217,142)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(217,95,14)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(153,52,4)"^^graphic:cssColorLiteral .
+
+:YlOrBr_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 6 ;
+    rdf:_1 "rgb(255,255,212)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,227,145)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,196,79)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(217,95,14)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(153,52,4)"^^graphic:cssColorLiteral .
+
+:YlOrBr_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 7 ;
+    rdf:_1 "rgb(255,255,212)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,227,145)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,196,79)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(236,112,20)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(204,76,2)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(140,45,4)"^^graphic:cssColorLiteral .
+
+:YlOrBr_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,229)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,247,188)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,227,145)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,196,79)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(236,112,20)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(204,76,2)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(140,45,4)"^^graphic:cssColorLiteral .
+
+:YlOrBr_9 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrBr ;
+    :steps 9 ;
+    rdf:_1 "rgb(255,255,229)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,247,188)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,227,145)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,196,79)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(254,153,41)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(236,112,20)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(204,76,2)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(153,52,4)"^^graphic:cssColorLiteral ;
+    rdf:_9 "rgb(102,37,6)"^^graphic:cssColorLiteral .
+
+:YlOrRd_3 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 3 ;
+    rdf:_1 "rgb(255,237,160)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,178,76)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(240,59,32)"^^graphic:cssColorLiteral .
+
+:YlOrRd_4 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 4 ;
+    rdf:_1 "rgb(255,255,178)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,204,92)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(227,26,28)"^^graphic:cssColorLiteral .
+
+:YlOrRd_5 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 5 ;
+    rdf:_1 "rgb(255,255,178)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,204,92)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(240,59,32)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(189,0,38)"^^graphic:cssColorLiteral .
+
+:YlOrRd_6 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 6 ;
+    rdf:_1 "rgb(255,255,178)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,217,118)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,178,76)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(240,59,32)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(189,0,38)"^^graphic:cssColorLiteral .
+
+:YlOrRd_7 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 7 ;
+    rdf:_1 "rgb(255,255,178)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(254,217,118)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,178,76)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(252,78,42)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(177,0,38)"^^graphic:cssColorLiteral .
+
+:YlOrRd_8 a :Palette ;
+    :colorBlindnessFriendly true ;
+    :hasScheme :YlOrRd ;
+    :steps 8 ;
+    rdf:_1 "rgb(255,255,204)"^^graphic:cssColorLiteral ;
+    rdf:_2 "rgb(255,237,160)"^^graphic:cssColorLiteral ;
+    rdf:_3 "rgb(254,217,118)"^^graphic:cssColorLiteral ;
+    rdf:_4 "rgb(254,178,76)"^^graphic:cssColorLiteral ;
+    rdf:_5 "rgb(253,141,60)"^^graphic:cssColorLiteral ;
+    rdf:_6 "rgb(252,78,42)"^^graphic:cssColorLiteral ;
+    rdf:_7 "rgb(227,26,28)"^^graphic:cssColorLiteral ;
+    rdf:_8 "rgb(177,0,38)"^^graphic:cssColorLiteral .
+
+:colorBlindnessFriendly a owl:DatatypeProperty ;
+    rdfs:label "Color blindness friendly"@en ;
+    rdfs:comment """Describe whether a Palette is readable for color-blind people.
+           It can be expressed either by a boolean value, or by the name of the
+           type of color vision deficiency for which it is suitable.
+           Note: this property is applied to a Palette and not to a whole Scheme because
+           some authors consider this property valid only below a certain number of data classes."""@en ;
+    rdfs:domain :Palette ;
+    rdfs:range xsd:boolean .
+
+:hasPalette a owl:ObjectProperty ;
+    rdfs:label "has Palette"@en ;
+    rdfs:comment "Describes the belonging of a concrete palette to a named scheme."@en ;
+    rdfs:domain :Scheme ;
+    rdfs:range :Palette ;
+    owl:inverseOf :hasScheme .
+
+:isFrom a owl:ObjectProperty ;
+    rdfs:label "is From"@en ;
+    rdfs:comment "Describe the provider of a Scheme to which a Palette refers."@en ;
+    rdfs:domain :Scheme ;
+    rdfs:range <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:subPropertyOf <http://www.w3.org/ns/prov#wasDerivedFrom> .
+
+:name a owl:DatatypeProperty ;
+    rdfs:label "Scheme name"@en ;
+    rdfs:comment "The name of the schema of which this palette is a declination."@en ;
+    rdfs:domain :Scheme ;
+    rdfs:range xsd:string .
+
+:steps a owl:DatatypeProperty ;
+    rdfs:label "Steps"@en ;
+    rdfs:comment "Describe the number of steps (i.e. the number of data classes) of a Palette."@en ;
+    rdfs:domain :Palette ;
+    rdfs:range xsd:integer .
+
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+
+:GreenMagenta a :DivergingScheme ;
+    :isFrom <urn:doi:10.1029/2004EO400002> ;
+    :name "GreenMagenta" .
+
+:Okabe_Ito_Categorigal :isFrom <https://jfly.uni-koeln.de/color/> ;
+    :name "Okabe_Ito_Categorigal" .
+
+:hasScheme a owl:ObjectProperty ;
+    rdfs:label "has Scheme"@en ;
+    rdfs:comment "Describes the fact that a named scheme has a concrete palette with a given number of steps."@en ;
+    rdfs:domain :Palette ;
+    rdfs:range :Scheme .
+
+<http://www.w3.org/ns/prov#wasDerivedFrom> a owl:ObjectProperty ;
+    rdfs:domain <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:range <http://www.w3.org/ns/prov#Entity> .
+
+<https://jfly.uni-koeln.de/color/> a <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:label "Okabe, M., & Ito, K. (2002). Color Universal Design (CUD) - How to Make Figures and Presentations That Are Friendly to Colorblind People. https://jfly.uni-koeln.de/color/"@en ;
+    dct:title "Color Universal Design (CUD) - How to Make Figures and Presentations That Are Friendly to Colorblind People"@en .
+
+:BlueDarkOrange a :DivergingScheme ;
+    :isFrom <urn:doi:10.1029/2004EO400002> ;
+    :name "BlueDarkOrange" .
+
+:BlueOrange a :DivergingScheme ;
+    :isFrom <urn:doi:10.1029/2004EO400002> ;
+    :name "BlueOrange" .
+
+<urn:doi:10.1029/2004EO400002> a <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:label "Light, A., & Bartlein, P. J. (2004). The end of the rainbow? Color schemes for improved data graphics. Eos, Transactions American Geophysical Union, 85(40), 385. https://doi.org/10.1029/2004EO400002"@en ;
+    dct:identifier "10.1029/2004EO400002" ;
+    dct:title "The end of the rainbow? Color schemes for improved data graphics"@en ;
+    bibo:doi "10.1029/2004EO400002" .
+
+<urn:doi:10.5281/zenodo.4491293> a <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:label "Crameri, F. (2021). Scientific colour maps. https://zenodo.org/record/1243862"@en ;
+    dct:identifier "10.5281/zenodo.4491293" ;
+    dct:title "Scientific colour maps"@en ;
+    bibo:doi "10.5281/zenodo.4491293" .
+
+:Accent a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Accent" .
+
+:Dark2 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Dark2" .
+
+:Pastel2 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Pastel2" .
+
+:Set2 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Set2" .
+
+:YlOrRd a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "YlOrRd" .
+
+:Acton a :SequentialScheme ;
+    :isFrom <urn:doi:10.5281/zenodo.4491293> ;
+    :name "Acton" .
+
+:Bilbao a :SequentialScheme ;
+    :isFrom <urn:doi:10.5281/zenodo.4491293> ;
+    :name "Bilbao" .
+
+:Blues a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Blues" .
+
+:BuGn a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "BuGn" .
+
+:BuPu a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "BuPu" .
+
+:GnBu a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "GnBu" .
+
+:Greens a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Greens" .
+
+:Greys a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Greys" .
+
+:OrRd a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "OrRd" .
+
+:Oranges a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Oranges" .
+
+:Pastel1 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Pastel1" .
+
+:PuBu a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PuBu" .
+
+:PuBuGn a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PuBuGn" .
+
+:PuRd a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PuRd" .
+
+:Purples a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Purples" .
+
+:RdPu a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "RdPu" .
+
+:Reds a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Reds" .
+
+:Set1 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Set1" .
+
+:YlGn a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "YlGn" .
+
+:YlGnBu a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "YlGnBu" .
+
+:YlOrBr a :SequentialScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "YlOrBr" .
+
+:Scheme a owl:Class ;
+    rdfs:label "Scheme"@en ;
+    rdfs:comment """
+A color scheme. Such a color scheme is intentend to be declined in multiple
+concrete palettes, regarding to a specific number of steps."""@en ;
+    rdfs:subClassOf <http://www.w3.org/ns/prov#Entity> .
+
+:BrBG a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "BrBG" .
+
+:Broc a :DivergingScheme ;
+    :isFrom <urn:doi:10.5281/zenodo.4491293> ;
+    :name "Broc" .
+
+:PRGn a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PRGn" .
+
+:PiYG a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PiYG" .
+
+:PuOr a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "PuOr" .
+
+:QualitativeScheme a owl:Class ;
+    rdfs:label "Qualitative scheme"@en ;
+    rdfs:comment "A qualitative (or categorical) scheme, appropriate to distinguish discrete chunks of data without ordering."@en ;
+    rdfs:subClassOf :Scheme .
+
+:RdBu a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "RdBu" .
+
+:RdGy a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "RdGy" .
+
+:RdYlBu a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "RdYlBu" .
+
+:RdYlGn a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "RdYlGn" .
+
+:Spectral a :DivergingScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Spectral" .
+
+:Paired a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Paired" .
+
+:Set3 a :QualitativeScheme ;
+    :isFrom <urn:doi:10.1559/152304003100010929> ;
+    :name "Set3" .
+
+:DivergingScheme a owl:Class ;
+    rdfs:label "Diverging scheme"@en ;
+    rdfs:comment "A diverging scheme, appropriate for visualizing a quantitative variable with a well-defined midpoint in the data."@en ;
+    rdfs:subClassOf :Scheme .
+
+:SequentialScheme a owl:Class ;
+    rdfs:label "Sequential scheme"@en ;
+    rdfs:comment "A sequential scheme, appropriate for visualizing a quantitative variable where the data as an increasing value."@en ;
+    rdfs:subClassOf :Scheme .
+
+<urn:doi:10.1559/152304003100010929> a <http://www.w3.org/ns/prov#Entity> ;
+    rdfs:label "Brewer, C. A., Hatchard, G. W., & Harrower, M. A. (2003). ColorBrewer in Print: A Catalog of Color Schemes for Maps. Cartography and Geographic Information Science, 30(1), 5‑32. https://doi.org/10.1559/152304003100010929"@en ;
+    dct:identifier "10.1559/152304003100010929" ;
+    dct:title "ColorBrewer in Print: A Catalog of Color Schemes for Maps"@en ;
+    bibo:doi "10.1559/152304003100010929" .
+
+:Palette a owl:Class ;
+    rdfs:label "Palette"@en ;
+    rdfs:comment """
+A concrete color palette. This is a subclass of rdf:Seq so it can hold the
+values of the palette, in order, starting from 1, as cssColorLiteral."""@en ;
+    rdfs:subClassOf rdf:Seq .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Palette :Scheme ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :SequentialScheme :DivergingScheme :QualitativeScheme ) .
+

@@ -4,19 +4,21 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
 @base <http://lig-tdcge.imag.fr/steamer/covikoa/context> .
 
 
 <http://lig-tdcge.imag.fr/steamer/covikoa/context> rdf:type owl:Ontology ;
-                                     rdfs:label "CoViKoa visualisation context ontology"@en ;
-                                     owl:versionInfo "0.1.0" ;
-                                     <http://purl.org/dc/terms/license> "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^<http://purl.org/dc/terms/URI> ;
-                                     <http://purl.org/dc/terms/issued> "2020-09-30"^^xsd:date ;
-                                     <http://purl.org/dc/terms/creator> "Matthieu VIRY" ;
-                                     <http://purl.org/dc/terms/description> """
-      This ontology is for visualisation context, i.e. the context of use, described by several concepts such as :
+                                                   rdfs:label "CoViKoa visualisation context ontology"@en ;
+                                                   owl:versionInfo "0.2.0" ;
+                                                   dct:license "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^<http://purl.org/dc/terms/URI> ;
+                                                   dct:issued "2020-09-30"^^xsd:date ;
+                                                   dct:creator "Matthieu VIRY" ;
+                                                   dct:description """
+      This ontology is for the initial context of the geovisualisation, i.e. the context of use, described by several concepts such as :
       the user preferences, possible visual impairment, choice of day/night display mode, datasets already displayed, etc."""@en .
 
 
@@ -44,6 +46,11 @@
 #    Object Properties
 #################################################################
 
+:hasComponent rdf:type owl:ObjectProperty ;
+              owl:equivalentProperty gviz:hasGeoVisualComponent ;
+              rdfs:domain :Application ;
+              rdfs:range :Component .
+
 :hasUserContext rdf:type owl:ObjectProperty ;
                 rdfs:domain :VisualisationContext ;
                 rdfs:range :UserContext .
@@ -52,29 +59,16 @@
                           rdfs:domain :UserContext ;
                           rdfs:range :ColorVisionDeficiency .
 
-:displaysGVR rdf:type owl:ObjectProperty ;
-             rdfs:domain :VisualisationContext ;
-             rdfs:range gviz:GeoVisualIntermediateRepresentation ;
-             rdfs:comment """
-                 Points to existing geovisual representation (in our KB) displayed by the client."""@en .
+:hasDevice rdf:type owl:ObjectProperty ;
+           rdfs:domain :UserContext ;
+           rdfs:range :Device .
 
 :hasPreferences rdf:type owl:ObjectProperty ;
                 rdfs:domain :UserContext ;
                 rdfs:range :InterfacePreferences .
 
-:hasMap rdf:type owl:ObjectProperty ;
-        rdfs:domain :VisualisationContext ;
-        rdfs:range :ClientMapObject .
-
-:hasComponent rdf:type owl:ObjectProperty ;
-              rdfs:domain :VisualisationContext .
-
-:hasDisplaySRS rdf:type owl:ObjectProperty ;
-               rdfs:domain :ClientMapObject ;
-               rdfs:range <http://example.com/srs#SpatialReferenceSystem> .
-
 :hasMappingLibrary rdf:type owl:ObjectProperty ;
-                   rdfs:domain :ClientMapObject ;
+                   rdfs:domain :Map2d3dUnion ;
                    rdfs:range :MappingLibrary .
 
 :hasVisualisationContext rdf:type owl:ObjectProperty ;
@@ -82,41 +76,116 @@
                          rdfs:range :VisualisationContext .
 
 :hasBaseMap rdf:type owl:ObjectProperty ;
-            rdfs:domain :ClientMapObject ;
-            rdfs:range :BaseMapProvider .
+            rdfs:domain :Map2d3dUnion ;
+            rdfs:range :BaseMap .
 
-#################################################################
-#    Data properties
-#################################################################
+
+:deactivesInteraction rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Map2d ;
+                      rdfs:range :DeactivableMappingInteraction .
+
+:hasConstrainedScaleRange rdf:type owl:ObjectProperty ;
+                          rdfs:comment """Describes a constrained range of visualisation scale (defined using scale:Scale so either as zoom level or as resolution)."""@en ;
+                          rdfs:domain :Map2d ;
+                          rdfs:range scale:Scale .
 
 :hasDayNightMode rdf:type owl:DatatypeProperty ;
                  rdfs:domain :InterfacePreferences ;
                  rdfs:range [
-                   rdf:type rdfs:Datatype ;
-                   owl:oneOf ( "DayMode"^^xsd:string "NightMode"^^xsd:string ) ;
-                 ] .
+                              rdf:type rdfs:Datatype ;
+                              owl:oneOf ( "DayMode"^^xsd:string "NightMode"^^xsd:string ) ;
+                          ] .
 
 :widthPx rdf:type owl:DatatypeProperty ;
-            rdfs:domain :ClientMapObject ;
-            rdfs:range xsd:integer .
+         rdfs:domain :Component ;
+         rdfs:range xsd:integer .
 
 :heightPx rdf:type owl:DatatypeProperty ;
-             rdfs:domain :ClientMapObject ;
-             rdfs:range xsd:integer .
+          rdfs:domain :Component ;
+          rdfs:range xsd:integer .
 
-:mapExtent rdf:type owl:ObjectProperty ;
-           rdfs:domain :ClientMapObject ;
+:widthRelative rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Component ;
+               rdfs:range xsd:string .
+
+:heightRelative rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Component ;
+                rdfs:range xsd:string .
+
+:position rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Component ;
+          rdfs:range [
+                       rdf:type rdfs:Datatype ;
+                       owl:oneOf ( "top" "bottom" "left" "right" "top-left" "top-right" "bottom-left" "bottom-right" ) ;
+                   ] .
+
+:order rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Component ;
+       rdfs:range xsd:integer .
+
+:hasMapExtent rdf:type owl:ObjectProperty ;
+           rdfs:domain :Map2d3dUnion ;
            rdfs:range geo:Geometry .
+
+:graticule rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Map2d ;
+           rdfs:range xsd:boolean .
+
+:templateUrl a owl:DatatypeProperty ;
+               rdfs:domain :BaseMap ;
+               rdfs:range xsd:string .
+
+:displaySRS rdf:type owl:DatatypeProperty  ;
+               rdfs:domain :Map2d3dUnion .
+
+:resizable rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Component ;
+           rdfs:range xsd:boolean .
+
+:movable rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Component ;
+         rdfs:range xsd:boolean .
+
+:closable rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Component ;
+          rdfs:range xsd:boolean .
+
+#################################################################
+#    Other properties
+#################################################################
+
+<http://purl.org/dc/terms/right> rdf:type rdf:Property .
 
 #################################################################
 #    Classes
 #################################################################
+:Application a owl:Class ;
+            owl:equivalentClass gviz:GeoVisualApplication .
 
-<http://example.com/srs#SpatialReferenceSystem> rdf:type owl:Class .
+:Component a owl:Class ;
+           owl:equivalentClass gviz:GeoVisualComponent .
 
+:Map2d a owl:Class ;
+             owl:equivalentClass gviz:Map2dComponent ;
+             rdfs:subClassOf :Component .
+
+:Map3d a owl:Class ;
+             owl:equivalentClass gviz:Map3dComponent ;
+             rdfs:subClassOf :Component .
+
+:Map2d3dUnion a owl:Class ;
+              owl:unionOf (:Map2d  :Map3d) .
+
+:Table a owl:Class ;
+             owl:equivalentClass gviz:TableComponent ;
+             rdfs:subClassOf :Component .
+
+:StaticPanel a owl:Class ;
+             owl:equivalentClass gviz:StaticContentComponent ;
+             rdfs:subClassOf :Component .
 
 :VisualisationContext rdf:type owl:Class ;
-      rdfs:comment """
+                      rdfs:comment """
         The context in which the client is doing the geovisualisation task.
         It is described by a various parameters :
           - the user part (color blindness, displaying preferences)
@@ -125,41 +194,53 @@
         """@en .
 
 :UserContext rdf:type owl:Class ;
-     rdfs:comment """
+             rdfs:comment """
        The specific part of the visualisation context that is user-induced
        (such as its UI preference or being affected by a color
        vision impairment, for example)."""@en .
 
 :ColorVisionDeficiency rdf:type owl:Class ;
-    rdfs:comment """ ColorVisionDeficiency is
+                       rdfs:comment """ ColorVisionDeficiency is
       one of the two concepts allowing to describe the UserContext.
       If the UserContext is said having a ColorVisionDeficiency,
-      the infered portrayal rule will use adapted color schemes."""@en .
+      the inferred portrayal rule will use adapted color schemes."""@en .
 
+:Device rdf:type owl:Class .
+
+:Mobile rdf:type owl:Class ;
+        rdfs:subClassOf :Device .
+
+:Desktop rdf:type owl:Class ;
+        rdfs:subClassOf :Device .
+
+:Tablet rdf:type owl:Class ;
+         rdfs:subClassOf :Device .
+
+:DeactivableMappingInteraction rdf:type owl:Class .
+
+:zooming a :DeactivableMappingInteraction .
+:panning a :DeactivableMappingInteraction .
+:rotating a :DeactivableMappingInteraction .
 
 :InterfacePreferences rdf:type owl:Class ;
-    rdfs:comment """ InterfacePreferences is
+                      rdfs:comment """ InterfacePreferences is
       one of the two concepts allowing to describe the UserContext.
       It currently only allows to describe explicitly that the user
       want a "night-themed" or a "day-themed" interface."""@en .
 
-:ClientMapObject rdf:type owl:Class ;
-     rdfs:comment """
-       Part of the visualisation context. Describes a `map` element used for displaying information to the user."""@en .
-
 :MappingLibrary rdf:type owl:Class ;
-     rdfs:comment """
+                rdfs:comment """
        Part of the visualisation context. Describe an interactive mapping library (such as Leaflet.js)."""@en .
 
 :MappingLibrary2D rdf:type owl:Class ;
-     rdfs:subClassOf :MappingLibrary ;
-     rdfs:comment """
-       Describe a library usable for interactive 2D visualization of geospatial data."""@en .
+                  rdfs:subClassOf :MappingLibrary ;
+                  rdfs:comment """
+       Describe a library usable for interactive 2D visualisation of geospatial data."""@en .
 
 :MappingLibrary3D rdf:type owl:Class ;
-     rdfs:subClassOf :MappingLibrary ;
-     rdfs:comment """
-       Describe a library usable for interactive 3D visualization of geospatial data."""@en .
+                  rdfs:subClassOf :MappingLibrary ;
+                  rdfs:comment """
+       Describe a library usable for interactive 3D visualisation of geospatial data."""@en .
 
 :BaseMap rdf:type owl:Class ;
          rdfs:comment """Describe the reference to a specific cartographic base-map (such as Stamen Toner, OpenTopoMap, etc.)."""@en .
@@ -168,29 +249,32 @@
               rdfs:subClassOf :ColorVisionDeficiency .
 
 :Dichromacy rdf:type owl:Class ;
-              rdfs:subClassOf :ColorVisionDeficiency .
+            rdfs:subClassOf :ColorVisionDeficiency .
 
 :AnomalousTrichromacy rdf:type owl:Class ;
-              rdfs:subClassOf :ColorVisionDeficiency .
+                      rdfs:subClassOf :ColorVisionDeficiency .
+
+:openlayers a :MappingLibrary2D .
+:leaflet a :MappingLibrary2D .
+:itowns a :MappingLibrary3D .
+:openglobus a :MappingLibrary3D .
 
 :openTopoMapBaseMap a :BaseMap ;
                     :templateUrl "https://a.tile.opentopomap.org/{z}/{x}/{y}.png" ;
-                    :attribution """Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org/">SRTM</a> | Map style: © <a href="https://opentopomap.org/">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)""" .
-
+                    dct:rights """Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org/">SRTM</a> | Map style: © <a href="https://opentopomap.org/">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)""" .
 
 :stamenTonerBaseMap a :BaseMap ;
                     :templateUrl "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png" ;
-                    :attribution """"Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://www.openstreetmap.org/">OpenStreetMap</a> under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.""" .
-
+                    dct:rights """"Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://www.openstreetmap.org/">OpenStreetMap</a> under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.""" .
 
 :stamenWatercolorBaseMap a :BaseMap ;
                          :templateUrl "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png" ;
-                         :attribution """Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.""" .
-
+                         dct:rights """Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.""" .
 
 :osmDefaultBaseMap a :BaseMap ;
-                    :templateUrl "https://tile.openstreetmap.org/{z}/{x}/{y}.png" ;
-                    :attribution """© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors""" .
+                   :templateUrl "https://tile.openstreetmap.org/{z}/{x}/{y}.png" ;
+                   dct:rights """© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors""" .
 
-
-
+:arcgisOnlineWorldImagery a :BaseMap ;
+                            :templateUrl "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" ;
+                            dct:rights """"Esri, Maxar, Earthstar Geographics, USDA FSA, USGS, Aerogrid, IGN, IGP, and the GIS User Community""" .

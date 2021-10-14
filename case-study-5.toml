@@ -1,0 +1,17 @@
+title = "Case study with data from TSN / TSN-change graphs"
+
+covikoa-vocabularies = [
+  "./rdf/voc-huang-graphic.ttl",
+  "./rdf/voc-huang-symbol.ttl",
+  "./rdf/voc-huang-symbolizer.ttl",
+  "./rdf/voc-context.ttl", 
+  "./rdf/voc-geoviz.ttl",
+  "./rdf/voc-derivation.ttl",
+]
+
+target-semantic-data-model-files = [
+]
+
+derivation-model = "./rdf/case_study_5/derivation-model-ctsn.ttl"
+
+

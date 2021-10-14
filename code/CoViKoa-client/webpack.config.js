@@ -129,4 +129,5 @@ if (process.env.NODE_ENV === 'production') {
       deleteOriginalAssets: false,
     }),
   );
+  module.exports[0].optimization.minimize = true;
 }

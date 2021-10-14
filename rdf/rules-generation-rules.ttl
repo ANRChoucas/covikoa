@@ -6,10 +6,11 @@
 @prefix cvk-ir: <http://example.com/cvk-ir#> .
 @prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
 
 
-cvkr:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
+cvkd:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
     a sh:NodeShape ;
     rdfs:comment """Prepare the SHACL derivation rules which will be used to create the intermediate representation of the
                     individuals from the semantic data model to be portrayed."""@en ;
@@ -23,27 +24,31 @@ cvkr:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
             prefix geo: <http://www.opengis.net/ont/geosparql#>
             prefix geof: <http://www.opengis.net/def/function/geosparql/>
             prefix sh: <http://www.w3.org/ns/shacl#>
-            prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+            prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
             prefix ir: <http://example.com/cvk-ir#>
 
             CONSTRUCT {
                 ?uriThisRule
-                    a sh:NodeShape, cvkr:DerivationRule ;
-                    sh:targetSubjectsOf gviz:represents ;
+                    a sh:NodeShape, cvkd:DerivationRule ;
+                    sh:targetSubjectsOf cvkd:represents ;
                     sh:rule [ a sh:SPARQLRule ;
                               sh:construct ?ruleContent ;
                             ] .
             } WHERE {
                 ?protoapp rdfs:subClassOf gviz:GeoVisualApplication ;
-                   gviz:represents ?entrypointconcept .
+                   cvkd:represents ?entrypointconcept .
 
                 ?app a ?protoapp ;
-                    gviz:represents ?entrypoint .
+                    cvkd:represents ?entrypoint .
 
-                ?conceptGVR a owl:Class ;
-                   rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-                   cvkr:pathFromGVALiteral ?pathFromGVA ;
-                   gviz:represents ?concept .
+                {
+                    SELECT DISTINCT ?pathFromGVA ?conceptGVR ?concept WHERE {
+                        ?conceptGVR a owl:Class ;
+                           rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+                           cvkd:pathFromGVA ?pathFromGVA ;
+                           cvkd:represents ?concept .
+                    }
+                }
 
                 BIND(
                   URI(
@@ -55,13 +60,14 @@ cvkr:RuleGenerationDerivationRuleWithEntrypointAndPathToGVA
                     )
                   ) as ?uriThisRule) .
 
-                ?_ a cvkr:PrefixToInject ;
+                [] a cvkd:PrefixToInject ;
                     rdf:value ?pfxs .
 
                 BIND(CONCAT(\"\"\"
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
 prefix owl: <http://www.w3.org/2002/07/owl#> \n\"\"\",
 str(?pfxs), \"\"\"
 
@@ -70,11 +76,11 @@ CONSTRUCT {
        gviz:represents ?u .
 } WHERE {
     $this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-       gviz:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
+       cvkd:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
     ?u a \"\"\", "<", STR(?concept), ">", \"\"\" .
     NOT EXISTS { ?_ gviz:represents ?u . }
     \"\"\",
-    \"\"\"<\"\"\", STR(?entrypoint), \"\"\">\"\"\", STR(?pathFromGVA), \"\"\"?u .\"\"\",
+    \"\"\"<\"\"\", STR(?entrypoint), \"\"\"> \"\"\", cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?pathFromGVA), \"\"\" ?u .\"\"\",
     \"\"\"
 
     BIND(URI(CONCAT("urn:id:",STRUUID())) as ?thisIndiv) .
@@ -85,12 +91,12 @@ CONSTRUCT {
             ] .
 
 # TODO ? If the application defines an individual as entryPoint but does not provide the path to reach it..
-#cvkr:RuleGenerationDerivationRuleWithEntrypointButNoPathToGVA
+#cvkd:RuleGenerationDerivationRuleWithEntrypointButNoPathToGVA
 #    a sh:NodeShape ;
 #    sh:targetClass gviz:GeoVisualApplication ;
 
 
-cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
+cvkd:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
     a sh:NodeShape ;
     rdfs:comment """Prepare the SHACL derivation rules which will be used to create the intermediate representation of the
                     individuals from the semantic data model to be portrayed
@@ -105,28 +111,28 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
             prefix geo: <http://www.opengis.net/ont/geosparql#>
             prefix geof: <http://www.opengis.net/def/function/geosparql/>
             prefix sh: <http://www.w3.org/ns/shacl#>
-            prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+            prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
             prefix ir: <http://example.com/cvk-ir#>
 
             CONSTRUCT {
                 ?uriThisRule
-                    a sh:NodeShape, cvkr:DerivationRule ;
-                    sh:targetSubjectsOf gviz:represents ;
+                    a sh:NodeShape, cvkd:DerivationRule ;
+                    sh:targetSubjectsOf cvkd:represents ;
                     sh:rule [ a sh:SPARQLRule ;
                               sh:construct ?ruleContent ;
                             ] .
             } WHERE {
-                ?app rdf:type/rdfs:subClassOf gviz:GeoVisualApplication .
+                ?app rdf:type/rdfs:subClassOf* gviz:GeoVisualApplication .
 
                 FILTER (NOT EXISTS {
-                    ?app gviz:represents ?entrypoint .
+                    ?app cvkd:represents ?entrypoint .
                 })
 
                 {
                     SELECT DISTINCT ?conceptGVR ?concept WHERE {
                         ?conceptGVR a owl:Class ;
                            rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-                           gviz:represents ?concept .
+                           cvkd:represents ?concept .
                     }
                 }
 
@@ -140,13 +146,14 @@ cvkr:RuleGenerationDerivationRuleNoEntrypointNoPathFromGVA
                     )
                   ) as ?uriThisRule) .
 
-                ?_ a cvkr:PrefixToInject ;
+                [] a cvkd:PrefixToInject ;
                     rdf:value ?pfxs .
 
                 BIND(CONCAT(\"\"\"
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
 prefix owl: <http://www.w3.org/2002/07/owl#> \n\"\"\",
 str(?pfxs), \"\"\"
 
@@ -155,7 +162,7 @@ CONSTRUCT {
        gviz:represents ?u .
 } WHERE {
     $this rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-       gviz:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
+       cvkd:represents \"\"\", "<", STR(?concept), ">", \"\"\" .
     ?u a \"\"\", "<", STR(?concept), ">", \"\"\" .
     NOT EXISTS { ?_ gviz:represents ?u . }
     BIND(URI(CONCAT("urn:id:",STRUUID())) as ?thisIndiv) .
@@ -165,307 +172,689 @@ CONSTRUCT {
     """ ;
       ] .
 
-cvkr:RuleGenerationEnrichmentRulesNoPatternToMatch
+
+cvkd:RuleGenerationEnrichmentRules
     a sh:NodeShape ;
-    rdfs:comment """Prepare the various enrichment rules."""@en ;
-    sh:targetSubjectsOf gviz:denotesGVR;
+    rdfs:comment """Prepare the various enrichment rules for gviz:PortrayalRules that do not link to a TemplateSymbolizer ."""@en ;
+    sh:targetSubjectsOf cvkd:denotesGVR;
     sh:rule [                a sh:SPARQLRule ;
                              sh:construct """
-		    prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-		    prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-		    prefix owl: <http://www.w3.org/2002/07/owl#>
-            prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
-            prefix geo: <http://www.opengis.net/ont/geosparql#>
-            prefix geof: <http://www.opengis.net/def/function/geosparql/>
-            prefix sh: <http://www.w3.org/ns/shacl#>
-            prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
-
-            CONSTRUCT {
-                ?thisIndiv a sh:NodeShape , ?typeRule ;
-                           sh:targetClass ?conceptGVR ;
-                           sh:rule [ a sh:SPARQLRule ;
-                               sh:construct ?constructValue ;
-                           ] .
-            } WHERE {
-                $this gviz:denotesGVR ?conceptGVR .
-
-                ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-                      gviz:represents ?someConcept .
-
-                FILTER(NOT EXISTS {
-                    $this cvkr:hasMatchingPattern ?nothing .
-                })
-
-                OPTIONAL {
-                    $this cvkr:preTransformOperation ?preTransformOperation .
-                }
-                OPTIONAL {
-                    $this cvkr:transformOperationLiteral ?transformOperation .
-                }
-                OPTIONAL {
-                    $this cvkr:hasConditionFilter [
-                        rdfs:label ?nameConditionFilter ;
-                        rdf:value ?contentConditionFilter ;
-                    ] .
-                }
-
-                OPTIONAL {
-                    $this cvkr:onComponent ?compo .
-                }
-
-                # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
-                BIND(
-                    IF(
-                        BOUND(?contentConditionFilter),
-                        cvkr:ProblemSpecificEnrichmentRule,
-                        cvkr:DefaultEnrichmentRule
-                    ) as ?typeRule) .
-
-                # Prepare the IRI for this enrichment rule
-                BIND(
-                  URI(
-                    CONCAT(
-                      "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
-                      replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
-                      "-EnrichmentRule-",
-                      STRUUID()
-                    )
-                  ) as ?thisIndiv) .
-
-                ?_ a cvkr:PrefixToInject ;
-                    rdf:value ?pfxs .
-
-                # Prepare the value for the sh:construct predicate
-                BIND(CONCAT(
-\"\"\"
 prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
 prefix geo: <http://www.opengis.net/ont/geosparql#>
 prefix geof: <http://www.opengis.net/def/function/geosparql/>
-prefix prov: <http://www.w3.org/ns/prov#>
-prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
-prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
-prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
-str(?pfxs), \"\"\"
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
 
 CONSTRUCT {
-    $this gviz:hasPortrayal [
-        geo:hasGeometry [ geo:asWKT ?resGeom ] ;
-        gviz:hasPortrayalSymbolizer ?symblz ;
-        gviz:displayIndex ?di;
-        prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
-        prov:qualifiedGeneration ?gen ;
-        scale:hasScale ?scale ;
-        gviz:appearsIn ?component ;
-    ] .
-    ?component gviz:presentsGVR $this .
+  ?thisIndiv a sh:NodeShape , ?typeRule ;
+    sh:targetClass ?conceptGVR ;
+    sh:rule [ a sh:SPARQLRule ;
+      sh:construct ?constructValue ;
+  ] .
 } WHERE {
-    NOT EXISTS { $this gviz:hasPortrayal [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
-    BIND(<\"\"\", STR($this), \"\"\"> as ?symb) .
+  ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+              cvkd:represents ?someConcept .
 
-    ?symb gviz:denotesGVR ?thisKind ;
-          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
-    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } ) .\"\"\",
-IF(BOUND(?nameConditionFilter),
-CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
-\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
-),
-\"\"\"
-    $this a ?thisKind ;
-          gviz:represents ?somethingRepresentable .
-\"\"\",
-IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
-\"\"\"
-    BIND(cvkr:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry).\"\"\",
-IF(BOUND(?preTransformOperation), CONCAT(\"\"\"\n    \"\"\", ?preTransformOperation, \"\"\" .\"\"\"), \"\"\"\"\"\"),
-IF(BOUND(?transformOperation), CONCAT(\"\"\"\n    BIND(\"\"\", ?transformOperation, \"\"\" as ?newGeom)\"\"\"), \"\"\"\"\"\"),
+  $this cvkd:denotesGVR ?conceptGVR ;
+        gviz:hasPortrayalRule ?rule .
 
-\"\"\"
-    BIND(cvkr:UnPackGeomType(?somethingRepresentable) as ?geomType) .
-    FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#forType> ?geomType ; ]. } )
+  OPTIONAL {
+    $this cvkd:multipleGeometryType ?_multGeomType .
+  }
+  BIND(IF(Bound(?_multGeomType) && ?_multGeomType = true, true, false) as ?multipleGeomType)
 
-    OPTIONAL { ?symb gviz:displayIndex ?_di . }
-    BIND(IF(BOUND(?_di), ?_di, 500) as ?di) .
-    OPTIONAL { ?symb cvkr:onValidScale ?scale . }
+  # we generate one shacl rule of this type for each gviz:PortrayalRule that has symbolizer
+  FILTER (EXISTS { ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symbolizer . })
+  FILTER (NOT EXISTS { ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?symbolizer . })
 
-    BIND(IF(BOUND(?newGeom), ?newGeom, ?thisGeometry) as ?resGeom) .
-    BIND(cvkr:GetCurrentGenerationNode() as ?gen) . \"\"\",
-IF(BOUND(?compo),
-    CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
-    \"\"\"\n        ?app gviz:hasGeoVisualComponent ?component .\n        ?component a gviz:Map2dComponent .\n\"\"\"
-),
-\"\"\"
-}
-\"\"\"
-                ) as ?constructValue) .
-            }
-    """ ;
-      ] .
+  # Is there PropertyConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasPropertyConstraint ?propConstraint .
+  }
 
-
-cvkr:RuleGenerationEnrichmentRulesWithPatternToMatch
-    a sh:NodeShape ;
-    rdfs:comment """Prepare the various enrichment rules."""@en ;
-    sh:targetSubjectsOf gviz:denotesGVR;
-    sh:rule [                a sh:SPARQLRule ;
-                             sh:construct """
-		    prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-		    prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-		    prefix owl: <http://www.w3.org/2002/07/owl#>
-            prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
-            prefix geo: <http://www.opengis.net/ont/geosparql#>
-            prefix geof: <http://www.opengis.net/def/function/geosparql/>
-            prefix sh: <http://www.w3.org/ns/shacl#>
-            prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
-
-            CONSTRUCT {
-                ?thisIndiv a sh:NodeShape , ?typeRule ;
-                           sh:targetClass ?conceptGVR ;
-                           sh:rule [ a sh:SPARQLRule ;
-                               sh:construct ?constructValue ;
-                           ] .
-            } WHERE {
-                ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
-                      gviz:represents ?someConcept .
-
-                $this gviz:denotesGVR ?conceptGVR ;
-                      cvkr:hasMatchingPattern [ cvkr:patternPropertyLiteral ?patternPropLiteral ] .
-
-                OPTIONAL {
-                    $this cvkr:preTransformOperation ?preTransformOperation .
-                }
-                OPTIONAL {
-                    $this cvkr:transformOperationLiteral ?transformOperation .
-                }
-                OPTIONAL {
-                    $this cvkr:hasConditionFilter [
-                        rdfs:label ?nameConditionFilter ;
-                        rdf:value ?contentConditionFilter ;
-                    ] .
-                }
-
-                OPTIONAL {
-                    $this cvkr:onComponent ?compo .
-                }
-
-                # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
-                BIND(
-                    IF(
-                        BOUND(?contentConditionFilter),
-                        cvkr:ProblemSpecificEnrichmentRule,
-                        cvkr:DefaultEnrichmentRule
-                    ) as ?typeRule) .
-
-                # Prepare the IRI for this enrichment rule
-                BIND(
-                  URI(
-                    CONCAT(
-                      "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
-                      replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
-                      "-EnrichmentRule-",
-                      STRUUID()
-                    )
-                  ) as ?thisIndiv) .
-
-                ?_ a cvkr:PrefixToInject ;
-                    rdf:value ?pfxs .
-
-                # Prepare the value for the sh:construct predicate
-                BIND(CONCAT(
-                \"\"\"
-prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix owl: <http://www.w3.org/2002/07/owl#>
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix geo: <http://www.opengis.net/ont/geosparql#>
-prefix geof: <http://www.opengis.net/def/function/geosparql/>
-prefix prov: <http://www.w3.org/ns/prov#>
-prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
-prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
-prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
-str(?pfxs), \"\"\"
-
-CONSTRUCT {
-    $this gviz:hasPortrayal [
-        geo:hasGeometry [ geo:asWKT ?resGeom ] ;
-        gviz:hasPortrayalSymbolizer ?symblz ;
-        gviz:displayIndex ?di;
-        prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
-        prov:qualifiedGeneration ?gen ;
-        scale:hasScale ?scale ;
-        gviz:appearsIn ?component ;
-    ] .
-    ?component gviz:presentsGVR $this .
-} WHERE {
-    NOT EXISTS { $this gviz:hasPortrayal [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
-    BIND(<\"\"\", STR($this), \"\"\"> as ?symb) .
-
-    ?symb gviz:denotesGVR ?thisKind ;
-          <https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
-    FILTER ( NOT EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#TextSymbolizer> . } ) .\"\"\",
-IF(BOUND(?nameConditionFilter),
-CONCAT(\"\"\"\n    ?symb cvkr:hasConditionFilter [ rdfs:label \\"\"\"\", ?nameConditionFilter, \"\"\"\\" ] .\"\"\"),
-\"\"\"\n    FILTER (NOT EXISTS { ?symb cvkr:hasConditionFilter ?_ }) .\"\"\"
-),
-\"\"\"
-    $this a ?thisKind ;
-          gviz:represents ?somethingRepresentable .
-\"\"\",
-IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
-\"\"\"
-    BIND(cvkr:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry).\"\"\",
-IF(BOUND(?preTransformOperation), CONCAT(\"\"\"    \"\"\", ?preTransformOperation, \"\"\" .\"\"\"), \"\"\"\"\"\"),
-IF(BOUND(?transformOperation), CONCAT(\"\"\"    BIND(\"\"\", ?transformOperation, \"\"\" as ?newGeom)\"\"\"), \"\"\"\"\"\"),
-\"\"\"
-
-    {
-        # Symbolizers with a cvkr:patternObject
-        ?symblz cvkr:patternObject ?_tobj .
-        ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj .
-        FILTER(?qobj = ?_tobj).
-    } UNION {
-        # Symbolizers where cvkr:patternObject is cvkr:AbsentProperty
-        ?symblz cvkr:patternObject cvkr:AbsentProperty .
-        ?somethingRepresentable a <\"\"\", STR(?someConcept), \"\"\"> .
-        FILTER(NOT EXISTS { ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj . })
-    } UNION {
-        # Symbolizers that use cvkr:propertyIs(Less|Greater)Than[OrEqualTo]
-        OPTIONAL { ?symblz cvkr:propertyIsLessThanOrEqualTo ?comp_less_equal . }
-        OPTIONAL { ?symblz cvkr:propertyIsLessThan ?comp_less . }
-        OPTIONAL { ?symblz cvkr:propertyIsGreaterThanOrEqualTo ?comp_greater_equal . }
-        OPTIONAL { ?symblz cvkr:propertyIsGreaterThan ?comp_greater . }
-        FILTER(BOUND(?comp_less_equal) || BOUND(?comp_less) || BOUND(?comp_greater_equal) || BOUND(?comp_greater))
-        ?somethingRepresentable \"\"\", STR(?patternPropLiteral), \"\"\" ?qobj .
-        BIND(IF(BOUND(?comp_less_equal), ?comp_less_equal, 9999999999) AS ?_comp_less_equal).
-        BIND(IF(BOUND(?comp_less), ?comp_less, 9999999999) AS ?_comp_less).
-        BIND(IF(BOUND(?comp_greater_equal), ?comp_greater_equal, -9999999999) AS ?_comp_greater_equal).
-        BIND(IF(BOUND(?comp_greater), ?comp_greater, -9999999999) AS ?_comp_greater).
-        FILTER(?qobj < ?_comp_less && ?qobj <= ?_comp_less_equal && ?qobj > ?_comp_greater && ?qobj >= ?_comp_greater_equal).
+  # Is there SpatialConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasSpatialConstraint ?spatialConstraint .
+    OPTIONAL {
+        ?spatialConstraint cvkd:preludeBinding ?spatialConstraintPreBindings .
     }
+  }
 
-    BIND(cvkr:UnPackGeomType(?somethingRepresentable) as ?geomType) .
-    FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#forType> ?geomType ; ]. } )
+  # Is there a TransformOperation on the Portrayal or on the PortrayalRule ?
+  OPTIONAL {
+    $this cvkd:hasTransformOperation [ cvkd:preludeBinding ?preTransformOperationPortrayal ] .
+  }
+  OPTIONAL {
+    $this cvkd:hasTransformOperation ?transformOperationPortrayal .
+  }
+  OPTIONAL {
+    ?rule cvkd:hasTransformOperation [ cvkd:preludeBinding ?preTransformOperationRule ] .
+  }
+  OPTIONAL {
+    $this cvkd:hasTransformOperation ?transformOperationRule .
+  }
+  BIND(IF(BOUND(?preTransformOperationRule), ?preTransformOperationRule, ?preTransformOperationPortrayal) as ?preTransformOperation)
+  BIND(IF(BOUND(?transformOperationRule), ?transformOperationRule, ?transformOperationPortrayal) as ?transformOperation)
+  OPTIONAL {
+    $this cvkd:hasSPARQLFilter [
+        rdfs:label ?nameConditionFilter ;
+        rdf:value ?contentConditionFilter ;
+        ] .
+  }
 
-    OPTIONAL { ?symb gviz:displayIndex ?_di . }
-    BIND(IF(BOUND(?_di), ?_di, 500) as ?di) .
-    OPTIONAL { ?symb cvkr:onValidScale ?scale . }
+  OPTIONAL {
+    $this gviz:onComponent ?compo .
+    ?compo a ?compoType .
+    FILTER(?compoType in (gviz:Map2dComponent, gviz:Map3dComponent))
+  }
+
+  # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
+  BIND(
+    IF(
+      BOUND(?contentConditionFilter),
+      cvkd:ProblemSpecificEnrichmentRule,
+      cvkd:DefaultEnrichmentRule
+    ) as ?typeRule) .
+
+  # Prepare the IRI for this enrichment rule
+  BIND(
+    URI(
+      CONCAT(
+        "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
+        replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
+        "-EnrichmentRule-",
+        STRUUID()
+      )
+    ) as ?thisIndiv) .
+
+  [] a cvkd:PrefixToInject ;
+          rdf:value ?pfxs .
+
+  # Prepare the value for the sh:construct predicate
+  BIND(CONCAT(
+      \"\"\"
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix prov: <http://www.w3.org/ns/prov#>
+prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
+prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
+      str(?pfxs), \"\"\"
+
+CONSTRUCT {
+    $this gviz:hasMaterialisation ?materialisation .
+    ?materialisation
+        geo:hasGeometry [ geo:asWKT ?resGeom ] ;
+        gviz:isSymbolizedBy ?symblz ;
+        gviz:displayIndex ?di;
+        prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
+        prov:qualifiedGeneration ?gen ;
+        scale:hasScale ?scale ;
+        gviz:appearsIn ?component ;
+        cvkd:fromPortrayalRule ?rule .
+    ?component gviz:presentsGVR $this .
+} WHERE {
+    NOT EXISTS { $this gviz:hasMaterialisation [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
+    BIND(<\"\"\", STR($this), \"\"\"> as ?portrayal) .
+    # TODO: simplify the next line ...
+    BIND(\"\"\", IF(isBlank(?rule), CONCAT(\"\"\"<_:\"\"\", afn:bnode(?rule), \"\"\">\"\"\"), CONCAT(\"\"\"<\"\"\", STR(?rule), \"\"\">\"\"\")), \"\"\" as ?rule) .
+
+    ?portrayal cvkd:denotesGVR ?thisKind ;
+               gviz:hasPortrayalRule ?rule .
+
+    ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasSymbolizer> ?symblz .
+    OPTIONAL { ?rule cvkd:hasPropertyConstraint ?propConstraint . }
+
+    $this a ?thisKind ;
+          gviz:represents ?somethingRepresentable .
+    \"\"\",
+          IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
+          \"\"\"
+    BIND(cvkd:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry).
+    \"\"\",
+          IF(BOUND(?spatialConstraint), cvkd:RewriteSpatialConstraint_TODO(?spatialConstraint), \"\"\"\"\"\"),
+          IF(BOUND(?preTransformOperation), CONCAT(\"\"\"    \"\"\", ?preTransformOperation), \"\"\"\"\"\"),
+          IF(BOUND(?transformOperation), CONCAT(\"\"\"\n    BIND(\"\"\", cvkd:RewriteTransformOperationAsLiteral(?transformOperation), \"\"\" as ?newGeom)\n\"\"\"), \"\"\"\"\"\"),
+          IF(BOUND(?propConstraint), cvkd:RewritePropertyConstraint(?propConstraint, ?someConcept), \"\"\"\"\"\"),
+
+        IF(?multipleGeomType = true, \"\"\"
+    BIND(cvkd:UnpackGeomTypeFeature(?somethingRepresentable) as ?geomType) .
+    FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#defaultGeometryType> ?geomType ; ]. } )\"\"\", \"\"\"\"\"\"),
+    \"\"\"
+    OPTIONAL { ?portrayal gviz:displayIndex ?displayIndexPortrayal . }
+    OPTIONAL { ?rule gviz:displayIndex ?displayIndexRule . }
+    BIND(
+        IF(BOUND(?displayIndexRule),
+            ?displayIndexRule,
+            IF(BOUND(?displayIndexPortrayal), ?displayIndexPortrayal, 500))
+        as ?di) .
+
+    # Fetch the scale information, might have be defined on
+    # each PortrayalRule or on the Portrayal using it
+    OPTIONAL { ?portrayal scale:hasScale ?pScale . }
+    OPTIONAL { ?rule scale:hasScale ?rScale . }
+    BIND(IF(BOUND(?rScale), ?rScale, ?pScale) as ?scale).
 
     BIND(IF(BOUND(?newGeom), ?newGeom, ?thisGeometry) as ?resGeom) .
-    BIND(cvkr:GetCurrentGenerationNode() as ?gen) .\"\"\",
-IF(BOUND(?compo),
-    CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
-    \"\"\"\n        ?app gviz:hasGeoVisualComponent ?component .\n        ?component a gviz:Map2dComponent .\n\"\"\"
-),
-\"\"\"
+    BIND(cvkd:GetCurrentGenerationNode() as ?gen) .\"\"\",
+          IF(BOUND(?compo),
+            CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
+            \"\"\"\n    ?app gviz:hasGeoVisualComponent ?component .\n    ?component a gviz:Map2dComponent .\n\"\"\"
+          ),
+          \"\"\"
+    BIND(IRI(CONCAT("urn:materialisation:id:", STRUUID())) as ?materialisation) .
+    }
+    \"\"\"
+    ) as ?constructValue) .
 }
-\"\"\"
-                ) as ?constructValue) .
-            }
     """ ;
       ] .
 
+#####
+# TextSymbolizer
+#####
 
-cvkr:GenerateRuleForMapExtent
+cvkd:RuleCreationTextSymbolizerFromTemplateSymbolizer
+    a sh:NodeShape ;
+    rdfs:comment """Prepare the symbolizer (specific to a feature) from the provided template symbolizers."""@en ;
+    sh:targetSubjectsOf cvkd:denotesGVR ;
+    sh:rule [ a sh:SPARQLRule ;
+              sh:construct """
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+
+CONSTRUCT {
+  ?thisIndiv a sh:NodeShape , cvkd:SymbolizerCreationRule ;
+    sh:targetClass ?conceptGVR ; # TODO
+    sh:rule [ a sh:SPARQLRule ;
+      sh:construct ?constructValue ;
+  ] .
+} WHERE {
+  ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+              cvkd:represents ?someConcept .
+
+  $this cvkd:denotesGVR ?conceptGVR ;
+        gviz:hasPortrayalRule ?rule .
+
+  # for now we generate one shacl rule for each TemplateSymbolizer to derive..
+  FILTER (EXISTS { ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer . })
+  ?templateSymbolizer a <https://gis.lu.se/ont/data_portrayal/symbolizer#TemplateTextSymbolizer> .
+
+  # Possible customisable properties here, the other ones in the constructed rule
+  OPTIONAL {
+    ?templateSymbolizer graphic:hasFont/graphic:fontSize ?symblzFontSize .
+    OPTIONAL { ?symblzFontSize cvkd:valueOnProperty ?symblzFontSizeCustomisableGraphicValue . }
+    OPTIONAL { ?symblzFontSize cvkd:formula ?symblzFontSizeCustomisableGraphicValueFormula . }
+  }
+  OPTIONAL {
+    ?templateSymbolizer graphic:textLabel ?symblzTextLabel .
+    OPTIONAL { ?symblzTextLabel cvkd:valueOnProperty ?symblzTextLabelCustomisableGraphicValue . }
+  }
+
+  # Is there PropertyConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasPropertyConstraint ?propConstraint .
+  }
+
+  # Is there SpatialConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasSpatialConstraint ?spatialConstraint .
+    OPTIONAL {
+        ?spatialConstraint cvkd:preludeBinding ?spatialConstraintPreBindings .
+    }
+  }
+
+  OPTIONAL {
+    $this cvkd:hasSPARQLFilter [
+        rdfs:label ?nameConditionFilter ;
+        rdf:value ?contentConditionFilter ;
+        ] .
+  }
+
+  # Prepare the IRI for this symbolizer creation rule
+  BIND(
+    URI(
+      CONCAT(
+        "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
+        replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
+        "-TextSymbolizerCreationRule-",
+        STRUUID()
+      )
+    ) as ?thisIndiv) .
+
+  [] a cvkd:PrefixToInject ;
+          rdf:value ?pfxs .
+  # Prepare the value for the sh:construct predicate
+BIND(CONCAT(
+    \"\"\"
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix prov: <http://www.w3.org/ns/prov#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
+prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
+str(?pfxs), \"\"\"
+
+CONSTRUCT {
+  ?symblz a symblzr:TextSymbolizer .
+  ?symblz graphic:hasHalo ?halo .
+  ?symblz graphic:hasFont [
+    graphic:fontFamily ?symblzFontFamily ;
+    graphic:fontSize ?symblzFontSize ;
+    graphic:fontWeight ?symblzFontWeight ;
+  ] .
+  ?symblz graphic:hasFill [
+    graphic:fillColor ?symblzFillColor ;
+  ] .
+  ?symblz graphic:textLabel ?symblzTextLabel .
+} WHERE {
+  FILTER NOT EXISTS { ?symblz a symblzr:TextSymbolizer . }
+  BIND(<\"\"\", STR($this), \"\"\"> as ?portrayal) .
+  # TODO: simplify the next line ...
+  BIND(\"\"\", IF(isBlank(?rule), CONCAT(\"\"\"<_:\"\"\", afn:bnode(?rule), \"\"\">\"\"\"), CONCAT(\"\"\"<\"\"\", STR(?rule), \"\"\">\"\"\")), \"\"\" as ?rule) .
+
+  ?portrayal cvkd:denotesGVR ?thisKind ;
+             gviz:hasPortrayalRule ?rule .
+  ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer .
+  ?templateSymbolizer a <https://gis.lu.se/ont/data_portrayal/symbolizer#TemplateTextSymbolizer> .
+  OPTIONAL { ?rule cvkd:hasPropertyConstraint ?propConstraint . }
+
+  OPTIONAL { ?templateSymbolizer graphic:hasFont/graphic:fontFamily ?symblzFontFamily . }
+  OPTIONAL { ?templateSymbolizer graphic:hasFont/graphic:fontWeight ?symblzFontWeight . }
+  OPTIONAL { ?templateSymbolizer graphic:hasFill/graphic:fillColor ?symblzFillColor . }
+  OPTIONAL { ?templateSymbolizer graphic:hasHalo ?halo . }
+
+  $this a ?thisKind ;
+        gviz:represents ?somethingRepresentable .
+  \"\"\",
+        IF(BOUND(?spatialConstraint), CONCAT(\"\"\"    BIND(cvkd:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry)\n\"\"\", cvkd:RewriteSpatialConstraint_TODO(?spatialConstraint)), \"\"\"\"\"\"),
+        IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
+        IF(BOUND(?propConstraint), cvkd:RewritePropertyConstraint(?propConstraint, ?someConcept), \"\"\"\"\"\"),
+      IF(!ISLITERAL(?symblzTextLabel),
+        CONCAT(\"\"\"  ?somethingRepresentable \"\"\", cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?symblzTextLabelCustomisableGraphicValue), \"\"\" ?symblzTextLabel . \n\"\"\"),
+        CONCAT(\"\"\"  BIND(\\"\"\"\", STR(?symblzTextLabel), \"\"\"\\" as ?symblzTextLabel) . \n\"\"\")),
+      IF(!ISLITERAL(?symblzFontSize),
+        CONCAT(\"\"\"  ?somethingRepresentable \"\"\", cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?symblzFontSizeCustomisableGraphicValue), \"\"\" ?_symblzFontSize . \n\"\"\"),
+        CONCAT(\"\"\"  BIND(\\"\"\"\", STR(?symblzFontSize), \"\"\"\\"^^xsd:decimal as ?_symblzFontSize) . \n\"\"\")),
+      IF(BOUND(?symblzFontSizeCustomisableGraphicValueFormula),
+        CONCAT(\"\"\"  BIND((\"\"\", REPLACE(STR(?symblzFontSizeCustomisableGraphicValueFormula), "value", "_symblzFontSize"), \"\"\") as ?symblzFontSize) .\"\"\"),
+        \"\"\"  BIND(?_symblzFontSize as ?symblzFontSize) .\"\"\"),
+      \"\"\"
+  BIND(IRI(CONCAT("urn:symbolizer:id:", afn:localname(?somethingRepresentable), "-", afn:localname(?templateSymbolizer))) as ?symblz) .
+}\"\"\"
+  ) as ?constructValue) .
+}""" ;
+      ] .
+
+
+#####
+# PointSymbolizer
+#####
+
+cvkd:RuleCreationPointSymbolizerFromTemplateSymbolizer
+    a sh:NodeShape ;
+    rdfs:comment """Prepare the symbolizer (specific to a feature) from the provided template symbolizers."""@en ;
+    sh:targetSubjectsOf cvkd:denotesGVR ;
+    sh:rule [ a sh:SPARQLRule ;
+              sh:construct """
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+
+CONSTRUCT {
+  ?thisIndiv a sh:NodeShape , cvkd:SymbolizerCreationRule ;
+    sh:targetClass ?conceptGVR ;
+    sh:rule [ a sh:SPARQLRule ;
+      sh:construct ?constructValue ;
+  ] .
+} WHERE {
+  ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+              cvkd:represents ?someConcept .
+
+  $this cvkd:denotesGVR ?conceptGVR ;
+        gviz:hasPortrayalRule ?rule .
+
+  # for now we generate one shacl rule for each TemplateSymbolizer to derive..
+  FILTER (EXISTS { ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer . })
+  ?templateSymbolizer a <https://gis.lu.se/ont/data_portrayal/symbolizer#TemplatePointSymbolizer> .
+
+  # Possible customisable property here, the other ones in the constructed rule
+  OPTIONAL {
+    ?templateSymbolizer graphic:hasGraphicSymbol/graphic:size ?symblzSize .
+    OPTIONAL { ?symblzSize cvkd:valueOnProperty ?symblzSizeCustomisableGraphicValue . }
+    OPTIONAL { ?symblzSize cvkd:formula ?symblzSizeCustomisableGraphicValueFormula . }
+  }
+
+  # Is there PropertyConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasPropertyConstraint ?propConstraint .
+  }
+
+  # Is there SpatialConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasSpatialConstraint ?spatialConstraint .
+    OPTIONAL {
+        ?spatialConstraint cvkd:preludeBinding ?spatialConstraintPreBindings .
+    }
+  }
+
+  OPTIONAL {
+    $this cvkd:hasSPARQLFilter [
+        rdfs:label ?nameConditionFilter ;
+        rdf:value ?contentConditionFilter ;
+        ] .
+  }
+
+  # Prepare the IRI for this symbolizer creation rule
+  BIND(
+    URI(
+      CONCAT(
+        "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
+        replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
+        "-PointSymbolizerCreationRule-",
+        STRUUID()
+      )
+    ) as ?thisIndiv) .
+
+  [] a cvkd:PrefixToInject ;
+          rdf:value ?pfxs .
+  # Prepare the value for the sh:construct predicate
+BIND(CONCAT(
+    \"\"\"
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix prov: <http://www.w3.org/ns/prov#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
+prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
+str(?pfxs), \"\"\"
+
+CONSTRUCT {
+  ?symb a symb:Symbol .
+  ?symb dct:title ?symbTitle .
+  ?symb symblzr:hasSymbolizer ?symblz .
+  ?symblz a symblzr:PointSymbolizer .
+  ?symblz graphic:hasGraphicSymbol [
+    graphic:hasMark [
+        graphic:hasWellKnownName ?symblzNameMark ;
+        graphic:hasStroke [
+            graphic:strokeColor ?symblzStrokeColor ;
+        ] ;
+        graphic:hasFill [
+            graphic:fillColor ?symblzFillColor ;
+        ] ;
+    ] ;
+    graphic:size ?symblzSize ;
+  ] ;
+} WHERE {
+  FILTER NOT EXISTS { ?symblz a symblzr:PointSymbolizer . }
+  BIND(<\"\"\", STR($this), \"\"\"> as ?portrayal) .
+  # TODO: simplify the next line ...
+  BIND(\"\"\", IF(isBlank(?rule), CONCAT(\"\"\"<_:\"\"\", afn:bnode(?rule), \"\"\">\"\"\"), CONCAT(\"\"\"<\"\"\", STR(?rule), \"\"\">\"\"\")), \"\"\" as ?rule) .
+
+  ?portrayal cvkd:denotesGVR ?thisKind ;
+             gviz:hasPortrayalRule ?rule .
+  ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer .
+  OPTIONAL { ?rule cvkd:hasPropertyConstraint ?propConstraint . }
+
+  ?templateSymbolizer a symblzr:TemplatePointSymbolizer .
+  OPTIONAL { ?templateSymbolizer graphic:hasGraphicSymbol/graphic:hasMark/graphic:hasWellKnownName ?symblzNameMark . }
+  OPTIONAL { ?templateSymbolizer graphic:hasGraphicSymbol/graphic:hasMark/graphic:hasStroke/graphic:strokeColor ?symblzStrokeColor . }
+  OPTIONAL { ?templateSymbolizer graphic:hasGraphicSymbol/graphic:hasMark/graphic:hasFill/graphic:fillColor ?symblzFillColor . }
+
+  $this a ?thisKind ;
+        gviz:represents ?somethingRepresentable .
+  \"\"\",
+        IF(BOUND(?spatialConstraint), CONCAT(\"\"\"    BIND(cvkd:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry)\n\"\"\", cvkd:RewriteSpatialConstraint_TODO(?spatialConstraint)), \"\"\"\"\"\"),
+        IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
+        IF(BOUND(?propConstraint), cvkd:RewritePropertyConstraint(?propConstraint, ?someConcept), \"\"\"\"\"\"),
+      IF(!ISLITERAL(?symblzSize),
+        CONCAT(\"\"\"  ?somethingRepresentable \"\"\", cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?symblzSizeCustomisableGraphicValue), \"\"\" ?_symblzSize . \n     BIND(STR(?_symblzSize) AS ?symbTitle) .\n\"\"\"),
+        CONCAT(\"\"\"  BIND(\\"\"\"\", STR(?symblzSize), \"\"\"\\"^^xsd:decimal as ?_symblzSize) . \n\"\"\")),
+      IF(BOUND(?symblzSizeCustomisableGraphicValueFormula),
+        CONCAT(\"\"\"  BIND((\"\"\", REPLACE(STR(?symblzSizeCustomisableGraphicValueFormula), "value", "_symblzSize"), \"\"\") as ?symblzSize) .\"\"\"),
+        \"\"\"  BIND(?_symblzSize as ?symblzSize) .\"\"\"),
+      \"\"\"
+  BIND(IRI(CONCAT("urn:symbolizer:id:", afn:localname(?somethingRepresentable), "-", afn:localname(?templateSymbolizer))) as ?symblz) .
+  BIND(IRI(CONCAT("urn:symbol:id:", STRUUID())) as ?symb) .
+}\"\"\"
+  ) as ?constructValue) .
+}""" ;
+      ] .
+
+
+cvkd:RuleGenerationEnrichmentRulesWithTemplateSymbolizer
+    a sh:NodeShape ;
+    rdfs:comment """Prepare the various enrichment rules for gviz:PortrayalRules that link to a TemplateSymbolizer ."""@en ;
+    sh:targetSubjectsOf cvkd:denotesGVR;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+
+CONSTRUCT {
+  ?thisIndiv a sh:NodeShape , ?typeRule ;
+    sh:targetClass ?conceptGVR ;
+    sh:rule [ a sh:SPARQLRule ;
+      sh:construct ?constructValue ;
+  ] .
+} WHERE {
+  ?conceptGVR rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+              cvkd:represents ?someConcept .
+
+  $this cvkd:denotesGVR ?conceptGVR ;
+        gviz:hasPortrayalRule ?rule .
+
+  OPTIONAL {
+    $this cvkd:multipleGeometryType ?_multGeomType .
+  }
+  BIND(IF(Bound(?_multGeomType) && ?_multGeomType = true, true, false) as ?multipleGeomType)
+
+
+  # we generate one shacl rule of this type for each gviz:PortrayalRule that has template symbolizer
+  FILTER (EXISTS { ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer . })
+
+  # Is there PropertyConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasPropertyConstraint ?propConstraint .
+  }
+
+  # Is there SpatialConstraint on this PortrayalRule ?
+  OPTIONAL {
+    ?rule cvkd:hasSpatialConstraint ?spatialConstraint .
+    OPTIONAL {
+        ?spatialConstraint cvkd:preludeBinding ?spatialConstraintPreBindings .
+    }
+  }
+
+  # Is there a TransformOperation on the Portrayal or on the PortrayalRule ?
+  OPTIONAL {
+    $this cvkd:hasTransformOperation [ cvkd:preludeBinding ?preTransformOperationPortrayal ] .
+  }
+  OPTIONAL {
+    $this cvkd:hasTransformOperation ?transformOperationPortrayal .
+  }
+  OPTIONAL {
+    ?rule cvkd:hasTransformOperation [ cvkd:preludeBinding ?preTransformOperationRule ] .
+  }
+  OPTIONAL {
+    $this cvkd:hasTransformOperation ?transformOperationRule .
+  }
+  BIND(IF(BOUND(?preTransformOperationRule), ?preTransformOperationRule, ?preTransformOperationPortrayal) as ?preTransformOperation)
+  BIND(IF(BOUND(?transformOperationRule), ?transformOperationRule, ?transformOperationPortrayal) as ?transformOperation)
+  OPTIONAL {
+    $this cvkd:hasSPARQLFilter [
+        rdfs:label ?nameConditionFilter ;
+        rdf:value ?contentConditionFilter ;
+        ] .
+  }
+
+  OPTIONAL {
+    $this gviz:onComponent ?compo .
+    ?compo a ?compoType .
+    FILTER(?compoType in (gviz:Map2dComponent, gviz:Map3dComponent))
+  }
+
+  # Prepare the type of rule between DefaultEnrichmentRule and ProblemSpecificEnrichmentRule
+  BIND(
+    IF(
+      BOUND(?contentConditionFilter),
+      cvkd:ProblemSpecificEnrichmentRule,
+      cvkd:DefaultEnrichmentRule
+    ) as ?typeRule) .
+
+  # Prepare the IRI for this enrichment rule
+  BIND(
+    URI(
+      CONCAT(
+        "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#",
+        replace(STR($this), STR("http://example.com/cvk-ir#"), ""),
+        "-EnrichmentRule-",
+        STRUUID()
+      )
+    ) as ?thisIndiv) .
+
+  [] a cvkd:PrefixToInject ;
+          rdf:value ?pfxs .
+
+  # Prepare the value for the sh:construct predicate
+  BIND(CONCAT(
+      \"\"\"
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix geof: <http://www.opengis.net/def/function/geosparql/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix prov: <http://www.w3.org/ns/prov#>
+prefix scale: <https://gis.lu.se/ont/visualisation_scale#>
+prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> \n\"\"\",
+      str(?pfxs), \"\"\"
+
+CONSTRUCT {
+    $this gviz:hasMaterialisation ?materialisation .
+    ?materialisation
+        geo:hasGeometry [ geo:asWKT ?resGeom ] ;
+        gviz:isSymbolizedBy ?symblz ;
+        gviz:displayIndex ?di;
+        prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ;
+        prov:qualifiedGeneration ?gen ;
+        scale:hasScale ?scale ;
+        gviz:appearsIn ?component ;
+        cvkd:fromPortrayalRule ?rule .
+    ?component gviz:presentsGVR $this .
+} WHERE {
+    NOT EXISTS { $this gviz:hasMaterialisation [ prov:wasGeneratedBy <\"\"\", STR(?thisIndiv), \"\"\"> ; ] . }
+    BIND(<\"\"\", STR($this), \"\"\"> as ?portrayal) .
+    # TODO: simplify the next line ...
+    BIND(\"\"\", IF(isBlank(?rule), CONCAT(\"\"\"<_:\"\"\", afn:bnode(?rule), \"\"\">\"\"\"), CONCAT(\"\"\"<\"\"\", STR(?rule), \"\"\">\"\"\")), \"\"\" as ?rule) .
+
+    ?portrayal cvkd:denotesGVR ?thisKind ;
+               gviz:hasPortrayalRule ?rule .
+    ?rule gviz:hasSymbol/<https://gis.lu.se/ont/data_portrayal/symbolizer#hasTemplateSymbolizer> ?templateSymbolizer .
+    OPTIONAL { ?rule cvkd:hasPropertyConstraint ?propConstraint . }
+
+    $this a ?thisKind ;
+          gviz:represents ?somethingRepresentable .
+    \"\"\",
+          IF(BOUND(?contentConditionFilter), CONCAT(\"\"\"\n{\n\"\"\", STR(?contentConditionFilter), \"\"\"\n}\n\"\"\"), \"\"\"\"\"\"),
+          \"\"\"
+    BIND(cvkd:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry).\"\"\",
+          IF(BOUND(?spatialConstraint), cvkd:RewriteSpatialConstraint_TODO(?spatialConstraint), \"\"\"\"\"\"),
+          IF(BOUND(?preTransformOperation), CONCAT(\"\"\"    \"\"\", ?preTransformOperation), \"\"\"\"\"\"),
+          IF(BOUND(?transformOperation), CONCAT(\"\"\"    BIND(\"\"\", cvkd:RewriteTransformOperationAsLiteral(?transformOperation), \"\"\" as ?newGeom)\"\"\"), \"\"\"\"\"\"),
+          IF(BOUND(?propConstraint), cvkd:RewritePropertyConstraint(?propConstraint, ?someConcept), \"\"\"\"\"\"),
+
+        IF(?multipleGeomType = true, \"\"\"
+    BIND(cvkd:UnpackGeomTypeFeature(?somethingRepresentable) as ?geomType) .
+    FILTER ( EXISTS { ?symblz a [ <https://gis.lu.se/ont/data_portrayal/symbolizer#defaultGeometryType> ?geomType ; ]. } )\"\"\", \"\"\"\"\"\"),
+    \"\"\"
+    BIND(IRI(CONCAT("urn:symbolizer:id:", afn:localname(?somethingRepresentable), "-", afn:localname(?templateSymbolizer))) as ?symblz) .
+    FILTER ( EXISTS { ?symblz a <https://gis.lu.se/ont/data_portrayal/symbolizer#Symbolizer> . } )
+
+    OPTIONAL { ?portrayal gviz:displayIndex ?displayIndexPortrayal . }
+    OPTIONAL { ?rule gviz:displayIndex ?displayIndexRule . }
+    BIND(
+        IF(BOUND(?displayIndexRule),
+            ?displayIndexRule,
+            IF(BOUND(?displayIndexPortrayal), ?displayIndexPortrayal, 500))
+        as ?di) .
+
+    # Fetch the scale information, might have be defined on
+    # each PortrayalRule or on the Portrayal using it
+    OPTIONAL { ?portrayal scale:hasScale ?pScale . }
+    OPTIONAL { ?rule scale:hasScale ?rScale . }
+    BIND(IF(BOUND(?rScale), ?rScale, ?pScale) as ?scale).
+
+    BIND(IF(BOUND(?newGeom), ?newGeom, ?thisGeometry) as ?resGeom) .
+    BIND(cvkd:GetCurrentGenerationNode() as ?gen) .\"\"\",
+          IF(BOUND(?compo),
+            CONCAT(\"\"\"\n    BIND(<\"\"\", STR(?compo), \"\"\"> as ?component).\n\"\"\"),
+            \"\"\"\n    ?app gviz:hasGeoVisualComponent ?component .\n    ?component a gviz:Map2dComponent .\n\"\"\"
+          ),
+          \"\"\"
+    BIND(IRI(CONCAT("urn:materialisation:id:", STRUUID())) as ?materialisation) .
+    }
+    \"\"\"
+    ) as ?constructValue) .
+}
+""" ;
+      ] .
+
+
+cvkd:GenerateRuleForMapExtent
     a sh:NodeShape ;
     rdfs:comment """
         Generate the rule (if needed by the Derivation Model) that will allow to compute the initial extent to geovisualise.
@@ -483,20 +872,18 @@ cvkr:GenerateRuleForMapExtent
             prefix geo: <http://www.opengis.net/ont/geosparql#>
             prefix geof: <http://www.opengis.net/def/function/geosparql/>
             prefix sh: <http://www.w3.org/ns/shacl#>
-            prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
-            prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
+            prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+            prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
 
             CONSTRUCT {
-                ?uriThisRule a sh:NodeShape , cvkr:EnrichmentRule  ;
-                           sh:targetClass cvc:ClientMapObject ;
+                ?uriThisRule a sh:NodeShape , cvkd:EnrichmentRule  ;
+                           sh:targetClass gviz:Map2dComponent , gviz:Map3dComponent ;
                            sh:rule [ a sh:SPARQLRule ;
                                sh:construct ?ruleContent ;
                            ] .
             } WHERE {
-                $this gviz:hasGeoVisualComponent ?compo ;
-                     cvc:hasVisualisationContext ?context .
-                ?context cvc:hasMap [ owl:sameAs ?compo ] .
-                ?compo cvkr:hasDefaultExtent ?stuff .
+                $this gviz:hasGeoVisualComponent ?compo .
+                ?compo cvkd:hasDefaultExtent ?stuff .
 
                 BIND(
                   URI(
@@ -515,34 +902,91 @@ prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
 prefix geo: <http://www.opengis.net/ont/geosparql#>
 prefix geof: <http://www.opengis.net/def/function/geosparql/>
 prefix sh: <http://www.w3.org/ns/shacl#>
-prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
-prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
 prefix prov: <http://www.w3.org/ns/prov#>
-prefix fun: <http://lig-tdcge.imag.fr/steamer/covikoa/geo-agg#>
+prefix geoagg: <http://lig-tdcge.imag.fr/steamer/covikoa/geo-agg#>
 
 CONSTRUCT {
-    $this cvc:mapExtent [ a geo:Geometry ;
+    $this cvkc:hasMapExtent [ a geo:Geometry ;
         geo:asWKT ?geomExtent ;
         prov:wasGeneratedBy <\"\"\", STR(?uriThisRule), \"\"\"> ;
         prov:qualifiedGeneration ?gen ;
     ] .
 } WHERE {
-    NOT EXISTS { $this cvc:mapExtent ?_ } .
-    $this owl:sameAs ?geovisMapComponent .
-    ?geovisMapComponent a gviz:Map2dComponent ;
-                        cvkr:hasDefaultExtent ?concept .
+    NOT EXISTS { $this cvkc:hasMapExtent [] } .
+    $this cvkd:hasDefaultExtent ?concept .
+    FILTER EXISTS { ?targetIndiv a ?concept ;  geo:hasGeometry [ geo:asWKT ?geom ] . }
     {
-        SELECT (fun:Extent(?geom) as ?geomExtent) {
-            $this owl:sameAs ?geovisMapComponent .
-            ?geovisMapComponent a gviz:Map2dComponent ;
-            cvkr:hasDefaultExtent ?concept .
-
+        SELECT (geoagg:Extent(?geom) as ?geomExtent) {
+            {
+                $this a gviz:Map2dComponent ;
+                      cvkd:hasDefaultExtent ?concept .
+            } UNION {
+                $this a gviz:Map3dComponent ;
+                      cvkd:hasDefaultExtent ?concept .
+            }
             ?targetIndiv a ?concept ;
-            geo:hasGeometry [ geo:asWKT ?geom ] .
+                         geo:hasGeometry [ geo:asWKT ?geom ] .
         }
     }
-    BIND(cvkr:GetCurrentGenerationNode() as ?gen) .
+    FILTER (DATATYPE(?geomExtent) = geo:wktLiteral)
+    BIND(cvkd:GetCurrentGenerationNode() as ?gen) .
 }
                                 \"\"\") as ?ruleContent) .
             } """ ;
             ] .
+
+cvkd:GenerateRuleLinkingDenotesConcept
+    a sh:NodeShape ;
+    rdfs:comment """
+        Generate the rule that will allow to link Portrayal and Symbols
+        to the concept from the SDM they denote
+        (because the user did not write it explicitly in the derivation model).
+        """@en ;
+    sh:targetClass gviz:GeoVisualApplication ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+		    prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		    prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+		    prefix owl: <http://www.w3.org/2002/07/owl#>
+            prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+            prefix sh: <http://www.w3.org/ns/shacl#>
+            prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+            prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#>
+
+            CONSTRUCT {
+                ?uriThisRule a sh:NodeShape , cvkd:EnrichmentRule  ;
+                           sh:targetClass gviz:Portrayal ;
+                           sh:rule [ a sh:SPARQLRule ;
+                               sh:construct ?ruleContent ;
+                           ] .
+            } WHERE {
+
+                BIND(
+                  URI(
+                    CONCAT(
+                      "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#denotes-concept-linking",
+                      STRUUID()
+                    )
+                  ) as ?uriThisRule) .
+
+                BIND(CONCAT(
+                \"\"\"
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+
+CONSTRUCT {
+    $this gviz:denotesConcept ?concept .
+} WHERE {
+    NOT EXISTS { $this gviz:denotesConcept [] } .
+    $this cvkd:denotesGVR ?classIR .
+    ?classIR cvkd:represents ?concept . # We should unpack whats inside owl:unionOf if "?concept" is an union of concepts
+}
+                                \"\"\") as ?ruleContent) .
+            } """ ;
+      ] .

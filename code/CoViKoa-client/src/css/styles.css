@@ -1,3 +1,5 @@
+@import '~@lumino/default-theme/style/index.css';
+
 html {
   box-sizing: border-box;
   display: block;
@@ -5,9 +7,59 @@ html {
 
 body {
   display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(189, 189, 189);
 }
 
-.ol-map {
+/* The BoxPanel on which the elements are added */
+#main {
+  flex: 1 1 auto;
+  height: calc(100% - 5px);
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/* Style for the small tabs of dockpanel containing the widget title */
+.p-TabBar-tab, .lm-TabBar-tab {
+  flex: 0 1 225px !important;
+  border-top-right-radius: 3% 27%;
+  border-top-left-radius: 3% 27%;
+}
+
+/* Style for the dockpanel that may contains map and other widgets */
+#map-terrain-container {
   width: 100%;
-  height:800px;
+  flex: 1 1 auto;
+}
+
+
+/* Some relief on the tabBar content */
+ul.lm-TabBar-content.p-TabBar-content > li[aria-selected=true] {
+  box-shadow: grey 2px 1px 0px 0px;
+}
+
+ul.lm-TabBar-content.p-TabBar-content > li[aria-selected=false] {
+  box-shadow: grey 0px 0px 1px 0px;
+}
+
+/* Handlebar between widgets in DockPanel */
+div[data-orientation="vertical"].lm-DockPanel-handle.p-DockPanel-handle {
+  background: rgb(147, 147, 147);
+  box-shadow: rgb(103 58 183) 0px 0.5px 0.5px 0px;
+  height: 2px !important;
+}
+
+div[data-orientation="horizontal"].lm-DockPanel-handle.p-DockPanel-handle {
+  background: rgb(147, 147, 147);
+  box-shadow: rgb(103 58 183) 0.5px 0px 0.5px 0px;
+  width: 2px !important;
 }

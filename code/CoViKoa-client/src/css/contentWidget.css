@@ -1,0 +1,19 @@
+.cvk-ContentWidget {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1px;
+  background: white;
+  /* There may be a way to write just one of these things and postcss/autoprefix does the rest.
+    Anyway, depending on if we use a DockPanel, Lumino will override this with the real value
+    in px (but we need to define an initial behaviour + in case we use a BoxPanel instead of DockPanel). */
+  height: -webkit-fill-available;
+  height: -moz-available;
+  height: stretch;
+  height: 100%;
+}
+
+.cvk-ContentWidget > div {
+flex: 1 1 auto;
+overflow: auto;
+}

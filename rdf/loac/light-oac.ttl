@@ -11,10 +11,10 @@
 
 <http://purl.org/loac> a owl:Ontology ;
                        term:creator "Matthieu Viry"^^xsd:string , "Marlène Villanova-Oliver"^^xsd:string ;
-                       term:issued "2020-11-01"^^xsd:date ;
+                       term:issued "2021-06-01"^^xsd:date ;
                        vann:preferredNamespacePrefix "loac"^^xsd:string ;
                        vann:preferredNamespaceUri "http://purl.org/loac#"^^xsd:string ;
-                       owl:versionInfo "0.1.0"^^xsd:string ;
+                       owl:versionInfo "0.2.0"^^xsd:string ;
                        rdfs:label "Light Choucas Alert Ontology" ;
                        term:title "Light Choucas Alert Ontology (LOAC)" ;
                        term:license "http://creativecommons.org/licenses/by/4.0/"^^term:URI ;
@@ -81,13 +81,21 @@ term:title rdf:type owl:AnnotationProperty .
                  rdfs:label "Reference Object"@en, "Objet de Reference"@fr ;
                  rdfs:comment "These are elements of the territory that are mobilized as a reference by the caller when providing the various clues."@en .
 
-:RefObjectCategory a owl:Class ;
+:ReferenceObjectCategory a owl:Class ;
                    rdfs:label "Category of Reference Object"@en, "Categorie d'Objet de Reference"@fr ;
                    rdfs:comment "This is the category to which the reference objects belong (allows you to model categories such as PEAK, LAKE, ROAD, PATH, etc.)."@en .
 
 :LocationRelation a owl:Class ;
                   rdfs:label "Location Relation"@en, "Relation de Localisation"@fr ;
                   rdfs:comment "Describes a type of locational relationship, such as \"being close\" or \"seeing\" between the site (typically the victim) and the target (the object or type of object to which he or shes refers)."@en .
+
+:ProximityRelation a owl:Class ;
+                   rdfs:subClassOf :LocationRelation ;
+                   rdfs:label "Proximity Relation"@en , "Relation de proximité"@fr .
+
+:VisibilityRelation a owl:Class ;
+                rdfs:subClassOf :LocationRelation ;
+                rdfs:label "Visibility Relation"@en , "Relation de visibilité"@fr .
 
 :Confidence a owl:Class ;
             rdfs:label "Confidence"@en, "Confiance"@fr ;
@@ -122,12 +130,6 @@ geo:Geometry a owl:Class ;
                            rdfs:domain :Clue ;
                            rdfs:range :CompatibleLocationArea .
 
-:isCLAforClue a owl:ObjectProperty ;
-              rdfs:label "is CLA for Clue"@en, "est ZLC pour l'indice"@fr ;
-              rdfs:domain :CompatibleLocationArea ;
-              rdfs:range :Clue ;
-              owl:inverseOf :hasCompatibleLocationArea .
-
 :contains a owl:ObjectProperty ;
           rdfs:domain :InitialSearchArea ;
           rdfs:range :ReferenceObject ;
@@ -149,14 +151,14 @@ geo:Geometry a owl:Class ;
         rdfs:comment "The Probable Location Area is formed by merging the considered Compatible Location Areas."@en .
 
 :hasParentCategory a owl:ObjectProperty, owl:TransitiveProperty ;
-                   rdfs:range :RefObjectCategory ;
-                   rdfs:domain :RefObjectCategory ;
+                   rdfs:range :ReferenceObjectCategory ;
+                   rdfs:domain :ReferenceObjectCategory ;
                    rdfs:comment "Describes the parent category of a reference object category. These parent categories are not linked to objects but only to categories."@en .
 
-:hasRefObject a owl:ObjectProperty ;
-              rdfs:domain :RefObjectCategory ;
-              rdfs:range :ReferenceObject ;
-              owl:inverseOf :hasCategory .
+:hasObject a owl:ObjectProperty ;
+           rdfs:domain :ReferenceObjectCategory ;
+           rdfs:range :ReferenceObject ;
+           owl:inverseOf :hasCategory .
 
 :hasLocationRelation a owl:ObjectProperty ;
                      rdfs:domain :Clue ;
@@ -172,9 +174,13 @@ geo:Geometry a owl:Class ;
          rdfs:range :Victim ;
          rdfs:comment "Describes the site of a location relationship. This is typically the victim, for example, when he or she describes his or her location by saying \"I see a lake\"."@en .
 
+:hasVictim a owl:ObjectProperty ;
+           rdfs:domain :Alert ;
+           rdfs:range :Victim .
+
 :hasCategory a owl:ObjectProperty ;
              rdfs:domain :ReferenceObject ;
-             rdfs:range :RefObjectCategory .
+             rdfs:range :ReferenceObjectCategory .
 
 :hasConfidence a owl:ObjectProperty ;
                rdfs:domain :Clue ;
@@ -186,7 +192,16 @@ geo:Geometry a owl:Class ;
                       rdfs:range <https://www.w3.org/2006/time#TemporalEntity> ;
                       rdfs:comment "Relates to the temporal entity that makes it possible to describe the moment (instant, or temporal interval having a duration) at which the clue in question is valid."@en .
 
-:hasNaturalLanguageClue a owl:DatatypeProperty ;
+:hasNextClue a owl:ObjectProperty ;
+             rdfs:domain :Clue ;
+             rdfs:range :Clue .
+
+:hasPreviousClue a owl:ObjectProperty ;
+                 rdfs:domain :Clue ;
+                 rdfs:range :Clue ;
+                 owl:inverseOf :hasNextClue .
+
+:naturalLanguage a owl:DatatypeProperty ;
                         rdfs:domain :Clue ;
                         rdfs:range xsd:string ;
                         rdfs:comment "Links a clue to the corresponding speech fragment (recorded in natural language) of the caller."@en .
@@ -197,4 +212,4 @@ geo:hasGeometry a owl:ObjectProperty ;
                 rdfs:range geo:Geometry .
 
 [] a owl:AllDisjointClasses ;
-   owl:members ( :ReferenceObject :RefObjectCategory ) .
+   owl:members ( :ReferenceObject :ReferenceObjectCategory ) .

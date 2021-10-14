@@ -12,99 +12,108 @@
 :ReferenceObject a owl:Class ;
                  rdfs:subClassOf geo:Feature .
 
-:RefObjectCategory a owl:Class .
+:ReferenceObjectCategory a owl:Class .
 
 :hasCategory a owl:ObjectProperty ;
              rdfs:domain :ReferenceObject ;
-             rdfs:range :RefObjectCategory .
+             rdfs:range :ReferenceObjectCategory .
 
 :hasParentCategory a owl:ObjectProperty, owl:TransitiveProperty ;
-                   rdfs:range :RefObjectCategory ;
-                   rdfs:domain :RefObjectCategory .
+                   rdfs:range :ReferenceObjectCategory ;
+                   rdfs:domain :ReferenceObjectCategory .
 
-:hasRefObject a owl:ObjectProperty ;
-              rdfs:domain :RefObjectCategory ;
-              rdfs:range :ReferenceObject ;
-              owl:inverseOf :hasCategory .
+:hasObject a owl:ObjectProperty ;
+           rdfs:domain :ReferenceObjectCategory ;
+           rdfs:range :ReferenceObject ;
+           owl:inverseOf :hasCategory .
 
 [] a owl:AllDisjointClasses ;
-   owl:members ( :ReferenceObject :RefObjectCategory ) .
+   owl:members ( :ReferenceObject :ReferenceObjectCategory ) .
 
-:NATURAL a :RefObjectCategory ;
-    rdfs:label "Trucs du milieu naturel.." ;
-    rdfs:comment """
-      ..pour créer de la profondeur dans la hiérarchie d'objets
-      et tester la transitivité de la propriété oac:hasParentCategory..."""@fr .
+:NATURAL a :ReferenceObjectCategory ;
+    rdfs:label "Natural"@en , "Élements du milieu naturel"@fr .
 
-:HYDRO a :RefObjectCategory ;
-    rdfs:label "Objets relatifs à l'hydrologie."@fr ;
+:HUMAN-SETTL a :ReferenceObjectCategory ;
+           rdfs:label "Human settlement"@en , "Installations humaines"@fr .
+
+:HUMAN-FACILITIES a :ReferenceObjectCategory ;
+           rdfs:label "Human facilities"@en , "Équipement humains divers"@fr .
+
+:HYDRO a :ReferenceObjectCategory ;
+    rdfs:label "Hydrology"@en , "Hydrologie"@fr ;
     :hasParentCategory :NATURAL .
 
-:LAKE a :RefObjectCategory ;
-    rdfs:label "Lacs et plans d'eau"@fr ;
+:LAKE a :ReferenceObjectCategory ;
+    rdfs:label "Lakes and water bodies"@en , "Lacs et plans d'eau"@fr ;
     :hasParentCategory :HYDRO .
 
-:RIVER a :RefObjectCategory ;
-    rdfs:label "Rivières et ruisseaux"@fr ;
+:RIVER a :ReferenceObjectCategory ;
+    rdfs:label "Rivers and streams"@en , "Rivières et ruisseaux"@fr ;
     :hasParentCategory :HYDRO .
 
-:RESERVOIR a :RefObjectCategory ;
-    rdfs:label "Réservoirs"@fr ;
+:RESERVOIR a :ReferenceObjectCategory ;
+    rdfs:label "Water tanks"@en , "Réservoirs"@fr ;
     :hasParentCategory :HYDRO .
 
-:RELIEF a :RefObjectCategory ;
-    rdfs:label "Éléments de reliefs"@fr ;
+:RELIEF a :ReferenceObjectCategory ;
+    rdfs:label "Relief"@en , "Éléments de reliefs"@fr ;
     :hasParentCategory :NATURAL .
 
-:PEAK a :RefObjectCategory ;
-    rdfs:label "Pics et sommets"@fr ;
+:PEAK a :ReferenceObjectCategory ;
+    rdfs:label "Peaks and mountain tops"@en , "Pics et sommets"@fr ;
     :hasParentCategory :RELIEF .
 
-:COL a :RefObjectCategory ;
-    rdfs:label "Cols"@fr ;
+:COL a :ReferenceObjectCategory ;
+    rdfs:label "Mountain passes"@en , "Cols"@fr ;
     :hasParentCategory :RELIEF .
 
-:ROADS-PATHS-PISTES a :RefObjectCategory ;
-    rdfs:label "Voies de communications diverses."@fr ;
-    :hasParentCategory :INSTHUMAN .
+:COMMUNICATION-ROUTES a :ReferenceObjectCategory ;
+    rdfs:label "Communication routes"@en , "Voies de communications diverses."@fr ;
+    :hasParentCategory :HUMAN-FACILITIES .
 
-:ROAD a :RefObjectCategory ;
-    rdfs:label "Routes"@fr ;
-    :hasParentCategory :ROADS-PATHS-PISTES .
+:ROAD a :ReferenceObjectCategory ;
+    rdfs:label "Roads"@en , "Routes"@fr ;
+    :hasParentCategory :COMMUNICATION-ROUTES .
 
-:PATHWAY a :RefObjectCategory ;
-    rdfs:label "Chemins et sentiers"@fr ;
-    :hasParentCategory :ROADS-PATHS-PISTES .
+:PATHWAY a :ReferenceObjectCategory ;
+    rdfs:label "Paths and tracks"@en , "Chemins et sentiers"@fr ;
+    :hasParentCategory :COMMUNICATION-ROUTES .
 
-:PISTE a :RefObjectCategory ;
-    rdfs:label "Pistes de ski"@fr ;
-    :hasParentCategory :ROADS-PATHS-PISTES .
+:PISTE a :ReferenceObjectCategory ;
+    rdfs:label "Ski trails"@en , "Pistes de ski"@fr ;
+    :hasParentCategory :COMMUNICATION-ROUTES .
 
-:CITIES a :RefObjectCategory ;
-    rdfs:label "Objets représentant les villes et villages selon leur taille."@fr .
+:TOWN a :ReferenceObjectCategory ;
+    rdfs:label "Towns / large cities"@en , "Grandes villes"@fr ;
+    :hasParentCategory :HUMAN-SETTL .
 
-:TOWN a :RefObjectCategory ;
-    rdfs:label "Grandes villes"@fr ;
-    :hasParentCategory :CITIES .
+:CITY a :ReferenceObjectCategory ;
+    rdfs:label "Small-medium cities"@en , "Petites-moyennes villes"@fr ;
+    :hasParentCategory :HUMAN-SETTL .
 
-:CITY a :RefObjectCategory ;
-    rdfs:label "Petites-moyennes villes"@fr ;
-    :hasParentCategory :CITIES .
+:VILLAGE a :ReferenceObjectCategory ;
+    rdfs:label "Villages"@en , "Villages"@fr ;
+    :hasParentCategory :HUMAN-SETTL .
 
-:VILLAGE a :RefObjectCategory ;
-    rdfs:label "Villages"@fr ;
-    :hasParentCategory :CITIES .
+:ELECTRIC-NETWORK a :ReferenceObjectCategory ;
+    rdfs:label "Electricity network"@en , "Réseau électrique"@fr ;
+    :hasParentCategory :HUMAN-FACILITIES  .
 
-:INSTHUMAN a :RefObjectCategory ;
-    rdfs:label "Installations humaines diverses."@fr .
+:POWERLINE a :ReferenceObjectCategory ;
+               rdfs:label "Power lines"@en , "Lignes électriques"@fr ;
+               :hasParentCategory :ELECTRIC-NETWORK  .
 
-:POWERLINE a :RefObjectCategory ;
-    rdfs:label "Lignes électriques"@fr ;
-    :hasParentCategory :INSTHUMAN .
+:ELECTRIC-PYLON a :ReferenceObjectCategory ;
+                rdfs:label "Electric pylons"@en , "Pylône électrique"@fr ;
+                :hasParentCategory :ELECTRIC-NETWORK  .
 
-:SKILIFT a :RefObjectCategory ;
-    rdfs:label "Remontées mécaniques"@fr ;
-    :hasParentCategory :INSTHUMAN .
+:SKILIFT a :ReferenceObjectCategory ;
+    rdfs:label "Ski lifts"@en , "Remontées mécaniques"@fr ;
+    :hasParentCategory :HUMAN-FACILITIES .
+
+:TELEPHONE-TOWER a :ReferenceObjectCategory ;
+         rdfs:label "Telephone towers"@en , "Tour de téléphonie"@fr ;
+         :hasParentCategory :HUMAN-FACILITIES .
 
 [] a owl:AllDifferent ;
-   owl:distinctMembers ( :SKILIFT :POWERLINE :INSTHUMAN :VILLAGE :CITY :TOWN :CITIES :PISTE :PATHWAY :ROAD :ROADS-PATHS-PISTES :COL :PEAK :RELIEF :RESERVOIR :RIVER :LAKE :HYDRO :NATURAL ) .
+   owl:distinctMembers ( :NATURAL :HUMAN-SETTL :HUMAN-FACILITIES :HYDRO :LAKE :RIVER :RESERVOIR :RELIEF :PEAK :COL :COMMUNICATION-ROUTES :ROAD :PATHWAY :PISTE :TOWN :CITY :VILLAGE :ELECTRIC-NETWORK :ELECTRIC-LINE :ELECTRIC-PYLON :SKILIFT :TELEPHONE-TOWER ) .

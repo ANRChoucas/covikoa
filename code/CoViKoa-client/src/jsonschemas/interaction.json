@@ -1,0 +1,21 @@
+{
+  interaction: "" // iri of the interaction
+  event: "" // iri of the event
+  ending: "" // type of ending
+  endingDuration: integer or null
+  analyticalPurpose: "" // iri of the analyticalPurpose
+  outcomes: [
+    {
+      "typeOutcome": "", // "target" or "rest"
+      selectionStrategyType: "", // type of selection strategy
+      selectionStrategyPropertyPath: "",
+      selectionStrategyTargetsEntitiesFrom: "",
+      onComponent: "", // iri of the component
+      symbolizer: {}, // the json specification of the symbolizer
+      symbolizerModifiers: [{
+        "property": "",
+        "value": "",
+      }]
+    }
+  ]
+}

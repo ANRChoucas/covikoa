@@ -1,0 +1,18 @@
+title = "Case study with NUTS2 data - Presents variation on writing the Derivation Model by using carto vocabulary"
+
+covikoa-vocabularies = [
+  "./rdf/voc-huang-graphic.ttl",
+  "./rdf/voc-huang-symbol.ttl",
+  "./rdf/voc-huang-symbolizer.ttl",
+  "./rdf/voc-huang-scale.ttl",
+  "./rdf/voc-context.ttl",
+  "./rdf/voc-geoviz.ttl",
+  "./rdf/voc-derivation.ttl",
+  "./rdf/voc-dicopal-2021-08-13.ttl",
+]
+
+target-semantic-data-model-files = [
+  "./rdf/case_study_6/nuts2-2013.ttl",
+]
+
+derivation-model = "./rdf/case_study_6/derivation-model-nuts2-with-carto.ttl"

@@ -1,10 +1,10 @@
-title = "Case study 1 with the Choucas Alert Ontology"
+title = "Case study 3 with the Choucas Alert Ontology, near Chantepérier"
 
 covikoa-vocabularies = [
-  "./rdf/voc-hh-graphic.ttl",
-  "./rdf/voc-hh-symbol.ttl",
-  "./rdf/voc-hh-symbolizer.ttl",
-  "./rdf/voc-hh-scale.ttl",
+  "./rdf/voc-huang-graphic.ttl",
+  "./rdf/voc-huang-symbol.ttl",
+  "./rdf/voc-huang-symbolizer.ttl",
+  "./rdf/voc-huang-scale.ttl",
   "./rdf/voc-context.ttl",
   "./rdf/voc-geoviz.ttl",
   "./rdf/voc-derivation.ttl",

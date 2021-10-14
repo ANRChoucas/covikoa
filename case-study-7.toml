@@ -1,0 +1,21 @@
+title = "Case study 7, with NUTS2 data and 2 synchronized maps and many PropertyConstraints and SpatialConstraints, in order to show how they work"
+
+comment = "The various PropertyConstraints and SpatialConstraints aren't specifically interesting (from a thematic point of view) but they allow to demonstrate the various mechanisms embedded in CoViKoa"
+ 
+covikoa-vocabularies = [
+  "./rdf/voc-huang-graphic.ttl",
+  "./rdf/voc-huang-symbol.ttl",
+  "./rdf/voc-huang-symbolizer.ttl",
+  "./rdf/voc-huang-scale.ttl",
+  "./rdf/voc-context.ttl", 
+  "./rdf/voc-geoviz.ttl",
+  "./rdf/voc-derivation.ttl",
+]
+
+target-semantic-data-model-files = [
+  "./rdf/case_study_7/nuts2-2013.ttl",
+]
+
+derivation-model = "./rdf/case_study_7/derivation-model-nuts2.ttl"
+
+

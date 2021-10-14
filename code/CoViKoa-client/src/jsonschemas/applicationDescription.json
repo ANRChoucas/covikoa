@@ -1,0 +1,20 @@
+{
+  app: {
+    iri: '',
+    title: '',
+  },
+  components: [
+    {
+      iri: '',
+      type: '',
+      title: '',
+      position: '',
+      indexPosition: '',
+      width: '',
+      height: '',
+      options: {
+
+      }
+    }
+  ]
+}

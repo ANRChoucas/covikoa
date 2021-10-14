@@ -1,0 +1,432 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#> .
+@prefix dcpal: <http://purl.org/dicopal#> .
+
+
+cvkd:RuleGenerationIRClass
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:CartographicSolution ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+
+CONSTRUCT {
+	?UriIrClass a owl:Class ;
+             rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+             cvkd:represents ?conceptToDepict .
+} WHERE {
+  FILTER NOT EXISTS { ?UriIrClass rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation . }
+  ?cartosolution a carto:QuantitativeChoropleth ;
+                     carto:targetsSpatialFeature ?conceptToDepict .
+  BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?conceptToDepict), "-GVR")) as ?UriIrClass)
+}
+                             """ ; ] .
+
+
+cvkd:RuleGenerationPortrayal
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:QuantitativeChoropleth , carto:QualitativeChoropleth , carto:ProportionalSymbols , carto:Labeling  ;
+    # TODO: Maybe we should just enrich the carto:CartographicSolution instead of creating a new gviz:Portrayal ...
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+
+CONSTRUCT {
+	?uriPortrayal a gviz:Portrayal , ?cartoSolutionType .
+    ?uriPortrayal cvkd:denotesGVR ?UriIrClass .
+    ?uriPortrayal dct:title ?title .
+    ?uriPortrayal carto:targetsProperty ?property .
+    ?uriPortrayal carto:rendersNoData ?nodata .
+    ?uriPortrayal carto:hasPaletteScheme ?scheme .
+    ?uriPortrayal gviz:onComponent ?component .
+    ?uriPortrayal gviz:displayIndex ?di .
+} WHERE {
+  FILTER NOT EXISTS { ?UriIrClass rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation . }
+  $this a ?cartoSolutionType ;
+                   carto:targetsSpatialFeature ?conceptToDepict ;
+                   carto:targetsProperty ?property .
+
+  OPTIONAL { $this dct:title ?title . }
+  OPTIONAL { $this gviz:onComponent ?component . }
+  OPTIONAL { $this carto:rendersNoData ?nodata . }
+  OPTIONAL { $this carto:hasPaletteScheme ?scheme . }
+  OPTIONAL { $this gviz:displayIndex ?di . }
+  BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?conceptToDepict), "-GVR")) as ?UriIrClass)
+  BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname($this), "-Portrayal")) as ?uriPortrayal)
+}
+                             """ ; ] .
+
+
+cvkd:RuleGenerationPortrayalRulesAndSymbolizerQuantitativeChoroArea # Todo: write equivalent rules for Point and Line
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:QuantitativeChoropleth ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix dcpal: <http://purl.org/dicopal#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix list: <http://jena.apache.org/ARQ/list#>
+
+CONSTRUCT {
+	?uriPortrayalRule a gviz:PortrayalRule ;
+    	gviz:hasSymbol [
+      		symblzr:hasSymbolizer ?uriSymbolizer ;
+      		dct:title ?titleSymbolizer ;
+  		] ;
+    	cvkd:hasPropertyConstraint [
+            cvkd:propertyPath ?property ;
+            ?predicateStart ?startValue ;
+      		?predicateEnd ?endValue ;
+  		] .
+	?uriPortrayal gviz:hasPortrayalRule ?uriPortrayalRule .
+
+    ?uriSymbolizer a symblzr:PolygonSymbolizer .
+    ?uriSymbolizer graphic:hasFill [ a graphic:Fill ; graphic:fillColor ?color ; ] .
+    ?uriSymbolizer graphic:hasStroke [ a graphic:Stroke ; graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ; ] .
+} WHERE {
+
+  # What we want to transform in gviz:PortrayalRules
+  ?portr a carto:QuantitativeChoropleth .
+  # This is the rule for data of type carto:Area
+  FILTER (EXISTS { ?portr carto:ofData [ a carto:Area ] })
+
+   {     # First part of the union is for all the data classes ...
+      ?portr carto:targetsProperty ?property ;
+             carto:targetsSpatialFeature ?conceptToDepict ;
+             carto:hasDataBreaks ?breaks ;
+             carto:hasPaletteScheme ?palette .
+      # Number of data classes in ?breaks list
+      ?breaks list:length ?_length .
+      BIND(?_length - 1 as ?nbClass) .
+      # Get start and end value of the data class
+      ?breaks rdf:rest+ ?node .
+      ?node rdf:first ?endValue .
+      ?node ^rdf:rest/rdf:first ?startValue .
+      # Compute the ix of the data class
+      ?node list:length ?_lengthRest .
+      BIND(?_length - ?_lengthRest as ?ix) .
+
+      # Comparison operators for the PropertyConstraint
+      BIND(cvkd:valueIsGreaterThan as ?predicateStart)
+      BIND(cvkd:valueIsLessThanOrEqualTo as ?predicateEnd)
+
+      # Prepare label of the symbol
+      BIND(CONCAT("]",STR(?startValue), ";", STR(?endValue), "]") as ?titleSymbolizer)
+      # We dont care about the name of the portrayal rule..
+      BIND(URI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+      # Get the URI of the Portrayal to whom its supposed to be rattached
+      BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+      # Uri of symbolizer, based on the requested graphical data to be portrayed + palette + nb of classes for the palette + position (ix) in this palette
+      BIND(URI(CONCAT("urn:id:symbolizer:", afn:localname(carto:Area), "_", afn:localname(?palette), "_", STR(?nbClass), "_", STR(?ix))) as ?uriSymbolizer)
+
+      ?pal a dcpal:Palette ;
+            dcpal:hasScheme ?palette ;
+            dcpal:steps ?nbClass .
+
+      ?pal rdfs:member ?color .
+      ?pal ?pt ?color .
+      BIND(xsd:integer(SUBSTR(str(?pt), 45)) AS ?index) .
+      FILTER(?index = ?ix)
+
+	} UNION {     # Second part of the union is for possible No Data class
+
+      ?portr carto:targetsProperty ?property ;
+           carto:rendersNoData ?rendersNoData ;
+           carto:hasPaletteScheme ?palette .
+       FILTER(?rendersNoData = true)
+
+       # Comparison for the PropertyConstraint
+       BIND(cvkd:valueOrObjectIsEqualTo as ?predicateStart)
+       BIND(cvkd:absentProperty as ?startValue)
+       # Prepare label of the symbol
+       BIND("No data" as ?titleSymbolizer)
+       # We could reuse some value from elsewhere (ie the Derivation Model) but we use this default for now
+       BIND("rgba(127,127,127,1)"^^graphic:cssColorLiteral as ?color)
+       # We dont care about the name of the portrayal rule..
+       BIND(URI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+       # Get the URI of the Portrayal to whom its supposed to be rattached
+       BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+       # Uri of the symbolizer for no data ...
+       BIND(URI(CONCAT("urn:id:symbolizer:", afn:localname(carto:Area), "_", afn:localname(?palette), "_", "NoData")) as ?uriSymbolizer)
+ 	}
+}
+                             """ ; ] .
+
+cvkd:RuleGenerationPortrayalRulesAndSymbolizerQualitativeChoroArea # Todo: write equivalent rules for Point and Line
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:QualitativeChoropleth ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix dcpal: <http://purl.org/dicopal#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+prefix list: <http://jena.apache.org/ARQ/list#>
+
+CONSTRUCT {
+	?uriPortrayalRule a gviz:PortrayalRule ;
+    	gviz:hasSymbol [
+      		symblzr:hasSymbolizer ?uriSymbolizer ;
+      		dct:title ?titleSymbolizer ;
+  		] ;
+    	cvkd:hasPropertyConstraint [
+            cvkd:propertyPath ?property ;
+            ?predicate ?predicateValue ;
+  		] .
+	?uriPortrayal gviz:hasPortrayalRule ?uriPortrayalRule .
+
+    ?uriSymbolizer a symblzr:PolygonSymbolizer .
+    ?uriSymbolizer graphic:hasFill [ a graphic:Fill ; graphic:fillColor ?color ; ] .
+    ?uriSymbolizer graphic:hasStroke [ a graphic:Stroke ; graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ; ] .
+} WHERE {
+
+  # What we want to transform in gviz:PortrayalRules
+  ?portr a carto:QualitativeChoropleth .
+  # This is the rule for data of type carto:Area
+  FILTER (EXISTS { ?portr carto:ofData [ a carto:Area ] })
+
+   {     # First part of the union is for all the data classes ...
+      ?portr carto:targetsProperty ?property ;
+             carto:targetsSpatialFeature ?conceptToDepict ;
+             carto:hasCategories ?categories ;
+             carto:hasPaletteScheme ?palette .
+      # Number of data classes in ?categories list
+      ?categories list:length ?nbClass .
+      ?categories list:index (?ix ?predicateValue) .
+
+      # Comparison operator for the PropertyConstraint
+      BIND(cvkd:valueOrObjectIsEqualTo as ?predicate)
+
+      # Prepare label of the symbol
+      BIND(STR(?predicateValue) as ?titleSymbolizer)
+      # We dont care about the name of the portrayal rule..
+      BIND(URI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+      # Get the URI of the Portrayal to whom its supposed to be rattached
+      BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+      # Uri of symbolizer, based on the requested graphical data to be portrayed + palette + nb of classes for the palette + position (ix) in this palette
+      BIND(URI(CONCAT("urn:id:symbolizer:", afn:localname(carto:Area), "_", afn:localname(?palette), "_", STR(?nbClass), "_", STR(?ix))) as ?uriSymbolizer)
+
+      ?pal a dcpal:Palette ;
+            dcpal:hasScheme ?palette ;
+            dcpal:steps ?nbClass .
+
+      ?pal rdfs:member ?color .
+      ?pal ?pt ?color .
+      BIND(xsd:integer(SUBSTR(str(?pt), 45)) AS ?index) .
+      FILTER(?index = ?ix + 1)
+
+	} UNION {     # Second part of the union is for possible No Data class
+
+      ?portr carto:targetsProperty ?property ;
+           carto:rendersNoData ?rendersNoData ;
+           carto:hasPaletteScheme ?palette .
+       FILTER(?rendersNoData = true)
+
+       # Comparison for the PropertyConstraint
+       BIND(cvkd:valueOrObjectIsEqualTo as ?predicateStart)
+       BIND(cvkd:absentProperty as ?startValue)
+       # Prepare label of the symbol
+       BIND("No data" as ?titleSymbolizer)
+       # We could reuse some value from elsewhere (ie the Derivation Model) but we use this default for now
+       BIND("rgba(127,127,127,1)"^^graphic:cssColorLiteral as ?color)
+       # We dont care about the name of the portrayal rule..
+       BIND(URI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+       # Get the URI of the Portrayal to whom its supposed to be rattached
+       BIND(URI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+       # Uri of the symbolizer for no data ...
+       BIND(URI(CONCAT("urn:id:symbolizer:", afn:localname(carto:Area), "_", afn:localname(?palette), "_", "NoData")) as ?uriSymbolizer)
+ 	}
+}                             """ ; ] .
+
+cvkd:RuleGenerationPortrayalRulesAndSymbolizerProportionalSymbolsPointAndArea
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:ProportionalSymbols ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix dcpal: <http://purl.org/dicopal#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+
+CONSTRUCT {
+	?uriPortrayalRule a gviz:PortrayalRule ;
+    	gviz:hasSymbol [
+      		symblzr:hasTemplateSymbolizer ?uriSymbolizer ;
+      		# dct:title ?titleSymbolizer ;
+  		] .
+
+	?uriPortrayal gviz:hasPortrayalRule ?uriPortrayalRule .
+
+    ?uriSymbolizer a symblzr:TemplatePointSymbolizer .
+    ?uriSymbolizer graphic:hasGraphicSymbol [
+        graphic:hasMark [ a graphic:Mark ;
+                          graphic:hasWellKnownName graphic:circle ;
+                          graphic:hasStroke [ a graphic:Stroke ;
+                                              graphic:strokeColor ?strokeColor ;
+                            ] ;
+                          graphic:hasFill [ a graphic:Fill ;
+                                            graphic:fillColor ?fillColor ;
+                            ] ;
+          ] ;
+        graphic:size [ a cvkd:CustomisableGraphicValue;
+                           cvkd:valueOnProperty ?property ;
+                           cvkd:formula ?formula ;
+                     ] ;
+    ] .
+    # Only added if data is of carto:Area type
+	?uriPortrayal cvkd:hasTransformOperation ?b .
+    ?b <http://lig-tdcge.imag.fr/steamer/covikoa/geof#Centroid> ( [cvkd:variable "?thisGeometry"] ) .
+} WHERE {
+
+  # What we want to transform in gviz:PortrayalRules
+  ?portr a carto:ProportionalSymbols ;
+         carto:targetsProperty ?property ;
+         carto:targetsSpatialFeature ?conceptToDepict ;
+         graphic:fillColor ?fillColor ;
+         carto:maxSizePixel ?maxSize .
+
+  # Make the formula for this max size
+  BIND(CONCAT("afn:sqrt(?value/afn:pi()) / ", STR(?maxSize)) as ?formula)
+  # We dont care about the name of the portrayal rule..
+  BIND(IRI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+  # Get the IRI of the Portrayal to whom its supposed to be rattached
+  BIND(IRI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+  # IRI of the symbolizer
+  BIND(IRI(CONCAT("urn:id:template-symbolizer:", afn:localname(?portr))) as ?uriSymbolizer)
+  #
+  BIND("rgba(20,128,0,1)"^^graphic:cssColorLiteral as ?strokeColor)
+  # Do we need to bind a TransformOperation
+  OPTIONAL {
+    FILTER(EXISTS { ?port carto:ofData [ a carto:Area ]  } )
+    BIND(IRI(BNODE()) as ?b)
+  }
+}
+                             """ ; ] .
+
+cvkd:RuleGenerationPortrayalRulesAndSymbolizerLabelingPointLineArea
+    a sh:NodeShape ;
+    rdfs:comment """TODO"""@en ;
+    sh:targetClass carto:Labeling ;
+    sh:rule [                a sh:SPARQLRule ;
+                             sh:construct """
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+prefix carto: <http://lig-tdcge.imag.fr/steamer/covikoa/carto#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#>
+prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#>
+prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#>
+prefix afn: <http://jena.apache.org/ARQ/function#>
+
+CONSTRUCT {
+	?uriPortrayalRule a gviz:PortrayalRule ;
+    	gviz:hasSymbol [
+      		symblzr:hasTemplateSymbolizer ?uriSymbolizer ;
+      		# dct:title ?titleSymbolizer ;
+  		] .
+
+	?uriPortrayal gviz:hasPortrayalRule ?uriPortrayalRule .
+
+    ?uriSymbolizer a symblzr:TemplateTextSymbolizer .
+    ?uriSymbolizer graphic:hasHalo [ a graphic:Halo ] ;
+        graphic:hasFont [ a graphic:Font ;
+                          graphic:fontFamily "Arial" ;
+                          graphic:fontSize 12 ;
+                          graphic:fontWeight "bold" ;
+          ] ;
+        graphic:hasFill [ a graphic:Fill ;
+                          graphic:fillColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+          ] ;
+        graphic:textLabel [ a cvkd:CustomisableGraphicValue ;
+                              cvkd:valueOnProperty ?property ;
+                          ] .
+
+    # Only added if data is of carto:Area type
+	?uriPortrayal cvkd:transformOperation ?b .
+    ?b <http://lig-tdcge.imag.fr/steamer/covikoa/geof#Centroid> ( [cvkd:variable "?thisGeometry"] ) .
+} WHERE {
+
+  # What we want to transform in gviz:PortrayalRules
+  ?portr a carto:Labeling ;
+         carto:targetsProperty ?property ;
+         carto:targetsSpatialFeature ?conceptToDepict .
+
+  # We dont care about the name of the portrayal rule..
+  BIND(IRI(CONCAT("urn:id:portrayal-rule-", STRUUID())) as ?uriPortrayalRule)
+  # Get the IRI of the Portrayal to whom its supposed to be rattached
+  BIND(IRI(CONCAT("urn:id:covikoa-ir:", afn:localname(?portr), "-Portrayal")) as ?uriPortrayal)
+  # IRI of the symbolizer
+  BIND(IRI(CONCAT("urn:id:template-symbolizer:", afn:localname(?portr))) as ?uriSymbolizer)
+
+  # Do we need to bind a TransformOperation
+  OPTIONAL {
+    FILTER(EXISTS { ?port carto:ofData [ a carto:Area ]  } )
+    BIND(IRI(BNODE()) as ?b)
+  }
+}
+                             """ ; ] .

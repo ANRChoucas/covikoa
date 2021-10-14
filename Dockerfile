@@ -17,13 +17,13 @@ MAINTAINER Matthieu Viry <matthieu.viry@univ-grenoble-alpes.fr>
 
 ENV TZ=Europe/Paris
 
+ENV LANG='fr_FR.UTF-8' LANGUAGE='fr_FR'
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get -y update && apt-get -y upgrade
-
-RUN apt-get install -y software-properties-common openjdk-11-jdk nodejs python3-pip
-
-ENV LANG='fr_FR.UTF-8' LANGUAGE='fr_FR'
+RUN apt-get -y update \
+    && apt-get install -y --no-install-recommends software-properties-common openjdk-11-jre python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /home/app
 
@@ -31,9 +31,9 @@ COPY *.toml /home/app/
 
 COPY ./code /home/app/code
 
-RUN python3 -m pip install -r /home/app/code/CoViKoa/py-wrapper/requirements.txt
-
 COPY ./rdf /home/app/rdf
+
+RUN python3 -m pip install -r /home/app/code/CoViKoa/py-wrapper/requirements.txt
 
 EXPOSE 8000
 

@@ -6,11 +6,13 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
-@prefix cvkr: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
 @prefix cdp: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation-prefixes#> .
-@prefix cvc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
 
-# Here is a set of utility SPARQL functions used by CoViKoa rules.
+# Here is a set of utility SPARQL functions used by CoViKoa rules,
+# whether during the generation of said rules or
+# during their execution.
 
 cdp:
     a owl:Ontology ;
@@ -24,7 +26,7 @@ cdp:
                    sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
                ] ;
     sh:declare [
-                   sh:prefix "cvkr" ;
+                   sh:prefix "cvkd" ;
                    sh:namespace "http://lig-tdcge.imag.fr/steamer/covikoa/derivation#"^^xsd:anyURI ;
                ] ;
     sh:declare [
@@ -42,22 +44,35 @@ cdp:
     sh:declare [
                    sh:prefix "rdfs" ;
                    sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "rdf" ;
+                   sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "sh" ;
+                   sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI ;
+               ] ;
+    sh:declare [
+                   sh:prefix "xsd" ;
+                   sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ;
                ] .
 
-cvkr:GetCurrentGenerationNode
+
+cvkd:GetCurrentGenerationNode
     a sh:SPARQLFunction ;
     rdfs:comment """Returns the generation node (prov:Generation) corresponding to the current reasoning pass."""@en ;
     sh:prefixes cdp: ;
     sh:select """
         SELECT ?lastGenNode
         WHERE {
-            BIND(cvkr:Now() as ?dt) .
+            BIND(cvkd:Now() as ?dt) .
             ?lastGenNode a prov:Generation ;
                 prov:atTime ?dt .
         }
     """ .
 
-cvkr:Now
+cvkd:Now
     a sh:SPARQLFunction ;
     rdfs:comment """
         A function returning the starting datetime of execution of the current reasoning process
@@ -70,18 +85,18 @@ cvkr:Now
     sh:select """
         SELECT ?timestampValue
         WHERE {
-            ?timestamp a cvkr:RuleExecutionMarker ;
+            ?timestamp a cvkd:RuleExecutionMarker ;
                 time:inXSDDateTime ?timestampValue .
         }
         """ .
 
-cvkr:UnPackGeomWKT
+cvkd:UnPackGeomWKT
     a sh:SPARQLFunction ;
     rdfs:comment """
         Match the pattern allowing to retrieve the WKT geometry a geo:Feature.
         """@en ;
     sh:parameter [
-                     sh:path cvkr:op1 ;
+                     sh:path cvkd:op1 ;
                      sh:datatype xsd:anyURI ;
                      sh:description "The URI of the Feature for which we want to extract the WKT geometry."@en ;
                  ] ;
@@ -94,16 +109,16 @@ cvkr:UnPackGeomWKT
         }
     """ .
 
-cvkr:UnPackGeomType
+cvkd:UnpackGeomTypeFeature
     a sh:SPARQLFunction ;
     rdfs:comment """
-        Match the pattern allowing to retrieve the SF geometry type or returns sf:Geometry otherwise if the
-        type isn't specified and can't be retrieved from the WKT representation.
+        Match the pattern allowing to retrieve the SF geometry type of a geo:Feature,
+        or returns sf:Geometry otherwise if the type isn't specified and can't be retrieved from the WKT representation.
 
         Used for matching a geometry specific type of symbolizer (PointSymbolizer, LineSymbolizer, PolygonSymbolizer).
         """@en ;
     sh:parameter [
-                     sh:path cvkr:op1 ;
+                     sh:path cvkd:op1 ;
                      sh:datatype xsd:anyURI ;
                      sh:description "The URI of the Feature for which we want to know the SF geometry type."@en ;
                  ] ;
@@ -116,14 +131,793 @@ cvkr:UnPackGeomType
                 $op1 geo:hasGeometry [geo:asWKT ?geomFtWkt ; a ?gtype ] .
                 FILTER(CONTAINS(STR(?gtype), "http://www.opengis.net/ont/sf")) .
             } .
-            BIND(IF(BOUND(?gtype), ?gtype,
-                IF(CONTAINS(STR(?geomFtWkt), "MULTIPOINT"), IRI("http://www.opengis.net/ont/sf#MultiPoint"),
-                IF(CONTAINS(STR(?geomFtWkt), "POINT"), IRI("http://www.opengis.net/ont/sf#Point"),
-                IF(CONTAINS(STR(?geomFtWkt), "MULTILINESTRING"), IRI("http://www.opengis.net/ont/sf#MultiLineString"),
-                IF(CONTAINS(STR(?geomFtWkt), "LINESTRING"), IRI("http://www.opengis.net/ont/sf#LineString"),
-                IF(CONTAINS(STR(?geomFtWkt), "MULTIPOLYGON"), IRI("http://www.opengis.net/ont/sf#MultiPolygon"),
-                IF(CONTAINS(STR(?geomFtWkt), "POLYGON"), IRI("http://www.opengis.net/ont/sf#Polygon"),
-                IRI("http://www.opengis.net/ont/sf#Geometry"))))))))
+            BIND(IF(BOUND(?gtype), ?gtype, cvkd:UnpackGeomType(?geomFtWkt)) AS ?geomType).
+        }
+    """ .
+
+cvkd:UnpackGeomType
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Match the pattern allowing to retrieve the SF geometry type of a geo:Geometry,
+        or returns sf:Geometry otherwise if the type isn't specified and can't be retrieved from the WKT representation.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype geo:wktLiteral  ;
+          sh:description "The WKT geometry for which we want to know the SF geometry type."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+        SELECT ?geomType
+        WHERE {
+            BIND(IF(CONTAINS(STR($op1), "MULTIPOINT"), IRI("http://www.opengis.net/ont/sf#MultiPoint"),
+                IF(CONTAINS(STR($op1), "POINT"), IRI("http://www.opengis.net/ont/sf#Point"),
+                IF(CONTAINS(STR($op1), "MULTILINESTRING"), IRI("http://www.opengis.net/ont/sf#MultiLineString"),
+                IF(CONTAINS(STR($op1), "LINESTRING"), IRI("http://www.opengis.net/ont/sf#LineString"),
+                IF(CONTAINS(STR($op1), "MULTIPOLYGON"), IRI("http://www.opengis.net/ont/sf#MultiPolygon"),
+                IF(CONTAINS(STR($op1), "POLYGON"), IRI("http://www.opengis.net/ont/sf#Polygon"),
+                IRI("http://www.opengis.net/ont/sf#Geometry")))))))
             AS ?geomType).
         }
     """ .
+
+cvkd:RewritePropertyListAsLiteral
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a RDF list of property (SHACL SequencePath) to a SPARQL property path.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The RDF List."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+        SELECT ?chainliteral
+        WHERE {
+          {
+              # SELECT (CONCAT("<", (GROUP_CONCAT(?e;separator=">/<")), ">")  as ?chainliteral) WHERE {
+              SELECT (GROUP_CONCAT(?p;separator="/") as ?chainliteral) WHERE {
+                  $op1 rdf:rest*/rdf:first ?e .
+                  BIND(cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?e) as ?p)
+              } GROUP BY $op1
+          }
+        }
+    """ .
+
+cvkd:RewriteAlternativePathAsLiteral
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a SHACL AlternativePath to a SPARQL property path
+        (this AlternativePath can itself contain PropertyPaths or SequencePath).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The blank node corresponding to the shacl AlternativePath."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?value WHERE {
+    $op1 sh:alternativePath ?l  .
+    ?l rdf:first ?v1 ;
+       rdf:rest [ rdf:first ?v2 ] .
+    BIND(
+        CONCAT(
+            cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?v1),
+            "|",
+            cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?v2)
+        ) as ?value).
+}
+    """ .
+
+cvkd:RewriteInversePathAsLiteral
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a SHACL InversePath to a SPARQL property path
+        (this InversePath can itself contain PropertyPaths or SequencePath).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The blank node corresponding to the shacl InversePath."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?value WHERE {
+    $op1 sh:inversePath ?p  .
+    BIND(
+        CONCAT(
+            "^(",
+            cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?p),
+            ")"
+        ) as ?value).
+}
+    """ .
+
+
+cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a PredicatePath, a SequencePath or an AlternativePath (see https://www.w3.org/TR/shacl/#property-paths)
+        to a SPARQL property path.
+
+        Examples:
+            gviz:Prop -> <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop>
+            (gviz:Prop1 gviz:Prop2) -> <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop1>/<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop2>
+            [sh:alternativePath (gviz:PropA gviz:PropB)] -> <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>|<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropB>
+            [sh:alternativePath (gviz:PropA (gviz:Prop1stHalfB gviz:Prop2ndHalfB))] -> <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>|<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop1stHalfB>/<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop2ndHalfB>
+            [sh:inversePath gviz:Prop] -> ^(<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop>)
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "SHACL property path."@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+        SELECT ?value
+        WHERE {
+            BIND(cvkd:RewritePropertyListAsLiteral($op1) as ?r1) .
+            BIND(cvkd:RewriteAlternativePathAsLiteral($op1) as ?r2) .
+            BIND(cvkd:RewriteInversePathAsLiteral($op1) as ?r3) .
+            BIND(
+                IF(BOUND(?r1), ?r1,
+                    IF(BOUND(?r2), ?r2,
+                        IF(BOUND(?r3), ?r3,
+                            CONCAT("<", STR($op1), ">"))))
+                as ?value) .
+        }
+    """ .
+
+cvkd:RewritePropertyListPlusValueAsNestedPath # TODO: now unused ?
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a RDF list of property to a SPARQL nested path in blank nodes.
+        So cvkd:RewritePropertyListPlusValueAsNestedPath(?l, ?v)
+        where ?l is (ex:someProperty ex:someOtherProperty ex:someLastProperty)
+          and ?v is "someValue"^^xsd:string
+        returns the following string
+         "ex:someProperty [ ex:someOtherProperty [ ex:someLastProperty "someValue"^^xsd:string ] ] ."
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The RDF list."@en ;
+      ] ;
+    sh:parameter [
+        sh:path cvkd:op2 ;
+        sh:datatype xsd:anyType ;
+        sh:description "The value to be put at the end of the nested path."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?chainLiteral WHERE {
+    {
+        SELECT (REPLACE(CONCAT(GROUP_CONCAT(?e;separator=" [ "), " ", str(?newValue), GROUP_CONCAT(?endString)), "] $", ".") as ?chainLiteral) WHERE {
+            $op1 rdf:rest*/rdf:first ?_e .
+            BIND(CONCAT("<", STR(?_e), ">") as ?e) .
+            BIND(CONCAT(" ] ") as ?endString) .
+            BIND($op2 as ?newValue).
+        } GROUP BY ?newValue
+    }
+}
+""" .
+
+cvkd:RewritePropertyListAsNestedPathP1 # TODO: now unused ?
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a RDF list of property to a SPARQL nested path in blank nodes.
+        So when
+            ?l is (ex:someProperty ex:someOtherProperty ex:someLastProperty)
+        cvkd:RewritePropertyListAsNestedPathP1(?l) returns the following string
+            "ex:someProperty [ ex:someOtherProperty [ ex:someLastProperty"
+        and
+        cvkd:RewritePropertyListAsNestedPathP2(?l) returns the following string
+            "] ]"
+
+        So we can use the path defined in ?l to inject in SHACL-AF rules.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The RDF list."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?chainLiteral WHERE {
+    {
+        SELECT (GROUP_CONCAT(?e;separator=" [ ") as ?chainLiteral) WHERE {
+            $op1 rdf:rest*/rdf:first ?_e .
+            BIND(CONCAT("<", STR(?_e), ">") as ?e) .
+        } GROUP BY $op1
+    }
+}
+""" .
+
+cvkd:RewritePropertyListAsNestedPathP2 # TODO: now unused ?
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrite a RDF list of property to a SPARQL nested path in blank nodes.
+        So when
+            ?l is (ex:someProperty ex:someOtherProperty ex:someLastProperty)
+        cvkd:RewritePropertyListAsNestedPathP1(?l) returns the following string
+            "ex:someProperty [ ex:someOtherProperty [ ex:someLastProperty"
+        and
+        cvkd:RewritePropertyListAsNestedPathP2(?l) returns the following string
+            "] ]"
+
+        So we can use the path defined in ?l to inject in SHACL-AF rules.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The RDF list."@en ;
+      ] ;
+    sh:returnType xsd:anyURI ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?chainLiteral WHERE {
+    {
+        SELECT (REPLACE(GROUP_CONCAT(?endString), "] $", "") as ?chainLiteral) WHERE {
+            $op1 rdf:rest*/rdf:first ?_e .
+            BIND(CONCAT("<", STR(?_e), ">") as ?e) .
+            BIND(CONCAT(" ] ") as ?endString) .
+        } GROUP BY $op1
+    }
+}
+""" .
+
+
+cvkd:RewriteTransformOperationAsLiteral
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a cvkd:TransformOperation in a SPARQL literal form.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The IRI of the transform operation"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    {
+        $op1 ?fun ([?a ?_va] [?b ?_vb]) .
+        BIND(
+          IF(?a = cvkd:value,
+            CONCAT("\\\"", STR(?_va), "\\\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>"),
+            ?_va
+          ) as ?va)
+        BIND(
+          IF(?b = cvkd:value,
+            CONCAT("\\\"", STR(?_vb), "\\\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>"),
+            ?_vb
+          ) as ?vb)
+        BIND(CONCAT("<", STR(?fun), ">", "(", ?va, ", ", ?vb, ")") as ?rewroteValue) .
+    } UNION {
+        $op1 ?fun ([?a ?_va]) .
+        BIND(
+          IF(?a = cvkd:value,
+            CONCAT("\\\"", STR(?_va), "\\\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>"),
+            ?_va
+          ) as ?va)
+        BIND(CONCAT("<", STR(?fun), ">", "(", ?va, ")") as ?rewroteValue) .
+    }
+}
+""" .
+
+cvkd:RewriteIRIorLiteral
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a resource which may be an IRI or a Literal into its SPARQL literal form.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the value"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    BIND(IF(IsLiteral($op1), CONCAT('"', STR($op1), '"^^<', STR(IRI(datatype($op1))), '>'), CONCAT('<', STR($op1), '>')) as ?rewroteValue)
+}
+    """ .
+
+cvkd:RewritePropertyConstraintConstVariableName
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a Property Constraint (defined in the Derivation Model) into its SPARQL form (with hardcoded variable names).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the property constraint"@en ;
+      ] ;
+    sh:parameter [
+          sh:path cvkd:op2 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the class to which belong the entities concerned by the constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    $op1 cvkd:propertyPath ?_propertyPath .
+    BIND(cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?_propertyPath) as ?propertyPathLiteral) .
+
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsNotEqualTo ?valueOrObjectNotEqualTo .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo cvkd:absentProperty .
+      BIND(true as ?absentProperty) .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo cvkd:presentProperty .
+      BIND(true as ?presentProperty) .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo ?_valEqualTo .
+      FILTER(?_valEqualTo != cvkd:absentProperty && ?_valEqualTo != cvkd:presentProperty) .
+      BIND(true as ?valueOrObjectIsEqualToNoAbsent) .
+    }
+    OPTIONAL {
+      $op1 cvkd:objectOfType ?typeOfObjectOfType .
+    }
+    OPTIONAL {
+      $op1 cvkd:objectNotOfType ?typeOfObjectNotOfType .
+    }
+    OPTIONAL { $op1 cvkd:valueIsLessThanOrEqualTo ?comp_less_equal . }
+    OPTIONAL { $op1 cvkd:valueIsLessThan ?comp_less . }
+    OPTIONAL { $op1 cvkd:valueIsGreaterThanOrEqualTo ?comp_greater_equal . }
+    OPTIONAL { $op1 cvkd:valueIsGreaterThan ?comp_greater . }
+    BIND(IF(BOUND(?comp_less_equal), ?comp_less_equal, "INF"^^xsd:double) AS ?_comp_less_equal).
+    BIND(IF(BOUND(?comp_less), ?comp_less, "INF"^^xsd:double) AS ?_comp_less).
+    BIND(IF(BOUND(?comp_greater_equal), ?comp_greater_equal, "-INF"^^xsd:double) AS ?_comp_greater_equal).
+    BIND(IF(BOUND(?comp_greater), ?comp_greater, "-INF"^^xsd:double) AS ?_comp_greater).
+
+    BIND(
+        IF(BOUND(?valueOrObjectIsEqualToNoAbsent),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:valueOrObjectIsEqualTo
+    ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" ?qobj .
+    FILTER(?qobj = \"\"\", cvkd:RewriteIRIorLiteral(?_valEqualTo), \"\"\").
+    \"\"\"),
+        IF(BOUND(?valueOrObjectNotEqualTo),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:valueOrObjectIsNotEqualTo
+    ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" ?qobj .
+    FILTER(?qobj != \"\"\", cvkd:RewriteIRIorLiteral(?_valEqualTo), \"\"\").
+    \"\"\"),
+        IF(BOUND(?typeOfObjectOfType),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:objectOfType
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [ a \"\"\", cvkd:RewriteIRIorLiteral(?typeOfObjectOfType), \"\"\" ] .
+    })
+    \"\"\"),
+        IF(BOUND(?typeOfObjectNotOfType),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:objectNotOfType
+    # First, filter to get individuals with that property path ...
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] .
+    })
+    # But exclude those that are instance of ?typeOfObjectNotOfType
+    # (so we don't get ?somethingRepresentable that are not instance of ?typeOfObjectNotOfType but are also instance of other class(es))
+    FILTER(NOT EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [ a \"\"\", cvkd:RewriteIRIorLiteral(?typeOfObjectNotOfType), \"\"\" ] .
+    })
+    \"\"\"),
+        IF(BOUND(?absentProperty), CONCAT(\"\"\"
+    # Portrayal rule where cvkd:valueOrObjectIsEqualTo is cvkd:absentProperty
+    ?somethingRepresentable a <\"\"\", STR($op2), \"\"\"> .
+    FILTER(NOT EXISTS { ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" ?qobj . })
+    \"\"\"),
+        IF(BOUND(?presentProperty), CONCAT(\"\"\"
+    # Portrayal rule where cvkd:valueOrObjectIsEqualTo is cvkd:presentProperty
+    ?somethingRepresentable a <\"\"\", STR($op2), \"\"\"> .
+    FILTER(EXISTS { ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] . })
+    \"\"\"),
+        CONCAT(\"\"\"
+    # Portrayal rule that use cvkd:propertyIs(Less|Greater)Than[OrEqualTo]
+    ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" ?qobj .
+    FILTER(?qobj < \"\"\", cvkd:RewriteIRIorLiteral(?_comp_less), \"\"\"
+        && ?qobj <= \"\"\", cvkd:RewriteIRIorLiteral(?_comp_less_equal), \"\"\"
+        && ?qobj > \"\"\", cvkd:RewriteIRIorLiteral(?_comp_greater), \"\"\"
+        && ?qobj >= \"\"\", cvkd:RewriteIRIorLiteral(?_comp_greater_equal), \"\"\").
+    \"\"\")
+        )))))) as ?rewroteValue)
+}
+""" .
+
+
+cvkd:MakeRandomVarName
+    a sh:SPARQLFunction ;
+    rdfs:comment "Make a random variable name (based on uuid) for safe injection during rule generation"@en ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?v WHERE {
+    BIND(CONCAT(\"\"\"?var\"\"\", REPLACE(STRUUID(), "-", "")) as ?v)
+}
+""" .
+
+cvkd:RewritePropertyConstraintRandomVariableName
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a Property Constraint (defined in the Derivation Model) into its SPARQL form.
+        It uses random variable names so that we can include multiple property constraints without clash in the generated rule.
+        """@en ;
+    sh:parameter [
+            sh:path cvkd:op1 ;
+            sh:datatype xsd:anyURI ;
+            sh:description "The uri of the property constraint"@en ;
+      ] ;
+    sh:parameter [
+            sh:path cvkd:op2 ;
+            sh:datatype xsd:anyURI ;
+            sh:description "The uri of the class to which belong the entities concerned by the constraint"@en ;
+                 ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    $op1 cvkd:propertyPath ?_propertyPath .
+    BIND(cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath(?_propertyPath) as ?propertyPathLiteral) .
+
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsNotEqualTo ?valueOrObjectNotEqualTo .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo cvkd:absentProperty .
+      BIND(true as ?absentProperty) .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo cvkd:presentProperty .
+      BIND(true as ?presentProperty) .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueOrObjectIsEqualTo ?_valEqualTo .
+      FILTER(?_valEqualTo != cvkd:absentProperty && ?_valEqualTo != cvkd:presentProperty) .
+      BIND(true as ?valueOrObjectIsEqualToNoAbsent) .
+    }
+    OPTIONAL {
+      $op1 cvkd:objectOfType ?typeOfObjectOfType .
+    }
+    OPTIONAL {
+      $op1 cvkd:objectNotOfType ?typeOfObjectNotOfType .
+    }
+    OPTIONAL {
+      $op1 cvkd:valueIsLike ?typeOfObjectOfType .
+    }
+    OPTIONAL { $op1 cvkd:valueIsLessThanOrEqualTo ?comp_less_equal . }
+    OPTIONAL { $op1 cvkd:valueIsLessThan ?comp_less . }
+    OPTIONAL { $op1 cvkd:valueIsGreaterThanOrEqualTo ?comp_greater_equal . }
+    OPTIONAL { $op1 cvkd:valueIsGreaterThan ?comp_greater . }
+    BIND(IF(BOUND(?comp_less_equal), ?comp_less_equal, "INF"^^xsd:double) AS ?_comp_less_equal).
+    BIND(IF(BOUND(?comp_less), ?comp_less, "INF"^^xsd:double) AS ?_comp_less).
+    BIND(IF(BOUND(?comp_greater_equal), ?comp_greater_equal, "-INF"^^xsd:double) AS ?_comp_greater_equal).
+    BIND(IF(BOUND(?comp_greater), ?comp_greater, "-INF"^^xsd:double) AS ?_comp_greater).
+
+    # We need a random variable name so that we can include
+    # multiple property constraints without clash
+    BIND(cvkd:MakeRandomVarName() as ?v1)
+
+    BIND(
+        IF(BOUND(?valueOrObjectIsEqualToNoAbsent),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:valueOrObjectIsEqualTo
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" \"\"\", cvkd:RewriteIRIorLiteral(?_valEqualTo), \"\"\" .
+    })
+    \"\"\"),
+        IF(BOUND(?valueOrObjectNotEqualTo),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:valueOrObjectIsNotEqualTo
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] .
+    })
+    FILTER(NOT EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" \"\"\", cvkd:RewriteIRIorLiteral(?valueOrObjectNotEqualTo), \"\"\" .
+    })
+    \"\"\"),
+        IF(BOUND(?typeOfObjectOfType),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:objectOfType
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [ a \"\"\", cvkd:RewriteIRIorLiteral(?typeOfObjectOfType), \"\"\" ] .
+    })
+    \"\"\"),
+        IF(BOUND(?typeOfObjectNotOfType),
+              CONCAT(\"\"\"
+    # Portrayal rule with a cvkd:objectNotOfType
+    # First, filter to get individuals with that property path ...
+    FILTER(EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] .
+    })
+    # But exclude those that are instance of ?typeOfObjectNotOfType
+    # (so we don't get ?somethingRepresentable that are not instance of ?typeOfObjectNotOfType but are also instance of other class(es))
+    FILTER(NOT EXISTS {
+        ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [ a \"\"\", cvkd:RewriteIRIorLiteral(?typeOfObjectNotOfType), \"\"\" ] .
+    })
+    \"\"\"),
+        IF(BOUND(?absentProperty), CONCAT(\"\"\"
+    # Portrayal rule where cvkd:valueOrObjectIsEqualTo is cvkd:absentProperty
+    ?somethingRepresentable a <\"\"\", STR($op2), \"\"\"> .
+    FILTER(NOT EXISTS { ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] . })
+    \"\"\"),
+        IF(BOUND(?presentProperty), CONCAT(\"\"\"
+    # Portrayal rule where cvkd:valueOrObjectIsEqualTo is cvkd:presentProperty
+    FILTER(EXISTS { ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" [] . })
+    \"\"\"),
+        CONCAT(\"\"\"
+    # Portrayal rule that use cvkd:propertyIs(Less|Greater)Than[OrEqualTo]
+    ?somethingRepresentable \"\"\", STR(?propertyPathLiteral), \"\"\" \"\"\", ?v1, \"\"\" .
+    FILTER(\"\"\", ?v1, \"\"\" < \"\"\", cvkd:RewriteIRIorLiteral(?_comp_less), \"\"\"
+        && \"\"\", ?v1, \"\"\" <= \"\"\", cvkd:RewriteIRIorLiteral(?_comp_less_equal), \"\"\"
+        && \"\"\", ?v1, \"\"\" > \"\"\", cvkd:RewriteIRIorLiteral(?_comp_greater), \"\"\"
+        && \"\"\", ?v1, \"\"\" >= \"\"\", cvkd:RewriteIRIorLiteral(?_comp_greater_equal), \"\"\").
+    \"\"\")
+        )))))) as ?rewroteValue)
+}
+""" .
+
+cvkd:RewritePropertyConstraintLogicalAnd
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a logical "and" articulation between property constraints
+        (that may contain single property constraints or other logical articulation).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the property constraint"@en ;
+      ] ;
+    sh:parameter [
+          sh:path cvkd:op2 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the class to which belong the entities concerned by the constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    {
+        SELECT (GROUP_CONCAT(?v ; separator="\\n") as ?r) WHERE {
+            $op1 cvkd:and ?list .
+            ?list rdf:rest*/rdf:first ?e .
+            BIND(cvkd:RewritePropertyConstraint(?e, $op2) as ?v)
+        } GROUP BY $op1
+    }
+}
+""" .
+
+cvkd:RewritePropertyConstraintLogicalOr  # maybe using VALUES clause (https://www.w3.org/TR/sparql11-query/#inline-data) could be faster ?
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a logical "or" articulation between property constraints
+        (that may contain single property constraints or other logical articulation).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the property constraint"@en ;
+      ] ;
+    sh:parameter [
+          sh:path cvkd:op2 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the class to which belong the entities concerned by the constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    {
+        SELECT (CONCAT(\"\"\"{ \n\"\"\", GROUP_CONCAT(?v ; separator=\"\"\"\n} UNION {\n\"\"\"), \"\"\" } \n\"\"\") as ?r) WHERE {
+            $op1 cvkd:or ?list .
+            ?list rdf:rest*/rdf:first ?e .
+            BIND(
+              CONCAT(
+                \"\"\"     ?somethingRepresentable a <\"\"\", STR($op2), \"\"\"> . \n\"\"\", cvkd:RewritePropertyConstraint(?e, $op2)) as ?v)
+        } GROUP BY $op1
+    }
+}
+""" .
+
+cvkd:RewritePropertyConstraint
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a Property Constraint (either a single property constraint or property constraint with logical and/or)
+        into its SPARQL form.
+        """@en ;
+    sh:parameter [
+                     sh:path cvkd:op1 ;
+                     sh:datatype xsd:anyURI ;
+                     sh:description "The uri of the property constraint"@en ;
+                 ] ;
+    sh:parameter [
+                     sh:path cvkd:op2 ;
+                     sh:datatype xsd:anyURI ;
+                     sh:description "The uri of the class to which belong the entities concerned by the constraint"@en ;
+                 ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    OPTIONAL {
+      $op1 cvkd:and [] .
+      BIND(cvkd:RewritePropertyConstraintLogicalAnd($op1, $op2) as ?r)
+    }
+    OPTIONAL {
+      $op1 cvkd:or [] .
+      BIND(cvkd:RewritePropertyConstraintLogicalOr($op1, $op2) as ?r)
+    }
+    OPTIONAL {
+      $op1 cvkd:propertyPath [] .
+      BIND(cvkd:RewritePropertyConstraintRandomVariableName($op1, $op2) as ?r)
+    }
+}
+""" .
+
+
+cvkd:RewriteSpatialConstraint
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a Spatial Constraint (defined in the Derivation Model) into its SPARQL form.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the spatial constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    $op1 a cvkd:SpatialConstraint ;
+         cvkd:hasPredicate ?predicate .
+    OPTIONAL { $op1 cvkd:preludeBinding ?preludeStuff }
+    OPTIONAL { $op1 cvkd:value ?value }
+    OPTIONAL { $op1 cvkd:variable ?variable }
+    BIND(IF(BOUND(?variable),
+        ?variable,
+        CONCAT("\\\"", STR(?value), "\\\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>")
+      ) as ?valueToConcat)
+    BIND(CONCAT("<", STR(?predicate), ">(?thisGeometry, ", ?valueToConcat, ")") AS ?rewroteValue)
+}
+    """ .
+
+cvkd:RewriteSpatialConstraintSingle
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a single Spatial Constraint (defined in the Derivation Model) into its SPARQL form.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the spatial constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?rewroteValue WHERE {
+    $op1 a cvkd:SpatialConstraint ;
+         cvkd:hasPredicate ?predicate .
+    OPTIONAL { $op1 cvkd:preludeBinding ?spatialConstraintPreBindings }
+    OPTIONAL { $op1 cvkd:value ?value }
+    OPTIONAL { $op1 cvkd:variable ?variable }
+
+    # The prelude bindings that may be present
+    BIND(
+        IF(BOUND(?spatialConstraintPreBindings), CONCAT(\"\"\"    \"\"\", ?spatialConstraintPreBindings), \"\"\"\"\"\")
+        as ?preludeStuff)
+
+    # The value, may be a variable name or a literal
+    BIND(IF(BOUND(?variable),
+        ?variable,
+        CONCAT("\\\"", STR(?value), "\\\"^^<http://www.opengis.net/ont/geosparql#wktLiteral>")
+      ) as ?valueToConcat)
+
+    # The whole rewrote value to be injected
+    BIND(
+        CONCAT(
+            ?preludeStuff,\"\"\"    FILTER(<\"\"\", STR(?predicate), \"\"\">(?thisGeometry, \"\"\", ?valueToConcat, \"\"\"))\"\"\")
+        AS ?rewroteValue)
+}
+    """ .
+
+cvkd:RewriteSpatialConstraintLogicalOr # maybe using VALUES clause (https://www.w3.org/TR/sparql11-query/#inline-data) could be faster ..
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a logical "or" articulation between spatial constraints
+        (that may contain single spatial constraints or other logical articulation).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the spatial constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    {
+        SELECT (CONCAT(\"\"\"{ \n\"\"\", GROUP_CONCAT(?v ; separator=\"\"\"\n} UNION {\n\"\"\"), \"\"\" } \n\"\"\") as ?r) WHERE {
+            $op1 cvkd:or ?list .
+            ?list rdf:rest*/rdf:first ?e .
+            BIND(
+                CONCAT(
+                    \"\"\"        $this a ?thisKind ; gviz:represents ?somethingRepresentable .\n        BIND(cvkd:UnPackGeomWKT(?somethingRepresentable) as ?thisGeometry). \n    \"\"\",
+                    cvkd:RewriteSpatialConstraint_TODO(?e, $op2)
+                ) as ?v)
+        } GROUP BY $op1
+    }
+}
+""" .
+
+cvkd:RewriteSpatialConstraintLogicalAnd
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a logical "and" articulation between spatial constraints
+        (that may contain single spatial constraints or other logical articulation).
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the spatial constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    {
+        SELECT (GROUP_CONCAT(?v ; separator="\\n") as ?r) WHERE {
+            $op1 cvkd:and ?list .
+            ?list rdf:rest*/rdf:first ?e .
+            BIND(cvkd:RewriteSpatialConstraint_TODO(?e, $op2) as ?v)
+        } GROUP BY $op1
+    }
+}
+""" .
+
+cvkd:RewriteSpatialConstraint_TODO
+    a sh:SPARQLFunction ;
+    rdfs:comment """
+        Rewrites a Spatial Constraint (either a single spatial constraint or spatial constraint with logical and/or)
+        into its SPARQL form.
+        """@en ;
+    sh:parameter [
+          sh:path cvkd:op1 ;
+          sh:datatype xsd:anyURI ;
+          sh:description "The uri of the spatial constraint"@en ;
+      ] ;
+    sh:returnType xsd:string ;
+    sh:prefixes cdp: ;
+    sh:select """
+SELECT ?r WHERE {
+    OPTIONAL {
+      $op1 cvkd:and [] .
+      BIND(cvkd:RewriteSpatialConstraintLogicalAnd($op1) as ?r)
+    }
+    OPTIONAL {
+      $op1 cvkd:or [] .
+      BIND(cvkd:RewriteSpatialConstraintLogicalOr($op1) as ?r)
+    }
+    OPTIONAL {
+      $op1 cvkd:hasPredicate [] .
+      BIND(cvkd:RewriteSpatialConstraintSingle($op1) as ?r)
+    }
+}
+""" .
+

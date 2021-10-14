@@ -1,0 +1,153 @@
+@prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix term: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@base <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+
+<http://lig-tdcge.imag.fr/steamer/covikoa/interaction> a owl:Ontology ;
+     term:creator "Matthieu Viry" ;
+     term:issued "2021-06-25"^^xsd:date ;
+     owl:versionInfo "0.1.0" ;
+     term:license "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^term:URI ;
+     vann:preferredNamespacePrefix "ion" ;
+     vann:preferredNamespaceUri "http://lig-tdcge.imag.fr/steamer/covikoa/interaction#"^^xsd:string ;
+     rdfs:comment """ The CoViKoa-interaction ontology is allows to describe interaction on geovisualisation component (and specifically the map) based on ..."""@en .
+
+ion:Interaction a owl:Class ;
+                rdfs:label "Interaction"@en , "Interaction"@fr ;
+                rdfs:comment "Describes a possible interaction with a component and the representations it presents."@en .
+
+ion:Event a owl:Class ;
+          rdfs:label "Event"@en , "Evenement"@fr ;
+          rdfs:comment """Describes the event that triggers the interaction.
+          Note that in our model, the event is necessarily triggered on one (or more) specific data feature(s) of the component
+          (such as a feature of the map or the line of a table), thus implicitly describing that it is this feature (or its data) that will be the object of the action performed.
+          We define instance of events, most of them can be triggered on a single feature (such as singleclick or mouseover)
+          but it can also captures event that concerns multiple features (such as a brushing event)."""@en .
+
+ion:AnalyticalPurpose a owl:Class ;
+                      rdfs:label "Analytical purpose"@en , "Finalite analytique"@fr ;
+                      rdfs:label """This is the analytical purpose for which this event is defined.
+                      It is through this concept (aided by the outcome defined) that we formalise the meaning given to an interaction and can translate this information into client-side computer code for a number of pre-defined cases."""@en .
+
+ion:Outcome a owl:Class ;
+            rdfs:label "Outcome"@en , "Resultat"@fr ;
+            rdfs:comment """It describes the result of the interaction.
+            This outcome is necessarily described by means of a property indicating the receiver component.
+            In the case where the interaction modifies the graphical properties of an object (for example to implement a highlighting technique), this outcome is also linked to a SymbolizerModifier."""@en .
+
+ion:SymbolizerModifier a owl:Class ;
+                       rdfs:label "Symbolizer Modifier"@en , "Modificateur de symboliseur"@fr ;
+                       rdfs:comment """Describes how to modify a symbolizer during an interaction (by specifying the path to the property and the new value)"""@en .
+
+ion:SelectionStrategy a owl:Class ;
+                      rdfs:label "Selection Strategy"@en , "Stratégie de sélection"@fr ;
+                      rdfs:comment """TODO"""@en .
+
+ion:Ending a owl:Class ;
+            rdfs:label "Ending"@en , "Fin"@fr ;
+            rdfs:comment """It describes what ends an interaction."""@en .
+
+ion:allowsInteraction a owl:ObjectProperty ;
+                      rdfs:label "allows Interaction"@en , "permet Interaction"@fr ;
+                      rdfs:domain [ a owl:Class ;
+                                    owl:unionOf (gviz:Portrayal gviz:PortrayalRule)
+                        ]  ;
+                      rdfs:range ion:Interaction .
+
+ion:targetsEntitiesFrom a owl:ObjectProperty ;
+                        rdfs:label "targets entities from"@en , "cible les entités de"@fr ;
+                        rdfs:domain ion:SelectionStrategy ;
+                        rdfs:range [ a owl:Class ;
+                                     owl:unionOf (gviz:Portrayal gviz:PortrayalRule)
+                          ]  .
+
+ion:isTriggeredBy a owl:ObjectProperty ;
+                  rdfs:domain ion:Interaction ;
+                  rdfs:range ion:Event .
+
+ion:hasTargetOutcome a owl:ObjectProperty ;
+                     rdfs:domain ion:Interaction ;
+                     rdfs:range ion:Outcome .
+
+ion:hasRestOutcome a owl:ObjectProperty ;
+                     rdfs:domain ion:Interaction ;
+                     rdfs:range ion:Outcome .
+
+ion:hasOutcomeSelectionStrategy a owl:ObjectProperty ;
+                                rdfs:domain ion:Outcome ;
+                                rdfs:range ion:SelectionStrategy .
+
+ion:propertyPath a rdf:Property ;
+                 rdfs:domain ion:SelectionStrategy .
+
+ion:onComponent a owl:ObjectProperty ;
+                rdfs:comment """Enables to specify on which component this Outcome applies."""@en ;
+                rdfs:domain ion:Outcome  ;
+                rdfs:range  gviz:GeoVisualComponent .
+
+ion:hasAnalyticalPurpose a owl:ObjectProperty ;
+        rdfs:domain ion:Interaction ;
+        rdfs:range ion:AnalyticalPurpose .
+
+ion:hasSymbolizerModifier a owl:ObjectProperty ;
+                       rdfs:comment """Links an Outcome to a SymbolizerModifier in order to describes how to modify a symbolizer during an interaction and on which component this appears."""@en ;
+                       rdfs:domain ion:Outcome ;
+                       rdfs:range ion:SymbolizerModifier .
+
+ion:hasInteractionSymbolizer a owl:ObjectProperty ;
+                             rdfs:comment """Specify a new symboliser to be used during an interaction. Using this property on an Outcome is exclusive with using the hasSymbolizerModifier property."""@en ;
+                             rdfs:domain ion:Outcome ;
+                             rdfs:range symblzr:Symbolizer .
+
+ion:seconds a owl:DatatypeProperty ;
+                rdfs:domain ion:Ending ;
+                rdfs:range xsd:integer .
+
+ion:singleClick a ion:Event ;
+                rdfs:label "singleclick"@en .
+
+ion:contextMenu a ion:Event ;
+                rdfs:label "contextmenu"@en .
+
+ion:doubleClick a ion:Event ;
+                rdfs:label "doubleclik"@en .
+
+ion:mouseOver a ion:Event ;
+              rdfs:label "mouseover"@en .
+
+ion:identify a ion:AnalyticalPurpose .
+ion:compare a ion:AnalyticalPurpose .
+ion:filter a ion:AnalyticalPurpose .
+ion:sort-order a ion:AnalyticalPurpose .
+
+ion:hasEnding a owl:ObjectProperty ;
+              rdfs:domain ion:Interaction ;
+              rdfs:range ion:Ending .
+
+ion:DuringEvent a owl:Class ;
+                rdfs:subClassOf ion:Ending .
+
+ion:Duration a owl:Class ;
+                rdfs:subClassOf ion:Ending .
+
+ion:Closable a owl:Class ;
+             rdfs:subClassOf ion:Ending .
+
+ion:SameEventOnOtherIndividual a owl:Class ;
+                               rdfs:subClassOf ion:Ending .
+
+ion:EmptySelection a owl:Class ;
+             rdfs:subClassOf ion:Ending .
+
+ion:SameIndividual a owl:Class ;
+                   rdfs:subClassOf ion:SelectionStrategy .
+
+ion:FollowPropertyPath a owl:Class ;
+                       rdfs:subClassOf ion:SelectionStrategy .

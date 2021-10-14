@@ -21,7 +21,7 @@ makePathResource = lambda x: os.path.join(dirpath, x)
 # Needs to be set before importing 'autoclass' from pyjnius
 if not 'JAVA_HOME' in os.environ:
     os.environ['JAVA_HOME'] = "/usr/lib/jvm/java-1.11.0-openjdk-amd64/"  # see `readlink -e $(whereis java)`
-os.environ['CLASSPATH'] = makePathResource('target/CoViKoa-0.1.0-SNAPSHOT-jar-with-dependencies.jar')
+os.environ['CLASSPATH'] = makePathResource('target/CoViKoa-0.2.0-SNAPSHOT-jar-with-dependencies.jar')
 
 from jnius import autoclass
 

@@ -35,7 +35,7 @@ async def get_kb(query: Optional[str] = None):
         return dispatch_query(query)
     else:
         # Otherwise return the whole KB ("materialized")
-        content = handlerInstance.writeDataModel()
+        content = handlerInstance.writeUnionModel()
         return Response(content=content, media_type="text/turtle")
 
 
@@ -102,13 +102,13 @@ def dispatch_query(query: str):
     _query = query.lower()
 
     if 'describe ' in _query:
-        res = handlerInstance.queryDataModelDescribe(query)
+        res = handlerInstance.queryUnionModelDescribe(query)
         return Response(content=res, media_type="text/turtle")
     elif 'construct ' in _query:
-        res = handlerInstance.queryDataModelConstruct(query)
+        res = handlerInstance.queryUnionModelConstruct(query)
         return Response(content=res, media_type="text/turtle")
     else:
-        res = handlerInstance.queryDataModelJSON(query)  # TODO: error handling
+        res = handlerInstance.queryUnionModelJSON(query)  # TODO: improve error handling
         return JSONResponse(json.loads(res), status_code=200)
 
 # Static files for the demo app
@@ -137,9 +137,11 @@ if __name__ == "__main__":
         # with SHACL (validation & rule execution) enabled
         # and GeoSPARQL enabled and load
         # all our vocabularies/ontologies/shacl-rules
+        covikoa_vocabularies = [makePathFile(file_path) for file_path in d['covikoa-vocabularies']]
+        data_model_files = [makePathFile(file_path) for file_path in d['target-semantic-data-model-files']]
         handlerInstance = CoViKoaHandler(
-            [makePathFile(file_path) for file_path in d['covikoa-vocabularies']]
-            + [makePathFile(file_path) for file_path in d['target-semantic-data-model-files']],
+            covikoa_vocabularies,
+            data_model_files,
             makePathFile(d['derivation-model']),
             False,
         )
@@ -148,6 +150,4 @@ if __name__ == "__main__":
             geosparqlFusekiProcess.terminate()
             geosparqlFusekiProcess.kill()
         raise
-    Utils.saveModel(handlerInstance.getDataModel(), '/tmp/covikoa.ttl')
-    Utils.saveModel(handlerInstance.getShapesModel(), '/tmp/covikoa-rules.ttl')
     uvicorn.run(app, host="0.0.0.0", port=8000)

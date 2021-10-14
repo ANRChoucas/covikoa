@@ -1,0 +1,358 @@
+@prefix : <http://example.com/cvk-ir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+@prefix ns2: <http://example.com/ns2#> .
+# Describe a vocabulary, build from CoViKoa-Geoviz,
+# covikoa-derivation and from the Semantic Data Model to visualize :
+# Here we want to visualise a loosely modelled dataset describing Nuts 2 features.
+# This time the point is not so much to use the semantic of the model but rather to demonstrate
+# how we can describe a choropleth portrayal with CoViKoa
+
+# We declare the prefix / namespace corresponding to the Semantic Data Model we are targeting (ns2)
+# so that we can reuse it directly in the literal value of the ConditionFilter we will define later.
+:
+    a owl:Ontology ;
+    sh:declare [
+                   sh:prefix "ns2" ;
+                   sh:namespace "http://example.com/ns2#"^^xsd:anyURI ;
+               ] .
+
+:DashboardLikeAppNuts a owl:Class ; ## <- We want to make an interface with various elements showing Nuts features
+    rdfs:subClassOf gviz:GeoVisualApplication .
+
+:NutsUnitUnion a owl:Class ;
+        owl:unionOf (ns2:NutsUnitABC ns2:NutsUnit) .
+
+:NutsUnitGVR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents :NutsUnitUnion .
+
+
+:NutsMapUnemp a gviz:Map2dComponent ;
+         cvkd:hasDefaultExtent ns2:NutsUnit ;
+         dct:title "Unemployment Rate Map"@en .
+
+:NutsMapPopulation a gviz:Map2dComponent ;
+         cvkd:hasDefaultExtent ns2:NutsUnit ;
+         gviz:hasCenterAndResolutionSynchronizedWith :NutsMapUnemp ;
+         dct:title "Population Map"@en .
+
+:NutsMapUnempLegend a gviz:LegendComponent ;
+                     gviz:linkedTo :NutsMapUnemp .
+
+:NutsMapPopulationLegend a gviz:LegendComponent ;
+                    gviz:linkedTo :NutsMapPopulation .
+
+:NutsTable a gviz:TableComponent .
+        # gviz:linkedTo :NutsMapPopulation .
+
+:nutsIdentifyPopup a gviz:PopupComponent .
+
+:thisAppDataNuts a :DashboardLikeAppNuts ; ## <- it implements making a concrete GeoVisualApplication for displaying our data about NUTS2
+    gviz:hasGeoVisualComponent :NutsMapUnemp, :NutsMapPopulation, :NutsMapUnempLegend, :NutsMapPopulationLegend, :nutsIdentifyPopup , :NutsTable ;
+    dct:title "NUTS2 data-visualisation" .
+
+
+# Symbolizers for each data class + symbolizer for no-data
+:SymbolizerNutsUnemp1 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(254,235,226,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp2 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(251,180,185,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp3 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(247,104,161,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnemp4 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(197,27,138,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp5 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(122,1,119,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnempNoData a symblzr:PolygonSymbolizer ;
+                           graphic:hasStroke [ a graphic:Stroke ;
+                                               graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                             ] ;
+                           graphic:hasFill [ a graphic:Fill ;
+                                             graphic:fillColor "rgba(206,206,206,1)"^^graphic:cssColorLiteral ;
+                             ] .
+
+# The choropleth symbolisation made from all these symbolizers,
+# to be displayed on the first map (NutsMapUnemp)
+:PortrayalNuts a gviz:Portrayal  ;
+               dct:title "Unemployment Rate (NUTS2 units, 2013, %)" ;
+               cvkd:denotesGVR :NutsUnitGVR ;
+               ion:allowsInteraction :identifyToPopup ;
+               gviz:onComponent :NutsMapUnemp ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]0.0,4.0]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp1 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 4.0 ;
+                                    ] ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]4.0,10.4]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp2 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 10.4 ;
+                                        cvkd:valueIsGreaterThan 4.0 ;
+                                    ] ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]10.4,16.6]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp3 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 16.6 ;
+                                        cvkd:valueIsGreaterThan 10.4 ;
+                                    ] ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]16.6,24.2]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp4 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 24.2 ;
+                                        cvkd:valueIsGreaterThan 16.6 ;
+                                    ] ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]24.2,34.8]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp5 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 36 ;
+                                        cvkd:valueIsGreaterThan 24.2 ;
+                                    ] ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "No data" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnempNoData  ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueOrObjectIsEqualTo cvkd:absentProperty ;
+                                    ] ;
+                 ] .
+
+# The interaction used just above ^^^^^^^^^^^^^^^^^^^^
+:identifyToPopup
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:singleClick ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasEnding [ a ion:Closable ] ;
+    ion:hasTargetOutcome [
+          a ion:Outcome ;
+          ion:onComponent :nutsIdentifyPopup ;
+      ] .
+
+:highlightOnTable
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:doubleClick ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasTargetOutcome [ a ion:Outcome ;
+                     ion:onComponent :NutsTable ;
+      ] .
+
+# Visualisation scale constraint
+:fromLowMediumVisualisationScale a scale:Scale ;
+               scale:hasMinZoomLevel "5.0"^^xsd:float ;
+               scale:hasMaxZoomLevel "19.0"^^xsd:float .
+
+# Visualisation scale constraint
+:fromMediumVisualisationScale a scale:Scale ;
+                              scale:hasMinZoomLevel "7.0"^^xsd:float ;
+                              scale:hasMaxZoomLevel "19.0"^^xsd:float .
+
+# Background portrayal for the 2nd map (NutsMapPopulation) : an opaque grey background
+:PortrayalNutsPopBasemap
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsMapPopulation ;
+    gviz:displayIndex 3 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerNutsGrey ;
+                         ] ;
+      ] .
+
+:SymbolizerNutsGrey
+    a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ; ] ;
+    graphic:hasFill [ graphic:fillColor "rgba(200,200,200,1)"^^graphic:cssColorLiteral ; ] .
+
+# The two main portrayals for the 2nd map (NutsMapPopulation) : the proportional symbol layers
+# (with labelling a middle-high zoom levels on features with large amount of population)
+# It uses TemplateSymbolizers so that PointSymbolizer and TextSymbolizer are created according to a specific value
+# of the individual we want to depict.
+# We use display index at PortrayalRule level to ensure that labels are rendered above the circles.
+:PortrayalNutsPop
+    a gviz:Portrayal ;
+    dct:title "Population (NUTS2 units, 2013, hab)" ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsMapPopulation ;
+    cvkd:hasTransformOperation [
+          <http://lig-tdcge.imag.fr/steamer/covikoa/geof#Centroid> ( [cvkd:variable "?thisGeometry"] )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 2 ;
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasTemplateSymbolizer :pointPropPopulation ;
+                         ] ;
+      ] .
+
+:PortrayalNutsLabelPop
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsMapPopulation ;
+    cvkd:hasTransformOperation [
+          <http://lig-tdcge.imag.fr/steamer/covikoa/geof#Centroid> ( [cvkd:variable "?thisGeometry"] )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 1 ;
+          scale:hasScale :fromMediumVisualisationScale  ;
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasTemplateSymbolizer :labelNutsManyPopulation ;
+                            ] ;
+      ] .
+
+# Define the content of the table
+:tableContent
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsTable ;
+    gviz:hasTableRule (
+          [
+              cvkd:columnName "id" ;
+              cvkd:propertypath ns2:id ;
+          ]
+          [
+              cvkd:columnName "Name" ;
+              cvkd:propertypath ns2:name ;
+          ]
+          [
+              cvkd:columnName "Country" ;
+              cvkd:propertypath (ns2:Country rdfs:label) ;
+          ]
+          [
+              cvkd:columnName "Population" ;
+              cvkd:propertypath ns2:population ;
+          ]
+          [
+              cvkd:columnName "Unemployment rate" ;
+              cvkd:propertypath ns2:unemploymentRate ;
+          ]
+          [
+              cvkd:columnName "Gross Domestic Product" ;
+              cvkd:propertypath ns2:grossDomesticProduct ;
+          ]
+      ) .
+
+
+## First TemplateSymbolizer
+:labelNutsManyPopulation
+    a symblzr:TemplateTextSymbolizer ;
+    graphic:hasHalo [ a graphic:Halo ] ;
+    graphic:hasFont [ a graphic:Font ;
+                      graphic:fontFamily "Arial" ;
+                      graphic:fontSize [ a cvkd:CustomisableGraphicValue ;
+                                             cvkd:valueOnProperty ns2:population ;
+                                             cvkd:formula "afn:max(afn:sqrt(?value/afn:pi()) / 60, 12)" ;
+                                       ] ;
+                      graphic:fontWeight "bold" ;
+      ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                      graphic:fillColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                      # Theoretically we could here define a CustomisableGraphicValue with cvkd:formula like so:
+                      # "IF(?value in ('Istanbul', 'Ankara'), \"rgba(99,99,99,1)\"^^graphic:cssColorLiteral, \"rgba(178,99,22,1)\"^^graphic:cssColorLiteral)"
+                      # in order to get a different color for labels of Istanbul and Ankara than the others
+      ] ;
+    graphic:textLabel [ a cvkd:CustomisableGraphicValue ;
+                          cvkd:valueOnProperty ns2:name ;
+                      ] .
+
+## Second TemplateSymbolizer
+:pointPropPopulation
+    a symblzr:TemplatePointSymbolizer ;
+    graphic:hasGraphicSymbol [
+        graphic:hasMark [ a graphic:Mark ;
+                          graphic:hasWellKnownName graphic:circle ;
+                          graphic:hasStroke [ a graphic:Stroke ;
+                                              graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+                            ] ;
+                          graphic:hasFill [ a graphic:Fill ;
+                                            graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+                            ] ;
+          ] ;
+        graphic:size [ a cvkd:CustomisableGraphicValue;
+                           cvkd:valueOnProperty ns2:population ;
+                           cvkd:formula "afn:sqrt(?value / afn:pi()) / 80" ;
+                     ] ;
+    ] .
+
+
+:NutsMapUnemp cvkc:widthPx 800 ;
+              cvkc:heightPx 900 ;
+              cvkc:hasBaseMap cvkc:stamenWatercolorBaseMap .
+
+
+:NutsMapPopulation cvkc:widthPx 500 ;
+                   cvkc:heightPx 900 ;
+                   cvkc:hasBaseMap cvkc:osmDefaultBaseMap .

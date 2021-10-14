@@ -1,0 +1,139 @@
+@prefix : <http://example.com/loac-shape#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> . # TODO: maybe not useful
+@prefix loac: <http://purl.org/loac#> .
+
+# This file contains shapes allowing to validate data using LOAC ontology.
+# It contains useful information about what is expected to be well-formed data using LOAC.
+:
+    a owl:Ontology ;
+    owl:imports sh: ;
+    sh:declare [
+          sh:prefix "owl" ;
+          sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
+      ] ;
+    sh:declare [
+          sh:prefix "rdfs" ;
+          sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+      ] .
+
+:AlertHasOneOrMoreHypothesis
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Alert has to be linked to one or more loac:Hypothesis."""@en ;
+    sh:targetNode loac:Alert ;
+    sh:property [
+          sh:path loac:hasHypothesis ;
+          sh:class loac:Hypothesis ;
+          sh:minCount 1 ;
+          sh:message "Each instance of loac:Alert has to be linked to one or more loac:Hypothesis."@en ;
+      ] .
+
+:HypothesisHasOneOrMultipleClue
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Hypothesis has to be linked to one or more clue."""@en ;
+    sh:targetNode loac:Hypothesis ;
+    sh:property [
+          sh:path loac:hasClue ;
+          sh:class loac:Clue ;
+          sh:minCount 1 ;
+          sh:message "Each instance of loac:Hypothesis has to be linked to one or more clue."@en ;
+      ] .
+
+:HypothesisHasOnlyOneISA
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Hypothesis has to be linked to one and only one loac:InitialSearchArea."""@en ;
+    sh:targetNode loac:Hypothesis ;
+    sh:property [
+          sh:path loac:hasInitialSearchArea ;
+          sh:class loac:InitialSearchArea ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:Hypothesis has to be linked to one and only one loac:InitialSearchArea."@en ;
+      ] .
+
+:HypothesisHasOnlyOnePLA
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Hypothesis has to be linked to one loac:ProbableLocationArea if their is two or more clues linked to this hypothesis."""@en ;
+    sh:targetNode loac:Hypothesis ;
+    sh:property [
+          sh:path loac:hasProbableLocationArea ;
+          sh:class loac:ProbableLocationArea ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:Hypothesis has to be linked to one loac:ProbableLocationArea if their is two or more clues linked to this hypothesis."@en ;
+      ] .
+
+:ClueHasOnlyOneLocationRelation
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Clue has to be linked to one and only one instance of loac:LocationRelation (or its subclasses)."""@en ;
+    sh:targetNode loac:Clue ;
+    sh:property [
+          sh:path loac:hasLocationRelation ;
+          sh:class loac:LocationRelation ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:Clue has to be linked to one and only one instance of loac:LocationRelation (or its subclasses)."@en ;
+      ] .
+
+:ClueHasOnlyOneCompatibleLocationArea
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:Clue has to be linked to one and only one instance of loac:CompatibleLocationArea."""@en ;
+    sh:targetNode loac:Clue ;
+    sh:property [
+          sh:path loac:hasCompatibleLocationArea ;
+          sh:class loac:CompatibleLocationArea ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:Clue has to be linked to one and only one instance of loac:CompatibleLocationArea."@en ;
+      ] .
+
+:LocationRelationHasOneSite
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:LocationRelation has to be linked to one and only one site which is an instance of loac:Victim."""@en ;
+    sh:targetNode loac:LocationRelation ;
+    sh:property [
+          sh:path loac:hasSite ;
+          sh:class loac:Victim ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:LocationRelation has to be linked to one and only one site which is an instance of loac:Victim."@en ;
+      ] .
+
+:LocationRelationHasOneTarget
+    a sh:NodeShape ;
+    rdfs:comment """Each instance of loac:LocationRelation has to be linked to one or more target which is/are instance of loac:ReferenceObject."""@en ;
+    sh:targetNode loac:LocationRelation ;
+    sh:property [
+          sh:path loac:hasTarget ;
+          sh:class loac:ReferenceObject ;
+          sh:minCount 1 ;
+          sh:message "Each instance of loac:LocationRelation has to be linked to one or more target which is/are instance of loac:ReferenceObject."@en ;
+      ] .
+
+:AlertHasOneVictim
+    a sh:NodeShape ;
+    rdfs:comment "Each instance of loac:Alert has to be linked to one and only one loac:Victim."@en ;
+    sh:targetNode loac:Alert ;
+    sh:property [
+          sh:path loac:hasVictim ;
+          sh:class loac:Victim ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Each instance of loac:Alert has to be linked to one and only one loac:Victim."@en ;
+      ] .
+
+:ReferenceObjectHasACategory
+    a sh:NodeShape ;
+    rdfs:comment "Each instance of loac:ReferenceObject has to be linked to one and only one loac:ReferenceObjectCategory."@en ;
+    sh:targetNode loac:ReferenceObject ;
+    sh:property [
+         sh:path loac:hasCategory ;
+         sh:class loac:ReferenceObjectCategory ;
+         sh:minCount 1 ;
+         sh:maxCount 1 ;
+         sh:message "Each instance of loac:ReferenceObject has to be linked to one and only one loac:ReferenceObjectCategory."@en ;
+      ] .

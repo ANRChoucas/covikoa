@@ -1,0 +1,380 @@
+@prefix : <http://example.com/cvk-ir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+
+@prefix tsn: <http://purl.org/net/tsn#> .
+@prefix nuts: <http://purl.org/steamer/nuts/> .
+@prefix tsnchange: <http://purl.org/net/tsnchange#> .
+@prefix ex: <http://example.com/ex#> .
+
+# We declare the prefix / namespace corresponding to the Semantic Data Model we are targeting (tsn / tsnchange)
+:
+    a owl:Ontology ;
+    sh:declare [
+          sh:prefix "tsn" ;
+          sh:namespace "http://purl.org/net/tsn#"^^xsd:anyURI ;
+      ] ,
+    [
+          sh:prefix "tsnchange" ;
+          sh:namespace "http://purl.org/net/tsnchange#"^^xsd:anyURI ;
+
+      ] .
+
+:AppChangeTU a owl:Class ; ## <- We want to make an application for exploring change in territorial units
+             rdfs:subClassOf gviz:GeoVisualApplication .
+
+:UnitVersionGVIR a owl:Class ;
+                 rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+                 cvkd:hasDataIntegrationRule :IntegrateNuts1Data ;
+                 cvkd:represents tsn:UnitVersion .
+
+:mapBefore a gviz:Map2dComponent ;
+           dct:title "NUTS 1999" ;
+           cvkc:hasBaseMap cvkc:stamenWatercolorBaseMap ;
+           cvkc:widthPx 800 ;
+           cvkc:heightPx 800 ;
+           cvkc:order 0 ;
+           cvkd:hasDefaultExtent tsn:UnitVersion .
+
+:mapAfter a gviz:Map2dComponent ;
+          dct:title "NUTS 2003" ;
+          cvkc:hasBaseMap cvkc:stamenWatercolorBaseMap ;
+          cvkc:widthPx 800 ;
+          cvkc:heightPx 800 ;
+          cvkc:order 1 ;
+          cvkc:position "right" ;
+          gviz:hasCenterAndResolutionSynchronizedWith :mapBefore ;
+          cvkd:hasDefaultExtent tsn:UnitVersion .
+
+:nutsIdentifyPopup a gviz:PopupComponent .
+
+:legendAfter a gviz:LegendComponent ;
+             gviz:linkedTo :mapAfter .
+
+:legendBefore a gviz:LegendComponent ;
+              gviz:linkedTo :mapBefore .
+
+:appChangeTUChoro a :AppChangeTU ;
+                  rdfs:label "Visualisation of the new NUTS1 2003 compared to the previous version"@en ;
+                  gviz:hasGeoVisualComponent :mapAfter , :mapBefore , :nutsIdentifyPopup , :legendAfter , :legendBefore .
+
+# All the symbolizers (except interaction symbolizer that are defined as blank node directly on the interactions)
+:SymbolizerGreen a symblzr:PolygonSymbolizer ;
+                 graphic:hasStroke [ a graphic:Stroke ;
+                                     graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                   ] ;
+                 graphic:hasFill [ a graphic:Fill ;
+                                   graphic:fillColor "rgba(74,251,116,0.9)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbolizerGreen2 a symblzr:PolygonSymbolizer ;
+                  graphic:hasStroke [ a graphic:Stroke ;
+                                      graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                    ] ;
+                  graphic:hasFill [ a graphic:Fill ;
+                                    graphic:fillColor "rgba(99,200,116,0.9)"^^graphic:cssColorLiteral ;
+                    ] .
+
+:SymbolizerPinkRed a symblzr:PolygonSymbolizer ;
+                   graphic:hasStroke [ a graphic:Stroke ;
+                                       graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                     ] ;
+                   graphic:hasFill [ a graphic:Fill ;
+                                     graphic:fillColor "rgba(251,74,94,0.9)"^^graphic:cssColorLiteral ;
+                     ] .
+
+:SymbolizerOrange a symblzr:PolygonSymbolizer ;
+                  graphic:hasStroke [ a graphic:Stroke ;
+                                      graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                    ] ;
+                  graphic:hasFill [ a graphic:Fill ;
+                                    graphic:fillColor "rgba(251,152,53,0.9)"^^graphic:cssColorLiteral ;
+                    ] .
+
+:SymbolizerNutsGrey
+    a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ; ] ;
+    graphic:hasFill [ graphic:fillColor "rgba(200,200,200,0.9)"^^graphic:cssColorLiteral ; ] .
+
+
+# The two portrayals, one for previous version (before changes)
+# and one for the new version (after changes).
+:PortrayalBefore
+    a gviz:Portrayal ;
+    dct:title "NUTS1, 1999, type of change" ;
+    cvkd:denotesGVR :UnitVersionGVIR ;
+    gviz:onComponent :mapBefore ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 0 ;
+          gviz:hasSymbol [
+                                dct:title "No change in 2003" ;
+                                symblzr:hasSymbolizer :SymbolizerNutsGrey  ;
+                            ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (
+                                             [
+                                                 cvkd:propertyPath tsnchange:input ;
+                                                 cvkd:valueOrObjectIsEqualTo cvkd:absentProperty ;
+                                             ]
+                                             [
+                                                 cvkd:propertyPath tsnchange:hasNextVersion ;
+                                                 cvkd:valueOrObjectIsEqualTo cvkd:presentProperty  ;
+                                             ]
+                                         )
+                            ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 0 ;
+          gviz:hasSymbol [
+                                dct:title "Modified (except for disappearance) in 2003" ;
+                                symblzr:hasSymbolizer :SymbolizerOrange ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                cvkd:propertyPath tsnchange:input ;
+                                cvkd:objectNotOfType tsnchange:Disappearance ;
+                            ] ;
+      ];
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 0 ;
+          gviz:hasSymbol [
+                                dct:title "Disappeared in 2003" ;
+                                symblzr:hasSymbolizer :SymbolizerPinkRed ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                cvkd:propertyPath tsnchange:input ;
+                                cvkd:objectOfType tsnchange:Disappearance ;
+                            ] ;
+      ] ;
+    ion:allowsInteraction :identifyToPopup ;
+    ion:allowsInteraction :identifyNextVersion .
+
+:PortrayalAfter
+    a gviz:Portrayal ;
+    dct:title "NUTS1, 2003" ;
+    cvkd:denotesGVR :UnitVersionGVIR ;
+    gviz:onComponent :mapAfter ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 2 ;
+          gviz:hasSymbol [
+                                dct:title "Entity unchanged from 1999" ;
+                                symblzr:hasSymbolizer :SymbolizerNutsGrey  ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                cvkd:and (
+                                             [
+                                                 cvkd:propertyPath ([sh:inversePath tsnchange:hasNextVersion]) ;
+                                                 cvkd:valueOrObjectIsEqualTo cvkd:presentProperty ;
+                                             ]
+                                             [
+                                                 cvkd:propertyPath ([sh:inversePath tsnchange:hasNextVersion] tsnchange:input) ;
+                                                 cvkd:valueOrObjectIsEqualTo cvkd:absentProperty ;
+                                             ]
+                                         )
+                            ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 2 ;
+          gviz:hasSymbol [
+                                dct:title "Entity changed from 1999 (Geometry change)" ;
+                                symblzr:hasSymbolizer :SymbolizerGreen ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                a cvkd:PropertyConstraint ;
+                                cvkd:propertyPath ([sh:inversePath tsnchange:hasNextVersion] tsnchange:input) ;
+                                cvkd:objectOfType tsnchange:GeometryChange ;
+                            ];
+
+      ];
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 2 ;
+          gviz:hasSymbol [
+                                dct:title "Entity changed from 1999 (other change)" ;
+                                symblzr:hasSymbolizer :SymbolizerGreen2 ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                a cvkd:PropertyConstraint ;
+                                cvkd:propertyPath ([sh:inversePath tsnchange:hasNextVersion] tsnchange:input) ;
+                                cvkd:objectNotOfType tsnchange:GeometryChange ;
+                            ];
+
+      ];
+    ion:allowsInteraction :identifyToPopup .
+
+# The various interactions
+:identifyToPopup
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:singleClick ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasEnding [ a ion:Closable , ion:SameEventOnOtherIndividual ] ;
+    ion:hasTargetOutcome [ a ion:Outcome ;
+                           ion:onComponent :nutsIdentifyPopup ;
+      ] .
+
+
+:identifyNextVersion
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:mouseOver ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasTargetOutcome [
+          a ion:Outcome ;
+          ion:hasOutcomeSelectionStrategy [
+                a ion:FollowPropertyPath ;
+                ion:propertyPath tsnchange:hasNextVersion ;
+                ion:targetsEntitiesFrom :PortrayalAfter ;
+            ] ;
+          ion:hasInteractionSymbolizer [
+                a symblzr:PolygonSymbolizer ;
+                graphic:hasStroke [ a graphic:Stroke ;
+                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeColor "rgba(255,255,0,1)"^^graphic:cssColorLiteral ;
+                  ] ;
+                graphic:hasFill [ a graphic:Fill ;
+                                  graphic:fillColor "rgba(255,192,203,1)"^^graphic:cssColorLiteral ;
+                  ] ;
+            ] ;
+      ] ;
+    ion:hasTargetOutcome [
+          a ion:Outcome ;
+          ion:hasOutcomeSelectionStrategy [
+                a ion:SameIndividual ;
+                ion:targetsEntitiesFrom :PortrayalBefore ;
+            ] ;
+          ion:hasSymbolizerModifier [ a ion:SymbolizerModifier ;
+              ion:onProperty (graphic:hasStroke graphic:strokeColor) ;
+              ion:modifiedValue "rgba(255, 255, 0, 1)"^^graphic:cssColorLiteral ;
+            ] ;
+          ion:hasSymbolizerModifier [ a ion:SymbolizerModifier ;
+              ion:onProperty (graphic:hasStroke graphic:strokeWidth) ;
+              ion:modifiedValue 2 ;
+            ] ;
+#          ion:hasInteractionSymbolizer [
+#                a symblzr:PolygonSymbolizer ;
+#                graphic:hasStroke [ a graphic:Stroke ;
+#                                    graphic:strokeWidth 2.5 ;
+#                                    graphic:strokeColor "rgba(255,255,0,1)"^^graphic:cssColorLiteral ;
+#                  ] ;
+#                graphic:hasFill [ a graphic:Fill ;
+#                                  graphic:fillColor "rgba(25,19,20,1)"^^graphic:cssColorLiteral ;
+#                  ] ;
+#            ] ;
+      ] ;
+    ion:hasRestOutcome [
+          a ion:Outcome ;
+          ion:hasOutcomeSelectionStrategy [
+                a ion:SameIndividual ;
+                ion:targetsEntitiesFrom :PortrayalBefore ;
+            ] ;
+          ion:hasInteractionSymbolizer [
+                a symblzr:PolygonSymbolizer ;
+                graphic:hasStroke [ a graphic:Stroke ;
+                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeColor "rgba(212,210,210,0.5)"^^graphic:cssColorLiteral ;
+                  ] ;
+                graphic:hasFill [ a graphic:Fill ;
+                                  graphic:fillColor "rgba(237,237,237,0.4)"^^graphic:cssColorLiteral ;
+                  ] ;
+            ] ;
+      ] ;
+    ion:hasEnding [ a ion:DuringEvent ] .
+
+:PortrayalAfter ion:allowsInteraction :testInteraction2 .
+
+:testInteraction2
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:doubleClick  ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasRestOutcome [
+          a ion:Outcome ;
+          ion:hasOutcomeSelectionStrategy [
+                a ion:FollowPropertyPath ;
+                ion:propertyPath [ sh:inversePath tsnchange:hasNextVersion ] ;
+                ion:targetsEntitiesFrom :PortrayalBefore ;
+            ] ;
+          ion:hasInteractionSymbolizer [
+                a symblzr:PolygonSymbolizer ;
+                graphic:hasStroke [ a graphic:Stroke ;
+                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeColor "rgba(237,237,237,0.2)"^^graphic:cssColorLiteral ;
+                  ] ;
+                graphic:hasFill [ a graphic:Fill ;
+                                  graphic:fillColor "rgba(237,237,237,0.2)"^^graphic:cssColorLiteral ;
+                  ] ;
+            ] ;
+      ] ;
+    ion:hasEnding [ a ion:Duration ; ion:seconds 3 ] .
+
+# Data integration rules,
+# one for integrating data of the two dates to visualise
+# and one to reconstruct the a property with the change values as IRI.
+:IntegrateNuts1Data
+    a sh:NodeShape , cvkd:DataIntegrationRule ;
+    sh:targetNode :UnitVersionGVIR ;
+    sh:rule [
+            a sh:SPARQLRule ;
+            sh:construct """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX tsn: <http://purl.org/net/tsn#>
+PREFIX nuts: <http://purl.org/steamer/nuts/>
+PREFIX tsnchange: <http://purl.org/net/tsnchange#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+CONSTRUCT {
+	?TU rdf:type tsn:UnitVersion .
+	?TU tsn:isMemberOf ?level .
+	?TU geo:hasGeometry ?TUGeomIri .
+	?TUGeomIri geo:asWKT ?geom .
+	?TU tsn:hasName ?name .
+	?TU tsn:hasIdentifier ?id .
+	?TU tsnchange:hasNextVersion ?nextVersion .
+	?TU tsnchange:input ?input .
+	?input a ?what .
+	?nextVersion rdf:type tsn:UnitVersion .
+	?nextVersion geo:hasGeometry ?nextVersionGeomIri .
+	?nextVersionGeomIri geo:asWKT ?geomNextVersion .
+	?nextVersion tsn:hasName ?nameNextVersion .
+	?nextVersion tsn:hasIdentifier ?idNextVersion .
+}
+WHERE {
+    NOT EXISTS { ?TU tsn:hasIdentifier [] }
+  	SERVICE <http://steamerlod.imag.fr/repositories/geochange>
+	{
+		SELECT ?TU ?geom ?category ?name ?id ?nextVersion ?nameNextVersion ?idNextVersion ?geomNextVersion ?TUGeomIri ?nextVersionGeomIri ?what ?input WHERE {
+			?TU rdf:type tsn:UnitVersion .
+			?TU tsn:isMemberOf ?level .
+			?level tsn:hasIdentifier "NUTS_V1999_L1" .
+			?TU tsn:hasIdentifier ?id .
+			# Dont retrieve ultraperipheral regions of the UE
+			# (only Madeira, Açores, Canaria and Guyane in 1999/2003)
+			# because their coordinates aren't correct in tsn graph
+			FILTER(?id != "PT2" && ?id != "PT3" && ?id != "FR9" && ?id != "ES7")
+			?TU tsn:hasName ?name .
+			?TU tsnchange:hasNextVersion ?nextVersion .
+			?TU geo:hasGeometry [ geo:asWKT ?geom ] .
+			?nextVersion geo:hasGeometry [ geo:asWKT ?geomNextVersion ] .
+			?nextVersion tsn:hasName ?nameNextVersion .
+			?nextVersion tsn:hasIdentifier ?idNextVersion .
+			BIND(iri(CONCAT('urn:', STR(?id), '-geom')) as ?TUGeomIri)
+			BIND(iri(CONCAT('urn:', STR(?idNextVersion), '-geom')) as ?nextVersionGeomIri)
+			OPTIONAL {
+				?TU tsnchange:input ?input .
+				?input a ?what .
+			}
+		}
+	}
+} """ ] .

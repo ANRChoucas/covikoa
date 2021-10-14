@@ -7,7 +7,7 @@
   border: 1px solid #cccccc;
   bottom: 12px;
   left: -50px;
-  min-width: 280px;
+  min-width: 400px;
 }
 .ol-popup:after, .ol-popup:before {
   top: 100%;
@@ -60,7 +60,7 @@
 }
 
 .ol-popup table.table-info > tbody > tr:nth-child(even) {
-  background: #e2ecee;
+  background: #edf2f3;
 }
 
 .ol-popup table.table-info > tbody > tr:nth-child(odd) {
@@ -78,6 +78,11 @@
 .ol-popup table.table-info .field-value {
   outline: none;
   word-wrap: break-word;
+}
+
+.ol-popup table a {
+  color: #025a86;
+  text-decoration: none;
 }
 
 .ol-popup .uri-feature {

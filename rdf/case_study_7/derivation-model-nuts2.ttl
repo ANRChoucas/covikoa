@@ -1,0 +1,610 @@
+@prefix : <http://example.com/cvk-ir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+@prefix ns2: <http://example.com/ns2#> .
+# Describe a vocabulary, build from CoViKoa-Geoviz,
+# covikoa-derivation and from the Semantic Data Model to visualize :
+# Here we want to visualise a loosely modelled dataset describing Nuts 2 features.
+# This time the point is not so much to use the semantic of the model but rather to demonstrate
+# how we can describe a choropleth portrayal with CoViKoa
+
+# We declare the prefix / namespace corresponding to the Semantic Data Model we are targeting (ns2)
+# so that we can reuse it directly in the literal value of the ConditionFilter we will define later.
+:
+    a owl:Ontology ;
+    sh:declare [
+                   sh:prefix "ns2" ;
+                   sh:namespace "http://example.com/ns2#"^^xsd:anyURI ;
+               ] .
+
+:DashboardLikeAppNuts a owl:Class ; ## <- We want to make an interface with various elements showing Nuts features
+    rdfs:subClassOf gviz:GeoVisualApplication .
+
+:NutsUnitUnion a owl:Class ;
+        owl:unionOf (ns2:NutsUnitABC ns2:NutsUnit) .
+
+:NutsUnitGVR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents :NutsUnitUnion .
+
+:NutsMapUnemp a gviz:Map2dComponent ;
+         cvkd:hasDefaultExtent ns2:NutsUnit ;
+         dct:title "Unemployment Rate Map"@en ;
+         cvkc:hasConstrainedScaleRange [ a scale:Scale ;
+#                                      scale:hasMinZoomLevel 6 ;
+#                                      scale:hasMaxZoomLevel 8 ;
+                                      scale:hasMaxScaleDenominator 2183915 ;
+                                      scale:hasMinScaleDenominator 8735660 ;
+                                    ] .
+
+:NutsMapPopulation a gviz:Map2dComponent ;
+         cvkd:hasDefaultExtent ns2:NutsUnit ;
+         gviz:hasCenterAndResolutionSynchronizedWith :NutsMapUnemp ;
+         dct:title "Population Map"@en .
+
+:NutsMap3 a gviz:Map2dComponent ;
+          cvkd:hasDefaultExtent ns2:NutsUnit .
+
+:NutsMapUnempLegend a gviz:LegendComponent ;
+                     gviz:linkedTo :NutsMapUnemp .
+
+:NutsMapPopulationLegend a gviz:LegendComponent ;
+                    gviz:linkedTo :NutsMapPopulation .
+
+:NutsTable a gviz:TableComponent .
+        # gviz:linkedTo :NutsMapPopulation .
+
+
+:nutsIdentifyPopup a gviz:PopupComponent .
+
+:thisAppDataNuts a :DashboardLikeAppNuts ; ## <- it implements making a concrete GeoVisualApplication for displaying our data about NUTS2
+    gviz:hasGeoVisualComponent :NutsMapUnemp, :NutsMapPopulation, :NutsMapUnempLegend, :NutsMapPopulationLegend, :nutsIdentifyPopup , :NutsTable , :SomeStaticContentComponent , :NutsMap3 ;
+    dct:title "NUTS2 data-visualisation" .
+
+
+# Symbolizers for each data class + symbolizer for no-data
+:SymbolizerNutsUnemp1 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(254,235,226,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp2 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(251,180,185,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp3 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(247,104,161,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnemp4 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(197,27,138,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+
+:SymbolizerNutsUnemp5 a symblzr:PolygonSymbolizer ;
+                      graphic:hasStroke [ a graphic:Stroke ;
+                                          graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                        ] ;
+                      graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(122,1,119,1)"^^graphic:cssColorLiteral ;
+                        ] .
+
+:SymbolizerNutsUnempNoData a symblzr:PolygonSymbolizer ;
+                           graphic:hasStroke [ a graphic:Stroke ;
+                                               graphic:strokeColor "rgba(99,99,99,0.7)"^^graphic:cssColorLiteral ;
+                             ] ;
+                           graphic:hasFill [ a graphic:Fill ;
+                                             graphic:fillColor "rgba(206,206,206,1)"^^graphic:cssColorLiteral ;
+                             ] .
+
+# The choropleth symbolisation made from all these symbolizers,
+# to be displayed on the first map (NutsMapUnemp)
+:PortrayalNuts a gviz:Portrayal  ;
+               dct:title "Unemployment Rate (NUTS2 units, 2013, %)" ;
+               cvkd:denotesGVR :NutsUnitGVR ;
+               ion:allowsInteraction :identifyToPopup ;
+               gviz:onComponent :NutsMapUnemp ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]0.0,4.0]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp1 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 4.0 ;
+                                    ] ;
+                     cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]4.0,10.4]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp2 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 10.4 ;
+                                        cvkd:valueIsGreaterThan 4.0 ;
+                                    ] ;
+                         cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]10.4,16.6]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp3 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 16.6 ;
+                                        cvkd:valueIsGreaterThan 10.4 ;
+                                    ] ;
+                         cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]16.6,24.2]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp4 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 24.2 ;
+                                        cvkd:valueIsGreaterThan 16.6 ;
+                                    ] ;
+                         cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "]24.2,34.8]" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnemp5 ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueIsLessThanOrEqualTo 36 ;
+                                        cvkd:valueIsGreaterThan 24.2 ;
+                                    ] ;
+                         cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] ;
+               gviz:hasPortrayalRule [
+                     gviz:hasSymbol [ a symb:Symbol ;
+                                      dct:title "No data" ;
+                                      symblzr:hasSymbolizer :SymbolizerNutsUnempNoData  ;
+                                    ] ;
+                     cvkd:hasPropertyConstraint [
+                                        cvkd:propertyPath ns2:unemploymentRate ;
+                                        cvkd:valueOrObjectIsEqualTo cvkd:absentProperty ;
+                                    ] ;
+                         cvkd:hasSpatialConstraint :orSpatialConstraint ;
+                 ] .
+
+# The interaction used just above ^^^^^^^^^^^^^^^^^^^^
+:identifyToPopup
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:singleClick ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasEnding [ a ion:Closable ] ;
+    ion:hasTargetOutcome [
+          a ion:Outcome ;
+          ion:onComponent :nutsIdentifyPopup ;
+      ] .
+
+:tableContent
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsTable ;
+    cvkd:hasTableRule (
+          [
+              cvkd:columnName "id" ;
+              cvkd:cellPropertyPath ns2:id ;
+          ]
+          [
+              cvkd:columnName "Name" ;
+              cvkd:cellPropertyPath ns2:name ;
+          ]
+          [
+              cvkd:columnName "Country" ;
+              cvkd:cellPropertyPath (ns2:Country rdfs:label) ;
+          ]
+          [
+              cvkd:columnName "Population" ;
+              cvkd:cellPropertyPath ns2:population ;
+          ]
+          [
+              cvkd:columnName "Unemployment rate" ;
+              cvkd:cellPropertyPath ns2:unemploymentRate ;
+          ]
+          [
+              cvkd:columnName "Gross Domestic Product" ;
+              cvkd:cellPropertyPath ns2:grossDomesticProduct ;
+          ]
+      ) .
+
+#:changePortrayalOtherMap
+#    a ion:Interaction ;
+#    ion:isTriggeredBy ion:mouseOver ;
+#    ion:hasAnalyticalPurpose ion:identify ;
+#    ion:hasTargetOutcome [ a ion:Outcome ;
+#          ion:onComponent :NutsMapUnemp ;
+#          ion:hasSymbolizerModifier [ a ion:SymbolizerModifier ;
+#                ion:onProperty (graphic:hasMark graphic:hasFill graphic:fillColor) ; # <- follow graphic:hasMark/graphic:hasFill/graphic:fillColor property path
+#                ion:modifiedValue "rgba(255, 255, 0, 1)"^^graphic:cssColorLiteral ; # <- ... and replace its value by this
+#            ] ;
+#          ion:hasSymbolizerModifier [ a ion:SymbolizerModifier ;
+#                ion:onProperty (graphic:radius) ;
+#                ion:modifiedValue "3.0"^^xsd:decimal ; # <- ... and replace its value by
+#            ] ;
+#    ] .
+
+#:changePortrayalOtherMap2
+#    a ion:Interaction ;
+#    ion:isTriggeredBy ion:mouseOver ;
+#    ion:hasAnalyticalPurpose ion:identify ;
+#    ion:hasTargetOutcome [ a ion:Outcome ;
+#                     ion:onComponent :NutsMapUnemp ;
+#                     ion:hasInteractionSymbolizer  [ a symblzr:PolygonSymbolizer ;
+#                             graphic:hasStroke [ graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ; ] ;
+#                             graphic:hasFill [ graphic:fillColor "rgba(255,192,203,1)"^^graphic:cssColorLiteral ; ] ;
+#                       ] ;
+#      ] .
+
+:highlightOnTable
+    a ion:Interaction ;
+    ion:isTriggeredBy ion:doubleClick ;
+    ion:hasAnalyticalPurpose ion:identify ;
+    ion:hasTargetOutcome [ a ion:Outcome ;
+                     ion:onComponent :NutsTable ;
+      ] .
+
+# Visualisation scale constraint
+:fromLowMediumVisualisationScale a scale:Scale ;
+               scale:hasMinZoomLevel "5.0"^^xsd:float ;
+               scale:hasMaxZoomLevel "19.0"^^xsd:float .
+
+# Visualisation scale constraint
+:fromMediumVisualisationScale a scale:Scale ;
+                              scale:hasMinZoomLevel "7.0"^^xsd:float ;
+                              scale:hasMaxZoomLevel "19.0"^^xsd:float .
+
+# Portrayal for the 2nd map (NutsMapPopulation) : an opaque grey background
+:PortrayalNutsPopBasemap
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsMapPopulation ;
+    gviz:displayIndex 3 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerNutsGrey ;
+                         ] ;
+          cvkd:hasPropertyConstraint [
+                             cvkd:propertyPath ns2:hasCountry ;
+                             cvkd:valueOrObjectIsEqualTo ns2:France ;
+                         ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerNutsGrey2 ;
+                         ] ;
+          cvkd:hasPropertyConstraint [
+                             cvkd:propertyPath ns2:hasCountry ;
+                             cvkd:valueOrObjectIsNotEqualTo ns2:France ;
+                         ] ;
+      ] .
+
+:PortrayalNutsTestTypeObj
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+    gviz:onComponent :NutsMap3 ;
+    gviz:displayIndex 3 ;
+#    gviz:hasPortrayalRule [
+#          gviz:hasSymbol [ a symb:Symbol ;
+#                           symblzr:hasSymbolizer :SymbolizerNutsGrey ;
+#                         ] ;
+#          cvkd:hasPropertyConstraint [
+#                             cvkd:propertyPath ns2:someOtherProp ;
+#                             cvkd:objectOfType ns2:Foo2 ;
+#                         ] ;
+#      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerNutsGrey2 ;
+                         ] ;
+          cvkd:hasPropertyConstraint [
+                             cvkd:propertyPath ns2:someOtherProp ;
+                             cvkd:objectOfType ns2:Foo1 ;
+                         ] ;
+      ] .
+
+:SymbolizerNutsGrey
+    a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ; ] ;
+    graphic:hasFill [ graphic:fillColor "rgba(200,200,200,1)"^^graphic:cssColorLiteral ; ] .
+
+:SymbolizerNutsGrey2
+    a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ; ] ;
+    graphic:hasFill [ graphic:fillColor "rgba(222,222,222,1)"^^graphic:cssColorLiteral ; ] .
+
+# Portrayal for the 2nd map (NutsMapPopulation) : the proportional symbol layers
+# (with labelling a middle-high zoom levels on features with large amount of population)
+# It uses TemplateSymbolizer so that PointSymbolizer and TextSymbolizer are created according to a specific value
+# of the individual we want to depict.
+# We use display index at PortrayalRule level to ensure that labels are rendered above the circles.
+:PortrayalNutsPop
+    a gviz:Portrayal ;
+    dct:title "Population (NUTS2 units, 2013, hab)" ;
+    cvkd:denotesGVR :NutsUnitGVR ;
+#    ion:allowsInteraction :changePortrayalOtherMap2 ;
+    gviz:onComponent :NutsMapPopulation ;
+    cvkd:hasTransformOperation [
+          <http://lig-tdcge.imag.fr/steamer/covikoa/geof#Centroid> ( [cvkd:variable "?thisGeometry"] )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 2 ;
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasTemplateSymbolizer :PointPropPopulation ;
+                         ] ;
+          cvkd:hasPropertyConstraint :propConstFR_BE ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 1 ;
+          scale:hasScale :fromLowMediumVisualisationScale ;
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasTemplateSymbolizer :NewLabelNutsManyPopulation ;
+                            ] ;
+          cvkd:hasPropertyConstraint [
+                                         a cvkd:PropertyConstraint ;
+                                         cvkd:or (
+                                               [ a cvkd:PropertyConstraint ;
+                                                 cvkd:propertyPath ns2:hasCountry ;
+                                                 cvkd:valueOrObjectIsEqualTo ns2:Spain  ;
+                                               ]
+                                               [ a cvkd:PropertyConstraint ;
+                                                 cvkd:propertyPath ns2:hasCountry ;
+                                                 cvkd:valueOrObjectIsEqualTo ns2:Portugal ;
+                                               ]
+                                           )
+                                     ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:displayIndex 1 ;
+          scale:hasScale :fromMediumVisualisationScale  ;
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasTemplateSymbolizer :NewLabelNutsManyPopulation ;
+                            ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (
+                                                  [
+                                                      cvkd:propertyPath ns2:population  ;
+                                                      cvkd:valueIsLessThanOrEqualTo 5000000 ;
+                                                      cvkd:valueIsGreaterThan 1400000 ;
+                                                  ]
+                                                  :propConstFR_BE
+                                              )
+                                     ] ;
+      ] ;
+#    cvkd:hasSPARQLFilter :sparqlFilterCountry
+.
+
+:propConstFR_BE
+    a cvkd:PropertyConstraint ;
+    cvkd:or (
+            [ a cvkd:PropertyConstraint ;
+              cvkd:propertyPath ns2:hasCountry ;
+              cvkd:valueOrObjectIsEqualTo ns2:France ;
+            ]
+            [ a cvkd:PropertyConstraint ;
+              cvkd:propertyPath ns2:hasCountry ;
+              cvkd:valueOrObjectIsEqualTo ns2:Belgium ;
+            ]
+            ) .
+
+:propConstPropSymbol1
+    a cvkd:PropertyConstraint ;
+    cvkd:and (
+          [
+              cvkd:propertyPath ns2:population  ;
+              cvkd:valueIsGreaterThan 5000000 ;
+          ]
+          :propConstFR_BE
+      )
+.
+
+:sparqlFilterCountry a cvkd:SPARQLFilter ;
+                     rdfs:label "Filter country" ;
+                     rdf:value """
+        SELECT ?somethingRepresentable WHERE {
+            ?somethingRepresentable ns2:hasCountry ?c .
+            FILTER(?c in (ns2:France, ns2:Belgium))
+        }
+        """ .
+
+## First TemplateSymbolizer
+:NewLabelNutsManyPopulation
+    a symblzr:TemplateTextSymbolizer ;
+    graphic:hasHalo [ a graphic:Halo ] ;
+    graphic:hasFont [ a graphic:Font ;
+                      graphic:fontFamily "Arial" ;
+                      graphic:fontSize [ a cvkd:CustomisableGraphicValue ;
+                                             cvkd:valueOnProperty ns2:population ;
+                                             cvkd:formula "afn:max(afn:sqrt(?value/afn:pi()) / 60, 12)" ;
+                                       ] ;
+                      graphic:fontWeight "bold" ;
+      ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                      graphic:fillColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                      # Theoretically we could here define a CustomisableGraphicValue with cvkd:formula like so:
+                      # "IF(?value in ('Istanbul', 'Ankara'), \"rgba(99,99,99,1)\"^^graphic:cssColorLiteral, \"rgba(178,99,22,1)\"^^graphic:cssColorLiteral)"
+                      # in order to get a different color for labels of Istanbul and Ankara than the others
+      ] ;
+    graphic:textLabel [ a cvkd:CustomisableGraphicValue ;
+                          cvkd:valueOnProperty ns2:name ;
+                      ] .
+
+## Second TemplateSymbolizer
+:PointPropPopulation
+    a symblzr:TemplatePointSymbolizer ;
+    graphic:hasGraphicSymbol [
+        graphic:hasMark [ a graphic:Mark ;
+                          graphic:hasWellKnownName graphic:circle ;
+                          graphic:hasStroke [ a graphic:Stroke ;
+                                              graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+                            ] ;
+                          graphic:hasFill [ a graphic:Fill ;
+                                            graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+                            ] ;
+          ] ;
+        graphic:size [ a cvkd:CustomisableGraphicValue;
+                           cvkd:valueOnProperty ns2:population ;
+                           cvkd:formula "afn:sqrt(?value / afn:pi()) / 80" ;
+                     ] ;
+    ] .
+
+
+:NutsMapUnemp cvkc:widthPx 800 ;
+              cvkc:heightPx 900 ;
+              cvkc:hasBaseMap cvkc:stamenWatercolorBaseMap .
+
+
+:NutsMapPopulation cvkc:widthPx 500 ;
+                   cvkc:heightPx 900 ;
+                   cvkc:hasBaseMap cvkc:osmDefaultBaseMap .
+
+# Futur test case for cvkd:RewriteShaclPropertyPathToSPARQLPropertyPath
+<urn:id:foo1> <urn:id:testPropertyPath> gviz:Prop . # <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop>
+<urn:id:foo2> <urn:id:testPropertyPath> (gviz:Prop1 gviz:Prop2) . # <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop1>/<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop2>
+<urn:id:foo3> <urn:id:testPropertyPath> [sh:alternativePath (gviz:PropA gviz:PropB)] . # <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>|<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropB>
+<urn:id:foo4> <urn:id:testPropertyPath> [sh:alternativePath (gviz:PropA (gviz:Prop1stHalfB gviz:Prop2ndHalfB))] . # <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>|<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop1stHalfB>/<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop2ndHalfB>
+<urn:id:foo5> <urn:id:testPropertyPath> [sh:inversePath gviz:PropA] . # ^(<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>)
+<urn:id:foo6> <urn:id:testPropertyPath> (gviz:Prop1 [sh:inversePath gviz:PropA]) . # <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#Prop1>/^(<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>)
+<urn:id:foo7> <urn:id:testPropertyPath> [sh:inversePath (gviz:PropB gviz:PropA)] . # ^(<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropB>/<http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#PropA>)
+
+# To verify we can reach the expected value with the rewritten property path
+<urn:id:bar1> gviz:Prop <value1> .
+
+<urn:id:bar2> gviz:Prop1 [ gviz:Prop2 <value2> ] .
+
+<urn:id:bar3> gviz:PropA <value3a> .
+<urn:id:bar3> gviz:PropB <value3b>  .
+
+<urn:id:bar4> gviz:PropA <value4a> .
+<urn:id:bar4> gviz:Prop1stHalfB [ gviz:Prop2ndHalfB <value4b> ] .
+
+<value5> gviz:PropA <urn:id:bar5> .
+
+<urn:id:bar6> gviz:Prop1 <tmpValue6> .
+<value6> gviz:PropA <tmpValue6> .
+
+<value7> gviz:PropB <tmpValue7> .
+<tmpValue7> gviz:PropA <urn:id:bar7> .
+
+
+:spatconst1 a cvkd:SpatialConstraint ; # OK
+            cvkd:hasPredicate geof:sfIntersects ;
+            cvkd:value "POLYGON ((2.7959 48.5954, 3.1435 45.7716, 9.2254 45.8585, 9.1385 49.1167, 2.7959 48.5954))"^^geo:wktLiteral .
+
+:spatconst2 a cvkd:SpatialConstraint ; # OK
+            cvkd:preludeBinding "ns2:NUTS2_2013_BE21 geo:hasGeometry [ geo:asWKT ?geomgeomgeom ; ] ." ;
+            cvkd:hasPredicate geof:sfIntersects ;
+            cvkd:variable "?geomgeomgeom" .
+
+:spatconst3 a cvkd:SpatialConstraint ; # OK
+            cvkd:preludeBinding """
+              {
+                SELECT (<http://lig-tdcge.imag.fr/steamer/covikoa/geo-agg#Extent>(?geom) as ?geomExtent) WHERE {
+                  ?nuts ns2:hasCountry ns2:France .
+                  ?nuts geo:hasGeometry [geo:asWKT ?geom ] .
+                }
+              }
+              """ ;
+            cvkd:hasPredicate geof:sfIntersects ;
+            cvkd:variable "?geomExtent" .
+
+:transfop1 a cvkd:TransformOperation ; # OK
+           geof:difference (
+                 [cvkd:value "POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))"^^geo:wktLiteral]
+                 [cvkd:variable "?thisGeometry"]
+             ) .
+
+:transfop2 a cvkd:TransformOperation ; # OK
+           cvkd:preludeBinding "Some SPARQL Stuff" ;
+           geof:difference (
+                 [cvkd:variable "?somePreBoundVariable"]
+                 [cvkd:variable "?thisGeometry"]
+             ) .
+
+:constraint1 a cvkd:PropertyConstraint ;
+    cvkd:propertyPath (<some-property> <path>) ;
+    cvkd:valueOrObjectIsEqualTo 11 .
+
+:constraint2 a cvkd:PropertyConstraint ;
+    cvkd:propertyPath <some-property-path> ;
+    cvkd:valueIsLessThan 12 ;
+    cvkd:valueIsGreaterThan 10 .
+
+:constraint3 a cvkd:PropertyConstraint ;
+     cvkd:propertyPath (<some-property> <path>) ;
+     cvkd:valueOrObjectIsEqualTo 11.6 .
+
+:andProperyConstraint a cvkd:PropertyConstraint ;
+    cvkd:and ( :constraint1 :constraint2 ) .
+
+:orPropertyContraint a cvkd:PropertyConstraint ;
+    cvkd:or ( :constraint1 :constraint2 ) .
+
+:nestedLogicalPropertyConstraint a cvkd:PropertyConstraint ;
+    cvkd:and (
+          :constraint1
+          [
+              cvkd:or (
+                         :constraint2
+                         :constraint3
+                     )
+          ]
+      ) .
+
+:andSpatialConstraint a cvkd:SpatialConstraint ;
+    cvkd:and ( :spatconst3 :spatconst2 ) .
+
+:orSpatialConstraint a cvkd:SpatialConstraint ;
+    cvkd:or ( :spatconst2 :spatconst3 ) .
+
+:nestedLogicalSpatialConstraint a cvkd:SpatialConstraint ;
+    cvkd:or (
+      :spatconst1
+      [
+          cvkd:and (
+              :spatconst2
+              :spatconst3
+             )
+      ]
+    ) .

@@ -1,0 +1,279 @@
+@prefix : <http://lig-tdcge.imag.fr/steamer/covikoa/carto#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix term: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix dcpal: <http://purl.org/dicopal#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@base <http://lig-tdcge.imag.fr/steamer/covikoa/carto#> .
+
+
+<http://lig-tdcge.imag.fr/steamer/covikoa/carto>
+    a owl:Ontology ;
+    term:creator "Matthieu Viry" ;
+    term:issued "2021-06-09"^^xsd:date ;
+    owl:versionInfo "0.1.0" ;
+    term:license "http://creativecommons.org/licenses/by-nc-sa/4.0/"^^term:URI ;
+    vann:preferredNamespacePrefix "carto" ;
+    vann:preferredNamespaceUri "http://lig-tdcge.imag.fr/steamer/covikoa/carto#"^^xsd:string ;
+    rdfs:comment """
+The CoViKoa-carto ontology is an ontology containing classes and properties to describe
+existing classical cartographic portrayals (here referred to as "solutions").
+The cartographic solutions therein can be instantiated and qualified by various properties specific to these solutions.
+This description can later be used to describe the parameters of cartographic portrayals which will then be read by a computer program.
+
+The ontology can also be used to reason about the cartographic solutions that are suitable for data of a specific kind
+thanks to a hierarchy that allows the data to be qualified
+(according to its datatype, according to its type of statistical variable and according to the type of geometry).
+"""@en .
+
+
+#################################################################
+# Annotation properties for the ontology
+#################################################################
+
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+<http://purl.org/dc/terms/issued> rdf:type owl:AnnotationProperty .
+
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+<http://purl.org/vocab/vann/preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+<http://purl.org/vocab/vann/preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+:forDataType rdf:type owl:AnnotationProperty .
+
+:forAttributeData rdf:type owl:AnnotationProperty .
+
+:forGraphicData rdf:type owl:AnnotationProperty .
+
+#################################################################
+# Classes and properties for Cartographic Solutions
+#################################################################
+
+:CartographicSolution a owl:Class .
+
+:QualitativeCartographicSolution a owl:Class ;
+                                 rdfs:subClassOf :CartographicSolution .
+
+:QuantitativeCartographicSolution a owl:Class ;
+                                 rdfs:subClassOf :CartographicSolution .
+
+:QuantitativeChoropleth a owl:Class ;
+            rdfs:subClassOf :QuantitativeCartographicSolution ;
+            rdfs:label "Quantitative Choropleth"@en, "Choroplethe"@fr ;
+            rdfs:comment "Describes a type of mapping solution intended to ... "@en ;
+            :forDataType :Number ;
+            :forAttributeData :RelativeQuantitativeData ;
+            :forGraphicData :Area, :Point , :Line .
+
+:ProportionalSymbols a owl:Class ;
+                     rdfs:subClassOf :QuantitativeCartographicSolution ;
+                     rdfs:label "Proportional Symbols"@en ;
+                     rdfs:comment "Describes a type of mapping solution intended to ... "@en ;
+                     :forDataType :Number ;
+                     :forAttributeData :AbsoluteQuantitativeData ;
+                     :forGraphicData :Area , :Point  .
+
+:ClusterSymbols a owl:Class ;
+                rdfs:subClassOf :QuantitativeCartographicSolution ;
+                rdfs:label "Cluster Symbols"@en .
+
+:QualitativeChoropleth a owl:Class ;
+                         rdfs:subClassOf :QualitativeCartographicSolution ;
+                         rdfs:label "Qualitative Choropleth"@en, "Choroplethe"@fr ;
+                         rdfs:comment "Describes a type of mapping solution intended to ... "@en ;
+                         :forDataType :Text , :ResourceIRI , :Integer ;
+                         :forAttributeData :OrdinalQualitativeData , :NominalQualitativeData ;
+                         :forGraphicData :Area , :Point , :Line .
+
+:QualitativeSymbol a owl:Class ;
+                   rdfs:subClassOf :QualitativeCartographicSolution ;
+                   :forDataType :Text , :ResourceIRI , :Integer ;
+                   :forAttributeData :NominalQualitativeData ;
+                   :forGraphicData :Area , :Point .
+
+:Labeling a owl:Class ;
+          rdfs:subClassOf :CartographicSolution ;
+          rdfs:label ""@en ;
+          rdfs:comment ""@en ;
+          :forDataType :Text ;
+          :forAttributeData :NominalQualitativeData ;
+          :forGraphicData :Area , :Point , :Line .
+
+#################################################################
+# Classes and properties to qualify the various Cartographic Solutions...
+#################################################################
+
+:ClassificationMethod a owl:Class ;
+                      rdfs:label "Classification Method"@en , "Méthode de classification"@fr .
+
+:PatronSymbolizer a owl:Class ;
+                  rdfs:subClassOf <https://gis.lu.se/ont/data_portrayal/symbolizer#TemplateSymbolizer> .
+
+:targetsProperty a owl:ObjectProperty ;
+                 rdfs:domain :CartographicSolution .
+
+:targetsSpatialFeature a owl:ObjectProperty ;
+                        rdfs:domain :CartographicSolution .
+
+:hasPatronSymbolizer a owl:ObjectProperty ;
+                       rdfs:domain :CartographicSolution ;
+                       rdfs:range :PatronSymbolizer .
+
+:ofData a owl:ObjectProperty ;
+        rdfs:domain :CartographicSolution ;
+        rdfs:range :Data .
+
+:hasClassificationMethod a owl:ObjectProperty ;
+                         rdfs:domain :QuantitativeChoropleth ;
+                         rdfs:range :ClassificationMethod .
+
+:hasDataBreaks a rdf:Property ;
+                rdfs:domain :QuantitativeChoropleth ;
+                rdfs:range rdf:List .
+
+:hasPaletteScheme a owl:ObjectProperty ;
+                  rdfs:domain [ a owl:Class ;
+                                owl:unionOf (:QuantitativeChoropleth :QualitativeChoropleth)
+                    ] ;
+                  rdfs:range dcpal:Scheme .
+
+:rendersNoData a owl:DatatypeProperty ;
+              rdfs:domain [ a owl:Class ;
+                            owl:unionOf (:QuantitativeChoropleth :QualitativeChoropleth) ;
+                ] ;
+              rdfs:range xsd:boolean .
+
+:numberDataClasses a owl:DatatypeProperty ;
+                   rdfs:domain :QuantitativeChoropleth ;
+                   rdfs:range xsd:integer .
+
+:hasCategories a rdf:Property ;
+               rdfs:domain :QualitativeChoropleth ;
+               rdfs:range rdf:List .
+
+:maxSizePixel a owl:DatatypeProperty ;
+              rdfs:domain :ProportionalSymbols ;
+              rdfs:range xsd:integer .
+
+:Jenks a :ClassificationMethod .
+:Quantiles a :ClassificationMethod .
+:EqualIntervals a :ClassificationMethod .
+:GeometricProgression a :ClassificationMethod .
+
+# Types of data
+:Data a owl:Class .
+
+:AttributeData a owl:Class ;
+               rdfs:subClassOf :Data .
+
+:QualitativeData a owl:Class ;
+                 rdfs:subClassOf :AttributeData .
+
+:NominalQualitativeData a owl:Class ;
+                        rdfs:subClassOf :QualitativeData .
+
+:OrdinalQualitativeData a owl:Class ;
+                        rdfs:subClassOf :QualitativeData .
+
+:QuantitativeData a owl:Class ;
+                  rdfs:subClassOf :AttributeData .
+
+:RelativeQuantitativeData a owl:Class ;
+                          rdfs:subClassOf :QuantitativeData .
+
+:AbsoluteQuantitativeData a owl:Class ;
+                          rdfs:subClassOf :QuantitativeData .
+
+:DataTypeDomain a owl:Class ;
+                rdfs:subClassOf :Data .
+
+:Boolean a owl:Class ;
+         rdfs:subClassOf :DataTypeDomain .
+:Date a owl:Class ;
+      rdfs:subClassOf :DataTypeDomain .
+:Number a owl:Class ;
+        rdfs:subClassOf :DataTypeDomain .
+:Integer a owl:Class ;
+         rdfs:subClassOf :Number .
+:Float a owl:Class ;
+       rdfs:subClassOf :Number .
+:ResourceIRI a owl:Class ;
+             rdfs:subClassOf :DataTypeDomain .
+:Text a owl:Class ;
+      rdfs:subClassOf :DataTypeDomain .
+
+:GraphicData a owl:Class ;
+             rdfs:subClassOf :Data .
+
+:RasterData a owl:Class ;
+            rdfs:subClassOf :GraphicData .
+
+:VectorData a owl:Class ;
+            rdfs:subClassOf :GraphicData .
+
+:Point a owl:Class ;
+           rdfs:subClassOf :VectorData .
+
+:Line a owl:Class ;
+      rdfs:subClassOf :VectorData .
+
+:Area a owl:Class ;
+      rdfs:subClassOf :VectorData .
+
+
+#:ChoroplethUnempNuts a :QuantitativeChoropleth ;
+#                     term:title "Unemployment Rate (NUTS2 units, 2013, %)" ;
+#                     :targetsSpatialFeature <http://example.com/ns2#NutsUnit> ;
+#                     :targetsProperty <http://example.com/ns2#unemploymentRate> ;
+#                     :ofData [ a :Area , :RelativeQuantitativeData , :Float ] ;
+#                     :hasDataBreaks (0.0 4.0 10.4 16.6 24.2 36) ;
+#                     :rendersNoData "true"^^xsd:boolean ;
+#                     :hasPaletteScheme dcpal:Blues .
+#
+#:PointPropPopNuts a :ProportionalSymbols ;
+#                    term:title "Population (NUTS2 units, 2013, inhabitants)" ;
+#                    :targetsSpatialFeature <http://example.com/ns2#NutsUnit> ;
+#                    :targetsProperty <http://example.com/ns2#population> ;
+#                    :ofData [ a :Area , :AbsoluteQuantitativeData , :Integer ] ;
+#                    :maxSizePixel 60 .
+#
+#:ChoroCountryNuts a :QualitativeChoropleth ;
+#                    term:title "Country of origin" ;
+#                    :targetsSpatialFeature <http://example.com/ns2#NutsUnit> ;
+#                    :targetsProperty <http://example.com/ns2#hasCountry> ;
+#                    :ofData [ a :Area , :NominalQualitativeData , :NodeIRI ] ;
+#                    :hasCategories (:France :Spain) ;
+#                    :rendersNoData "true"^^xsd:boolean ;
+#                    :hasPaletteScheme dcpal:Blues .
+#
+#:LabelNuts a :Labeling ;
+#             :targetsSpatialFeature <http://example.com/ns2#NutsUnit> ;
+#             :targetsProperty <http://example.com/ns2#name> ;
+#             :ofData [ a :Area , :NominalQualitativeData , :Text ] ;
+#             :hasMinDisplayValue [
+#                                     :property <http://example.com/ns2#population> ;
+#                                     :value 500000 ;
+#                                 ] .
+
+
+#:patronPointProp
+#    a :PatronSymbolizer ;
+#    graphic:hasGraphicSymbol [
+#          graphic:hasMark [ a graphic:Mark ;
+#                            graphic:hasWellKnownName graphic:circle ;
+#                            graphic:hasStroke [ a graphic:Stroke ;
+#                                                graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+#                              ] ;
+#                            graphic:hasFill [ a graphic:Fill ;
+#                                              graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+#                              ] ;
+#                          ] ;
+#          graphic:size [ a :PatronValue ] ;
+#      ] .

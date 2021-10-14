@@ -1,0 +1,674 @@
+@prefix : <http://example.com/cvk-ir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#> .
+@prefix loac: <http://purl.org/loac#> .
+@prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#> .
+@prefix graphic: <https://gis.lu.se/ont/data_portrayal/graphic#> .
+@prefix symb: <https://gis.lu.se/ont/data_portrayal/symbol#> .
+@prefix symblzr: <https://gis.lu.se/ont/data_portrayal/symbolizer#> .
+@prefix cvkc: <http://lig-tdcge.imag.fr/steamer/covikoa/context#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix scale: <https://gis.lu.se/ont/visualisation_scale#> .
+@prefix ion: <http://lig-tdcge.imag.fr/steamer/covikoa/interaction#> .
+
+# Describe a vocabulary, build from CoViKoa-Geoviz,
+# covikoa-derivation and from the Semantic Data Model to visualize (here LOAC - the Light Choucas Alert Ontology)
+#
+# We declare the prefix / namespace corresponding to the Semantic Data Model we are targeting (loac)
+# so that we can reuse it directly in the literal value of the ConditionFilter we will define later.
+:
+    a owl:Ontology ;
+    sh:declare [
+
+                   sh:prefix "loac" ;
+                   sh:namespace "http://purl.org/loac#"^^xsd:anyURI ;
+               ] .
+
+:AppChoucasHypo a owl:Class ; ## <- We want to make an application for handling CHOUCAS Alerts, at the hypothesis level
+    rdfs:subClassOf gviz:GeoVisualApplication ;
+    cvkd:represents loac:Hypothesis .
+
+:InitialSearchAreaIR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents loac:InitialSearchArea ;
+    cvkd:hasDataIntegrationRule :OSMRefObjectContainedInISA ;
+    cvkd:pathFromGVA loac:hasInitialSearchArea .
+
+:ReferenceObjectIR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents loac:ReferenceObject ;
+    cvkd:pathFromGVA (loac:hasInitialSearchArea loac:contains) .
+
+:CompatibleLocationAreaIR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents loac:CompatibleLocationArea ;
+    cvkd:pathFromGVA (loac:hasClue loac:hasCompatibleLocationArea) .
+
+:ProbableLocationAreaIR a owl:Class ;
+    rdfs:subClassOf gviz:GeoVisualIntermediateRepresentation ;
+    cvkd:represents loac:ProbableLocationArea ;
+    cvkd:pathFromGVA loac:hasProbableLocationArea .
+
+
+### Below is what ties the different elements needed to reason on what needs to be displayed to process a CHOUCAS alert.
+:HypothesisMap a gviz:Map2dComponent ; ## <- our GeoVisualComponent
+               dct:title "Overview map" ;
+               cvkd:hasDefaultExtent loac:InitialSearchArea ;
+               cvkc:hasBaseMap cvkc:openTopoMapBaseMap ;
+               cvkc:order 1 .
+
+:PLA-map a gviz:Map2dComponent ;
+           dct:title "PLA map" ;
+           cvkd:hasDefaultExtent loac:InitialSearchArea ;
+           cvkc:hasBaseMap cvkc:openTopoMapBaseMap ;
+           cvkc:order 2 ;
+           cvkc:position "right" ;
+#           gviz:linkedTo :HypothesisMap
+            .
+
+:terrain-map a gviz:Map3dComponent ;
+             dct:title "Terrain view" ;
+             cvkc:hasBaseMap cvkc:arcgisOnlineWorldImagery ;
+             cvkd:hasDefaultExtent loac:InitialSearchArea ;
+             cvkc:order 3 ;
+             cvkc:position "bottom" .
+
+
+# Now that we have a gviz:GeoVisualComponent, the intermediate representation of the various LOAC concepts
+# that can be displayed will be derived automatically (given the "derivation model" shown in derivation-model.ttl file)
+# and will be assigned a suggested graphical representation whenever possible (also defined in derivation-model.ttl file).
+
+# The popup that will display information about a single feature
+:identifyPopup a gviz:PopupComponent ;
+        gviz:linkedTo :HypothesisMap .
+
+:AppHypothesisChoucas a :AppChoucasHypo ; ## <- it implements making a concrete GeoVisualApplication for displaying a specific hypothesis of an alert
+    gviz:represents loac:hypo1 ; ## <- this is the entry point in the target semantic data model, the hypothesis, and all its related knowledge, we want to geovisualize (it allows us to generate rules that only produces the IR of the data related to it)
+    gviz:hasGeoVisualComponent :HypothesisMap , :PLA-map , :terrain-map , :identifyPopup .
+
+# Symbolizer for the Initial Search Area (ISA)
+:SymbolizerISA a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                       graphic:strokeColor "rgb(255,165,0)"^^graphic:cssColorLiteral ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(211, 211, 211, 0.7)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbolizerISABorder a symblzr:PolygonSymbolizer ;
+               graphic:hasStroke [ a graphic:Stroke ;
+                                   graphic:strokeColor "rgb(255,165,0)"^^graphic:cssColorLiteral ;
+                                   graphic:strokeWidth 2.5 ;
+                 ] ;
+               graphic:hasFill [ a graphic:Fill ;
+                               graphic:fillColor "rgba(211, 211, 211, 0)"^^graphic:cssColorLiteral ;
+                             ] .
+
+# Symboliser for the ISA at high zoom level
+:SymbolizerISAHighZoomScale a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                       graphic:strokeColor "rgb(255,165,0)"^^graphic:cssColorLiteral ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(211, 211, 211, 0.7)"^^graphic:cssColorLiteral ;
+                   ] .
+
+# Symbolizers for the Compatible Location Areas (CLA)
+:SymbCLA-Village-Visibility a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                        graphic:strokeWidth 1.8 ;
+                        graphic:strokeColor "rgba(0,0,0,1)"^^graphic:cssColorLiteral ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(204,121,167,0.7)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbCLA-Pathway-Visibility a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                        graphic:strokeWidth 1.8 ;
+                        graphic:strokeColor "rgba(0,0,0,1)"^^graphic:cssColorLiteral ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(204,200,121,0.7)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbCLA-Village-Proximity a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                        graphic:strokeWidth 1.8 ;
+                        graphic:strokeColor "rgba(254,254,254,1)"^^graphic:cssColorLiteral ;
+      ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                      graphic:fillColor "rgba(204,121,167,0.7)"^^graphic:cssColorLiteral ;
+      ] .
+
+:SymbCLA-Powerline-Visibility a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                       graphic:strokeWidth 1.8 ;
+                       graphic:strokeColor "rgba(0,0,0,1)"^^graphic:cssColorLiteral ;
+     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(255,158,23,0.7)"^^graphic:cssColorLiteral ;
+     ] .
+
+:SymbCLA-Pathway-Proximity a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                        graphic:strokeWidth 1.8 ;
+                        graphic:strokeColor "rgba(254,254,254,1)"^^graphic:cssColorLiteral ;
+      ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                      graphic:fillColor "rgba(204,200,121,0.7)"^^graphic:cssColorLiteral ;
+      ] .
+
+### Symbolizer for the Probable Location Area (PLA)
+:SymbolizerPLA a symblzr:PolygonSymbolizer ;
+               graphic:hasStroke [ a graphic:Stroke ;
+                                   graphic:strokeColor "rgba(244,12,12,1)"^^graphic:cssColorLiteral ;
+                                   graphic:strokeWidth 2.0 ;
+                 ] ;
+               graphic:hasFill [ a graphic:Fill ;
+                                 graphic:fillColor "rgba(255,0,0,0.5)"^^graphic:cssColorLiteral ;
+                 ] .
+
+:SymbolizerHighScalePLA a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                       graphic:strokeColor "rgba(255,0,0,1)"^^graphic:cssColorLiteral ;
+                       graphic:strokeWidth 2.5 ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(255,0,0,0)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbolizerPLATerrain a symblzr:PolygonSymbolizer ;
+                        graphic:hasStroke [ a graphic:Stroke ;
+                                            graphic:strokeColor "rgba(247,0,0,1)"^^graphic:cssColorLiteral ;
+                                            graphic:strokeWidth 5.0 ;
+                          ] ;
+                        graphic:hasFill [ a graphic:Fill ;
+                                        graphic:fillColor "rgba(255,0,0,0)"^^graphic:cssColorLiteral ;
+                                      ] .
+
+:SymbolizerReferenceFeatureHighlightPt
+    a symblzr:PointSymbolizer ;
+    graphic:hasGraphicSymbol [
+          graphic:hasMark [ a graphic:Mark ;
+                            graphic:hasWellKnownName graphic:circle ;
+                            graphic:hasStroke [ a graphic:Stroke ;
+                                                graphic:strokeColor "rgba(20,128,0,1)"^^graphic:cssColorLiteral ;
+                              ] ;
+                            graphic:hasFill [ a graphic:Fill ;
+                                              graphic:fillColor "rgba(127,255,0,1)"^^graphic:cssColorLiteral ;
+                              ] ;
+                          ] ;
+          graphic:size "5"^^xsd:decimal ;
+      ] .
+
+:SymbolizerReferenceFeatureHighlightLine a symblzr:LineSymbolizer ;
+     graphic:hasStroke [ a graphic:Stroke ;
+                         graphic:strokeColor "rgb(127,255,0)"^^graphic:cssColorLiteral ;
+                         graphic:strokeWidth 3.0 ;
+                       ] .
+
+:SymbolizerReferenceFeatureHighlightPolygon a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                       graphic:strokeColor "rgb(20,25,20)"^^graphic:cssColorLiteral ;
+                     ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                     graphic:fillColor "rgba(255, 170, 20, 1)"^^graphic:cssColorLiteral ;
+                   ] .
+
+:SymbolizerReferenceFeatureHighlightLineOutside a symblzr:LineSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                     graphic:strokeColor "rgba(127,255,0, 0.8)"^^graphic:cssColorLiteral ;
+                     graphic:strokeWidth 2.5 ;
+                     graphic:strokeDashArray "4 8" ;
+                     graphic:strokeDashOffset 2.0 ;
+                    ] .
+
+:SymbolizerReferenceFeatureHighlightPolygonOutside a symblzr:PolygonSymbolizer ;
+    graphic:hasStroke [ a graphic:Stroke ;
+                        graphic:strokeColor "rgb(20,25,20)"^^graphic:cssColorLiteral ;
+                      ] ;
+    graphic:hasFill [ a graphic:Fill ;
+                      graphic:fillColor "rgba(255, 170, 20, 1)"^^graphic:cssColorLiteral ;
+                    ] .
+
+:SymbolizerReferenceFeatureUsedInClueLine a symblzr:LineSymbolizer ;
+     graphic:hasStroke [ a graphic:Stroke ;
+                         graphic:strokeColor "rgb(47,30,15)"^^graphic:cssColorLiteral ;
+                         graphic:strokeWidth 1.5 ;
+                       ] .
+
+# Property constraints for the CLAs
+:constraintVillage
+    a cvkd:PropertyConstraint ;
+    cvkd:propertyPath ([sh:inversePath loac:hasCompatibleLocationArea] loac:hasLocationRelation loac:hasTarget loac:hasCategory) ;
+    cvkd:valueOrObjectIsEqualTo loac:VILLAGE .
+
+:constraintPathway
+    a cvkd:PropertyConstraint ;
+    cvkd:propertyPath ([sh:inversePath loac:hasCompatibleLocationArea] loac:hasLocationRelation loac:hasTarget loac:hasCategory) ;
+    cvkd:valueOrObjectIsEqualTo loac:PATHWAY .
+
+:constraintPowerline
+    a cvkd:PropertyConstraint ;
+    cvkd:propertyPath ([sh:inversePath loac:hasCompatibleLocationArea] loac:hasLocationRelation loac:hasTarget loac:hasCategory) ;
+    cvkd:valueOrObjectIsEqualTo loac:POWERLINE .
+
+:constraintRelationProximity
+    a cvkd:PropertyConstraint ;
+    cvkd:propertyPath ([sh:inversePath loac:hasCompatibleLocationArea] loac:hasLocationRelation) ;
+    cvkd:objectOfType loac:ProximityRelation .
+
+:constraintRelationVisibility
+    a cvkd:PropertyConstraint ;
+    cvkd:propertyPath ([sh:inversePath loac:hasCompatibleLocationArea] loac:hasLocationRelation) ;
+    cvkd:objectOfType loac:VisibilityRelation .
+
+# Portrayals
+
+:PortrayalISA
+    a gviz:Portrayal ;
+    gviz:onComponent :HypothesisMap , :PLA-map ;
+    cvkd:denotesGVR :InitialSearchAreaIR ;
+    gviz:displayIndex 1000 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Initial Search Area" ;
+                           symblzr:hasSymbolizer :SymbolizerISA ;
+                         ] ;
+      ] ;
+    cvkd:hasTransformOperation [
+          geof:difference (
+                              [cvkd:value "POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))"^^geo:wktLiteral]
+                              [cvkd:variable "?thisGeometry"]
+                          )
+      ] .
+
+:PortrayalISA-terrain
+    a gviz:Portrayal ;
+    gviz:onComponent :terrain-map  ;
+    cvkd:denotesGVR :InitialSearchAreaIR ;
+    gviz:displayIndex 1000 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Initial Search Area" ;
+                           symblzr:hasSymbolizer :SymbolizerISABorder ;
+                         ] ;
+      ] ;
+    cvkd:hasTransformOperation [
+        geof:boundary ( [ cvkd:variable "?thisGeometry" ] )
+      ] .
+
+:PortrayalPLA a gviz:Portrayal ;
+              cvkd:denotesGVR :ProbableLocationAreaIR ;
+              gviz:onComponent :HypothesisMap , :PLA-map ;
+              gviz:displayIndex 2 ;
+              gviz:hasPortrayalRule [
+                    gviz:hasSymbol [ a symb:Symbol ;
+                                     dct:title "Probable Location Area" ;
+                                     symblzr:hasSymbolizer :SymbolizerPLA ;
+                                   ] ;
+                ] .
+
+:PortrayalPLA-terrain
+    a gviz:Portrayal ;
+    gviz:onComponent :terrain-map  ;
+    cvkd:denotesGVR :ProbableLocationAreaIR  ;
+    gviz:displayIndex 1000 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Probable Location Area" ;
+                           symblzr:hasSymbolizer :SymbolizerPLATerrain ;
+                         ] ;
+      ] .
+
+
+:PortrayalCLATerrain
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :CompatibleLocationAreaIR  ;
+    gviz:onComponent :terrain-map  ;
+    gviz:displayIndex 2 ;
+    cvkd:hasTransformOperation [
+          cvkd:preludeBinding  """loac:hypo1 loac:hasProbableLocationArea [ geo:hasGeometry [ geo:asWKT ?geomPla ] ] .""" ;
+          geof:difference (
+                                   [cvkd:variable "?thisGeometry"]
+                                   [cvkd:variable "?geomPla"]
+                               )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Probable Location Area" ;
+                           symblzr:hasSymbolizer [ a symblzr:PolygonSymbolizer ;
+                                                   graphic:hasStroke [ a graphic:Stroke ;
+                                                                       graphic:strokeColor "rgba(20,25,20,0)"^^graphic:cssColorLiteral ;
+                                                                       graphic:strokeWidth 0.0 ;
+                                                     ] ;
+                                                   graphic:hasFill [ a graphic:Fill ;
+                                                                     graphic:fillColor "rgba(255,170,20,0)"^^graphic:cssColorLiteral ;
+                                                     ] ;
+                             ] ;
+                         ] ;
+      ] .
+
+:PortrayalCLA
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :CompatibleLocationAreaIR ;
+    gviz:onComponent :HypothesisMap  ;
+    gviz:displayIndex 3 ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Compatible Location Area (Village / Visibility)" ;
+                           symblzr:hasSymbolizer :SymbCLA-Village-Visibility ;
+                         ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (:constraintRelationVisibility :constraintVillage)
+                         ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Compatible Location Area (Village / Proximity)" ;
+                           symblzr:hasSymbolizer :SymbCLA-Village-Proximity ;
+                         ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (:constraintRelationProximity :constraintVillage)
+                         ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Compatible Location Area (Pathway / Visibility)" ;
+                           symblzr:hasSymbolizer :SymbCLA-Pathway-Visibility ;
+                         ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (:constraintRelationVisibility :constraintPathway)
+                         ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Compatible Location Area (Powerline / Visibility)" ;
+                           symblzr:hasSymbolizer :SymbCLA-Powerline-Visibility ;
+                         ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (:constraintRelationVisibility :constraintPowerline)
+                         ] ;
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Compatible Location Area (Pathway / Proximity)" ;
+                           symblzr:hasSymbolizer :SymbCLA-Pathway-Proximity ;
+                         ] ;
+          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                       cvkd:and (:constraintRelationProximity :constraintPathway)
+                         ] ;
+      ] .
+
+
+:PortrayalPLAHighScale
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :ProbableLocationAreaIR ;
+    gviz:onComponent :HypothesisMap , :PLA-map ;
+    gviz:displayIndex 2 ;
+    scale:hasScale :HighZoomScale ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Probable Location Area" ;
+                           symblzr:hasSymbolizer :SymbolizerHighScalePLA ;
+                         ] ;
+      ] .
+
+:PortrayalPLA scale:hasScale :LowZoomScale .
+
+:PortrayalISAHighZoom
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :InitialSearchAreaIR ;
+    gviz:displayIndex 1000 ;
+    cvkd:hasTransformOperation [
+          cvkd:preludeBinding """loac:hypo1 loac:hasProbableLocationArea [ geo:hasGeometry [ geo:asWKT ?geomPla ] ] .""" ;
+          geof:difference (
+                                  [cvkd:variable "?thisGeometry"]
+                                  [cvkd:variable "?geomPla"]
+                              )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           dct:title "Initial Search Area" ;
+                           symblzr:hasSymbolizer :SymbolizerISAHighZoomScale ;
+                         ] ;
+      ] ;
+    scale:hasScale :HighZoomScale .
+
+
+:PortrayalCLAHighScale
+    a gviz:Portrayal ;
+    gviz:onComponent :HypothesisMap ;
+    cvkd:denotesGVR :CompatibleLocationAreaIR ;
+    gviz:displayIndex 3 ;
+    scale:hasScale :HighZoomScale ;
+    cvkd:hasTransformOperation [
+          cvkd:preludeBinding  """loac:hypo1 loac:hasProbableLocationArea [ geo:hasGeometry [ geo:asWKT ?geomPla ] ] .""" ;
+          geof:difference (
+                                   [cvkd:variable "?thisGeometry"]
+                                   [cvkd:variable "?geomPla"]
+                               )
+      ] ;
+    gviz:hasPortrayalRule [
+                              gviz:hasSymbol [ a symb:Symbol ;
+                                               dct:title "Compatible Location Area (Village / Visibility)" ;
+                                               symblzr:hasSymbolizer :SymbCLA-Village-Visibility ;
+                                             ] ;
+                              cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                                           cvkd:and (:constraintRelationVisibility :constraintVillage)
+                                             ] ;
+                          ] ;
+    gviz:hasPortrayalRule [
+                              gviz:hasSymbol [ a symb:Symbol ;
+                                               dct:title "Compatible Location Area (Village / Proximity)" ;
+                                               symblzr:hasSymbolizer :SymbCLA-Village-Proximity ;
+                                             ] ;
+                              cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                                           cvkd:and (:constraintRelationProximity :constraintVillage)
+                                             ] ;
+                          ] ;
+    gviz:hasPortrayalRule [
+                              gviz:hasSymbol [ a symb:Symbol ;
+                                               dct:title "Compatible Location Area (Pathway / Visibility)" ;
+                                               symblzr:hasSymbolizer :SymbCLA-Pathway-Visibility ;
+                                             ] ;
+                              cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                                           cvkd:and (:constraintRelationVisibility :constraintPathway)
+                                             ] ;
+                          ] ;
+    gviz:hasPortrayalRule [
+                              gviz:hasSymbol [ a symb:Symbol ;
+                                               dct:title "Compatible Location Area (Powerline / Proximity)" ;
+                                               symblzr:hasSymbolizer :SymbCLA-Powerline-Visibility  ;
+                                             ] ;
+                              cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                                           cvkd:and (:constraintRelationVisibility :constraintPowerline)
+                                             ] ;
+                          ] ;
+    gviz:hasPortrayalRule [
+                              gviz:hasSymbol [ a symb:Symbol ;
+                                               dct:title "Compatible Location Area (Pathway / Proximity)" ;
+                                               symblzr:hasSymbolizer :SymbCLA-Pathway-Proximity ;
+                                             ] ;
+                              cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+                                                           cvkd:and (:constraintRelationProximity :constraintPathway)
+                                             ] ;
+                          ] .
+
+:PortrayalCLA scale:hasScale :LowZoomScale .
+
+### This is the rule allowing to trigger a federated query in order to integrate data in our data graph at run time
+:OSMRefObjectContainedInISA
+    a sh:NodeShape , cvkd:DataIntegrationRule ;
+    rdfs:comment """
+        Rule allowing to use the properties of the Initial Search Area (its geometry and the fact that it is an ISA)
+        to retrieve all the reference objects (from OSM) in the corresponding portion of territory that can be used
+        as reference during an alert.
+        We take this opportunity to read the type of geometry (in the WKT representation of the geometry)
+        and describe it with the appropriate class of the Simple Feature Ontology (http://www.opengis.net/ont/sf)."""@en ;
+    sh:targetClass loac:InitialSearchArea ;
+    sh:rule [
+                a sh:SPARQLRule ;
+                sh:construct """
+		    prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            prefix loac: <http://purl.org/loac#>
+            prefix gviz: <http://lig-tdcge.imag.fr/steamer/covikoa/geoviz#>
+            prefix geo: <http://www.opengis.net/ont/geosparql#>
+            prefix geof: <http://www.opengis.net/def/function/geosparql/>
+            prefix cvkd: <http://lig-tdcge.imag.fr/steamer/covikoa/derivation#>
+
+            CONSTRUCT {
+                ?ft a loac:ReferenceObject ;
+                    loac:hasCategory ?cat ;
+                    loac:isContainedIn ?zir ;
+                    geo:hasGeometry [ a ?geomType ; geo:asWKT ?geomFtWkt] .
+                ?ft loac:osmName ?osmName .
+            } WHERE {
+                NOT EXISTS { ?ft loac:isContainedIn ?zir . }
+                ?alerteIR gviz:represents [
+                    loac:hasInitialSearchArea ?zir ;
+                ] .
+                ?zir geo:hasGeometry [geo:asWKT ?geomZirWkt] .
+                SERVICE <http://localhost:3330/ds> {
+                    ?ft a loac:ReferenceObject ;
+                        loac:hasCategory ?cat ;
+                        geo:hasGeometry [geo:asWKT ?geomFtWkt] .
+                    OPTIONAL { ?ft loac:osmName ?osmName . }
+                }
+                FILTER(geof:sfIntersects(?geomZirWkt, ?geomFtWkt)).
+                BIND(cvkd:UnpackGeomType(?geomFtWkt) AS ?geomType).
+            }
+    """ ;
+            ] .
+
+:LowZoomScale a scale:Scale ;
+              scale:hasMinZoomLevel "0.0"^^xsd:float ;
+              scale:hasMaxZoomLevel "13.0"^^xsd:float .
+
+:HighZoomScale a scale:Scale ;
+               scale:hasMinZoomLevel "13.0"^^xsd:float ;
+               scale:hasMaxZoomLevel "19.0"^^xsd:float .
+
+:ConditionFilterRefObjectPLA a cvkd:SPARQLFilter ;
+                             rdfs:label "ObjectOfInterestInISA" ;
+                             rdf:value """
+		SELECT DISTINCT ?somethingRepresentable WHERE {
+		  {
+		    SELECT
+              (GROUP_CONCAT(?catTarget ; separator=\",\") as ?cats)
+              (GROUP_CONCAT(?pcatTarget ; separator=\",\") as ?pcats)
+		    WHERE {
+                ?probableLocArea loac:merges ?zone .
+                ?clue loac:hasCompatibleLocationArea ?zone ;
+                	  loac:hasLocationRelation/loac:hasTarget ?ftTarget .
+                ?ftTarget loac:hasCategory ?catTarget .
+                ?catTarget loac:hasParentCategory ?pcatTarget .
+            }
+		  }
+		  loac:hypo1 loac:hasProbableLocationArea ?probableLocArea .
+		  ?probableLocArea geo:hasGeometry [geo:asWKT ?geomProbableLocArea ].
+		  ?somethingRepresentable a loac:ReferenceObject ;
+		                         loac:hasCategory ?cat ;
+		  geo:hasGeometry [geo:asWKT ?geomObjet ] .
+		  ?cat loac:hasParentCategory ?pcat .
+		  FILTER(!CONTAINS(?cats, STR(?cat)) && !CONTAINS(?pcats, STR(?pcat))) .
+		  FILTER(geof:sfIntersects(?geomProbableLocArea, ?geomObjet)) .
+		}
+	""" .
+
+:PortrayalReferenceFeatureHighlightInsidePLA
+    a gviz:Portrayal ;
+    cvkd:denotesGVR :ReferenceObjectIR ;
+    gviz:onComponent :PLA-map ;
+    gviz:displayIndex 1 ;
+    cvkd:multipleGeometryType "true"^^xsd:boolean ;
+    cvkd:hasTransformOperation [
+          cvkd:preludeBinding """loac:hypo1 loac:hasProbableLocationArea [ geo:hasGeometry [ geo:asWKT ?geomPla ] ] .""" ;
+          geof:intersection (
+                                  [cvkd:variable "?thisGeometry"]
+                                  [cvkd:variable "?geomPla"]
+                              )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerReferenceFeatureHighlightPt , :SymbolizerReferenceFeatureHighlightLine , :SymbolizerReferenceFeatureHighlightPolygon ;
+                         ] ;
+      ] ;
+    cvkd:hasSPARQLFilter :ConditionFilterRefObjectPLA .
+
+
+:PortrayalReferenceFeatureHighlightOutsidePLA
+    a gviz:Portrayal ;
+    gviz:onComponent :PLA-map ;
+    cvkd:denotesGVR :ReferenceObjectIR ;
+    gviz:displayIndex 1 ;
+    cvkd:multipleGeometryType "true"^^xsd:boolean ;
+    cvkd:hasTransformOperation [
+          cvkd:preludeBinding """loac:hypo1 loac:hasProbableLocationArea [ geo:hasGeometry [ geo:asWKT ?geomPla ] ] .""" ;
+          geof:difference (
+                                  [cvkd:variable "?thisGeometry"]
+                                  [cvkd:variable "?geomPla"]
+                              )
+      ] ;
+    gviz:hasPortrayalRule [
+          gviz:hasSymbol [ a symb:Symbol ;
+                           symblzr:hasSymbolizer :SymbolizerReferenceFeatureHighlightLineOutside , :SymbolizerReferenceFeatureHighlightPolygonOutside ;
+                         ] ;
+      ] ;
+    cvkd:hasSPARQLFilter :ConditionFilterRefObjectPLA .
+
+:identifyToPopup a ion:Interaction ;
+                 ion:isTriggeredBy ion:singleClick ;
+                 ion:hasAnalyticalPurpose ion:identify ;
+                 ion:hasEnding [ a ion:Closable ] ;
+                 ion:hasTargetOutcome [ a ion:Outcome ;
+                                        ion:onComponent :identifyPopup ;
+                   ] .
+
+:PortrayalReferenceFeatureHighlightInsidePLA ion:allowsInteraction :identifyToPopup.
+:PortrayalReferenceFeatureHighlightOutsidePLA ion:allowsInteraction :identifyToPopup.
+
+:highlightOnOverviewMap
+    a ion:Interaction ;
+    ion:hasEnding [ a ion:DuringEvent ] ;
+    ion:isTriggeredBy ion:mouseOver ;
+    ion:hasTargetOutcome [ a ion:Outcome ;
+        ion:hasInteractionSymbolizer  [ a symblzr:PolygonSymbolizer ;
+           graphic:hasStroke [ a graphic:Stroke ;
+                               graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+             ] ;
+           graphic:hasFill [ a graphic:Fill ;
+                             graphic:fillColor "rgba(255,255,0,0.5)"^^graphic:cssColorLiteral ;
+             ] ;
+          ] ;
+        ion:hasOutcomeSelectionStrategy [ a ion:SameIndividual ; ion:targetsEntitiesFrom :PortrayalPLA ] ;
+      ] .
+
+:PortrayalPLA-terrain ion:allowsInteraction :highlightOnOverviewMap .
+
+:highlightOnTerrain a ion:Interaction ;
+                     ion:hasAnalyticalPurpose ion:identify ;
+                     ion:isTriggeredBy ion:mouseOver ;
+                     ion:hasEnding [ a ion:DuringEvent ] ;
+                     ion:hasTargetOutcome [ a ion:Outcome ;
+                                            ion:hasInteractionSymbolizer  [ a symblzr:PolygonSymbolizer ;
+                                                                            graphic:hasStroke [ a graphic:Stroke ;
+                                                                                                graphic:strokeColor "rgba(99,99,99,1)"^^graphic:cssColorLiteral ;
+                                                                              ] ;
+                                                                            graphic:hasFill [ a graphic:Fill ;
+                                                                                              graphic:fillColor "rgba(255,255,0,0.8)"^^graphic:cssColorLiteral ;
+                                                                              ] ;
+                                              ] ;
+                                            ion:hasOutcomeSelectionStrategy [ a ion:SameIndividual ; ion:targetsEntitiesFrom :PortrayalCLATerrain  ] ;
+                       ] .
+
+:PortrayalCLAHighScale ion:allowsInteraction :highlightOnTerrain .
+:PortrayalCLA  ion:allowsInteraction :highlightOnTerrain .
