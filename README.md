@@ -2,7 +2,7 @@
 
 This repository contains CoViKoa version 0.2.
 
-It has slightly evolved since version 0.1 which was described in the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937).
+It has slightly evolved since version 0.1 which was described in the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937).  
 If you are looking for this particular version, please go to the [*v0.1.0* git tag](https://github.com/mthh/covikoa/tree/v0.1.0).
 
 ## Folder content
@@ -55,10 +55,10 @@ In the end, almost everything will happen in our knowledge base, instrumented by
 ### Ontologies used
 
 - [covikoa-geoviz](./rdf/voc-geoviz.ttl): a generic, extensible, high-level vocabulary describing what a geovisualization user interface can be.
-- [covikoa-derivation](./rdf/voc-derivation.ttl): vocabulary necessary to write the Derivation Model - it allows to describe how the individuals to be represented graphically should be prepared.
-- [covikoa-interaction](./rdf/voc-interaction.ttl): a vocabulary to describe the interactions between the data that appear in the components of a geovisualisation
+- [covikoa-derivation](./rdf/voc-derivation.ttl): vocabulary necessary to write the Derivation Model - it allows to describe how the individuals to be represented graphically should be link to symbolizers and components (using various mechanisms of selections: constraints on properties or spatial constraints) and transformations of data to appear in a component.
+- [covikoa-interaction](./rdf/voc-interaction.ttl): a vocabulary to describe the interactions between the data that appear in the components of a geovisualisation.
 - [covikoa-context](./rdf/voc-context.ttl): a vocabulary describing the visualisation context of the client organized around the initial expected state of the various geovisualisation components (height and width of the map, library used, display or not of the legend, etc.).
-- [dicopal](./rdf/voc-derivation.ttl): a vocabulary that allows notably to describe various mechanisms of selections (via constraints on properties or spatial constraints) and transformations of data to appear in a component.
+- [dicopal](./rdf/voc-derivation.ttl): a vocabulary that describes discrete color palettes, useful for cartography/geovisualization.
 - [carto](./rdf/voc-carto.ttl): a vocabulary formalising the types of data encountered in cartography as well as various classic cartographic solutions and the parameters that allow them to be qualified.
 - [*Scale*](./rdf/voc-huang-scale.ttl) ontology that allows to describe the scale of validity of a portrayal (from Huang & Harrie, 2019, itself based on Carral et al., 2013).
 - *Graphic*, *symbolizer* and *symbols* ontologies that describe all the elements needed for building simple portrayals (from Huang & Harrie, 2019).
@@ -110,7 +110,7 @@ This case study uses NUTS2 data and present a geovisualisation with multiple com
 
 **Case study #2**
 
-> Note that terms in italic are part of the Choucas Alert Ontology (their meaning can be found in French in Viry & Villanova, 2020, or in english on [http://purl.org/loac](http://purl.org/loac))
+> Note that terms in italic are part of the Choucas Alert Ontology (their meaning can be found in French in Viry & Villanova, 2020, *L’Ontologie d’Alerte Choucas : de la modélisation des connaissances à un outil support d’un raisonnement géovisuel*, or in english on [http://purl.org/loac](http://purl.org/loac))
 
 In case studies 2-3-4 we want to present the data from the *alert* to a rescuer in an intelligent way:
 - before presenting him/her with the *alert* data, we want to add context data from OpenStreetMap
@@ -173,7 +173,7 @@ docker run --publish "8000:8000" -it "covikoa:latest" case-study-5.toml
 
 *Performance can be slightly degraded inside the Docker container*
 
-- Go on http://0.0.0.0:8000/ using any modern web-browser to see the example map.
+- Go on http://0.0.0.0:8000/ using any modern web-browser to see the example geovisualisation.
 
 - Change the number in `case-study-5.toml` between 1 and 7 and restart it to test the other case study.
 
@@ -190,7 +190,7 @@ docker run --publish "8000:8000" -it "covikoa:latest" case-study-5.toml
 cd covikoa/
 ```
 
-- Install Python dependences:
+- Install Python dependencies:
 
 ```
 python3 -m pip install -r code/CoViKoa/py-wrapper/requirements.txt
@@ -202,7 +202,7 @@ python3 -m pip install -r code/CoViKoa/py-wrapper/requirements.txt
 python3 code/CoViKoa/py-wrapper/server.py case-study-5.toml
 ```
 
-- Go on http://0.0.0.0:8000/ using any modern web-browser to see the example map.
+- Go on http://0.0.0.0:8000/ using any modern web-browser to see the example geovisualisation.
 
 
 ## Licences and attributions
