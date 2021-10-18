@@ -165,7 +165,7 @@ cd covikoa/
 docker build -t "covikoa:latest" .
 ```
 
-- Run the image *(using the 5rd case study)*:
+- Run the image *(using the 5th case study)*:
 
 ```
 docker run --publish "8000:8000" -it "covikoa:latest" case-study-5.toml
