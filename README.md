@@ -1,6 +1,6 @@
 # CoViKoa (i.e. *Comment on Visualise Quoi*)
 
-This repository contains CoViKoa version 0.2.
+This repository contains CoViKoa version 0.2, as described in my PhD thesis (only submitted to the reviewers for now).
 
 It has slightly evolved since version 0.1 which was described in the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937).  
 If you are looking for this particular version, please go to the [*v0.1.0* git tag](https://github.com/mthh/covikoa/tree/v0.1.0).
@@ -143,7 +143,7 @@ This case study highlights the use of the *carto* vocabulary and uses NUTS2 data
 
 **Case study #7**
 
-This case study uses the same data as case study #1 and serves mainly to show how to write complex spatial contraptions.
+This case study uses the same data as case study #1 and serves mainly to show how to write complex spatial constraints.
 
 
 ## How to run the code examples
