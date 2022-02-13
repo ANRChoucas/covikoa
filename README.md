@@ -1,6 +1,6 @@
 # CoViKoa (i.e. *Comment on Visualise Quoi*)
 
-This repository contains CoViKoa version 0.2, as described in my PhD thesis (only submitted to the reviewers for now).
+This repository contains CoViKoa version 0.2, as described in my PhD thesis.
 
 It has slightly evolved since version 0.1 which was described in the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937).  
 If you are looking for this particular version, please go to the [*v0.1.0* git tag](https://github.com/mthh/covikoa/tree/v0.1.0).
@@ -58,7 +58,7 @@ In the end, almost everything will happen in our knowledge base, instrumented by
 - [covikoa-derivation](./rdf/voc-derivation.ttl): vocabulary necessary to write the Derivation Model - it allows to describe how the individuals to be represented graphically should be link to symbolizers and components (using various mechanisms of selections: constraints on properties or spatial constraints) and transformations of data to appear in a component.
 - [covikoa-interaction](./rdf/voc-interaction.ttl): a vocabulary to describe the interactions between the data that appear in the components of a geovisualisation.
 - [covikoa-context](./rdf/voc-context.ttl): a vocabulary describing the visualisation context of the client organized around the initial expected state of the various geovisualisation components (height and width of the map, library used, display or not of the legend, etc.).
-- [dicopal](./rdf/voc-derivation.ttl): a vocabulary that describes discrete color palettes, useful for cartography/geovisualization.
+- [dicopal](./rdf/voc-dicopal-2021-08-13.ttl): a vocabulary that describes discrete color palettes, useful for cartography/geovisualization.
 - [carto](./rdf/voc-carto.ttl): a vocabulary formalising the types of data encountered in cartography as well as various classic cartographic solutions and the parameters that allow them to be qualified.
 - [*Scale*](./rdf/voc-huang-scale.ttl) ontology that allows to describe the scale of validity of a portrayal (from Huang & Harrie, 2019, itself based on Carral et al., 2013).
 - *Graphic*, *symbolizer* and *symbols* ontologies that describe all the elements needed for building simple portrayals (from Huang & Harrie, 2019).
