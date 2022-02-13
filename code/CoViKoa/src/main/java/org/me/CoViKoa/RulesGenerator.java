@@ -42,7 +42,7 @@ public class RulesGenerator {
         shapeVerif.read(new FileInputStream(pathShapeVerifFile), null, FileUtils.langTurtle);
 
         // Validate the derivation model against these shapes
-        Resource reportResource = ValidationUtil.validateModel(derivationModel, shapeVerif, true);
+        Resource reportResource = ValidationUtil.validateModel(derivationModel, shapeVerif, false);
         boolean conforms = reportResource.getProperty(SH.conforms).getBoolean();
         logger.warn("Derivation Model conforms to shape = " + conforms);
         if(!conforms){

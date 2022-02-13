@@ -241,7 +241,7 @@
           ion:hasInteractionSymbolizer [
                 a symblzr:PolygonSymbolizer ;
                 graphic:hasStroke [ a graphic:Stroke ;
-                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeWidth "2.0"^^xsd:decimal ;
                                     graphic:strokeColor "rgba(255,255,0,1)"^^graphic:cssColorLiteral ;
                   ] ;
                 graphic:hasFill [ a graphic:Fill ;
@@ -263,16 +263,6 @@
               ion:onProperty (graphic:hasStroke graphic:strokeWidth) ;
               ion:modifiedValue 2 ;
             ] ;
-#          ion:hasInteractionSymbolizer [
-#                a symblzr:PolygonSymbolizer ;
-#                graphic:hasStroke [ a graphic:Stroke ;
-#                                    graphic:strokeWidth 2.5 ;
-#                                    graphic:strokeColor "rgba(255,255,0,1)"^^graphic:cssColorLiteral ;
-#                  ] ;
-#                graphic:hasFill [ a graphic:Fill ;
-#                                  graphic:fillColor "rgba(25,19,20,1)"^^graphic:cssColorLiteral ;
-#                  ] ;
-#            ] ;
       ] ;
     ion:hasRestOutcome [
           a ion:Outcome ;
@@ -283,7 +273,7 @@
           ion:hasInteractionSymbolizer [
                 a symblzr:PolygonSymbolizer ;
                 graphic:hasStroke [ a graphic:Stroke ;
-                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeWidth "2.0"^^xsd:decimal ;
                                     graphic:strokeColor "rgba(212,210,210,0.5)"^^graphic:cssColorLiteral ;
                   ] ;
                 graphic:hasFill [ a graphic:Fill ;
@@ -309,7 +299,7 @@
           ion:hasInteractionSymbolizer [
                 a symblzr:PolygonSymbolizer ;
                 graphic:hasStroke [ a graphic:Stroke ;
-                                    graphic:strokeWidth 2 ;
+                                    graphic:strokeWidth "2.0"^^xsd:decimal ;
                                     graphic:strokeColor "rgba(237,237,237,0.2)"^^graphic:cssColorLiteral ;
                   ] ;
                 graphic:hasFill [ a graphic:Fill ;

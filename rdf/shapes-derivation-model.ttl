@@ -230,11 +230,18 @@
                     sh:minCount 1 ;
                     sh:message "Each `gviz:Portrayal` is supposed to by linked with the property `cvkd:denotesGVR` to the Intermediate Representation (defined in the Derivation Model) of a concept from the Semantic Data Model."@en ;
                 ] ;
-    sh:property [
-                    sh:path gviz:hasPortrayalRule ;
+    sh:or (
+              sh:property [
+                  sh:path gviz:hasPortrayalRule ;
+                  sh:minCount 1 ;
+                  sh:message "Each `gviz:Portrayal` is supposed to by linked with the property `gviz:hasPortrayalRule` or `gviz:hasTableRule` to one or more PortrayalRule(s)."@en ;
+              ]
+                  sh:property [
+                    sh:path gviz:hasTableRule ;
                     sh:minCount 1 ;
-                    sh:message "Each `gviz:Portrayal` is supposed to by linked with the property `gviz:hasPortrayalRule` to one or more PortrayalRule(s)."@en ;
-                ] ;
+                    sh:message "Each `gviz:Portrayal` is supposed to by linked with the property `gviz:hasPortrayalRule` or `gviz:hasTableRule` to one or more PortrayalRule(s)."@en ;
+              ]
+          ) ;
     sh:property [
                     sh:path gviz:displayIndex ;
                     sh:maxCount 1 ;

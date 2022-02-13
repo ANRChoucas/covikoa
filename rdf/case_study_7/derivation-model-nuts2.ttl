@@ -58,7 +58,8 @@
          dct:title "Population Map"@en .
 
 :NutsMap3 a gviz:Map2dComponent ;
-          cvkd:hasDefaultExtent ns2:NutsUnit .
+          cvkd:hasDefaultExtent ns2:NutsUnit ;
+          dct:title "Test map"@en .
 
 :NutsMapUnempLegend a gviz:LegendComponent ;
                      gviz:linkedTo :NutsMapUnemp .
@@ -451,7 +452,7 @@
 ## First TemplateSymbolizer
 :NewLabelNutsManyPopulation
     a symblzr:TemplateTextSymbolizer ;
-    graphic:hasHalo [ a graphic:Halo ] ;
+#    graphic:hasHalo [ a graphic:Halo ] ;
     graphic:hasFont [ a graphic:Font ;
                       graphic:fontFamily "Arial" ;
                       graphic:fontSize [ a cvkd:CustomisableGraphicValue ;

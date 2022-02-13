@@ -289,7 +289,7 @@
 
 :PortrayalPLA a gviz:Portrayal ;
               cvkd:denotesGVR :ProbableLocationAreaIR ;
-              gviz:onComponent :HypothesisMap , :PLA-map ;
+              gviz:onComponent :HypothesisMap , :PLA-map , :terrain-map ;
               gviz:displayIndex 2 ;
               gviz:hasPortrayalRule [
                     gviz:hasSymbol [ a symb:Symbol ;
@@ -340,48 +340,48 @@
                          ] ;
       ] .
 
-:PortrayalCLATerrain
-    a gviz:Portrayal ;
-    cvkd:denotesGVR :CompatibleLocationAreaIR ;
-    gviz:onComponent :terrain-map ;
-    gviz:displayIndex 3 ;
-    gviz:hasPortrayalRule [
-          gviz:hasSymbol [ a symb:Symbol ;
-                           dct:title "Compatible Location Area (Village / Visibility)" ;
-                           symblzr:hasSymbolizer :SymbCLA-Village-Visibility ;
-                         ] ;
-          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
-                                       cvkd:and (:constraintRelationVisibility :constraintVillage)
-                         ] ;
-      ] ;
-    gviz:hasPortrayalRule [
-          gviz:hasSymbol [ a symb:Symbol ;
-                           dct:title "Compatible Location Area (Village / Proximity)" ;
-                           symblzr:hasSymbolizer :SymbCLA-Village-Proximity ;
-                         ] ;
-          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
-                                       cvkd:and (:constraintRelationProximity :constraintVillage)
-                         ] ;
-      ] ;
-    gviz:hasPortrayalRule [
-          gviz:hasSymbol [ a symb:Symbol ;
-                           dct:title "Compatible Location Area (Pathway / Visibility)" ;
-                           symblzr:hasSymbolizer :SymbCLA-aPathway-Visibility ;
-                         ] ;
-          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
-                                       cvkd:and (:constraintRelationVisibility :constraintPathway)
-                         ] ;
-      ] ;
-    gviz:hasPortrayalRule [
-          gviz:hasSymbol [ a symb:Symbol ;
-                           dct:title "Compatible Location Area (Pathway / Proximity)" ;
-                           symblzr:hasSymbolizer :SymbCLA-Pathway-Proximity ;
-                         ] ;
-          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
-                                       cvkd:and (:constraintRelationProximity :constraintPathway)
-                         ] ;
-      ] ;
-    ion:allowsInteraction :highlightOnOverviewMap .
+#:PortrayalCLATerrain
+#    a gviz:Portrayal ;
+#    cvkd:denotesGVR :CompatibleLocationAreaIR ;
+#    gviz:onComponent :terrain-map ;
+#    gviz:displayIndex 3 ;
+#    gviz:hasPortrayalRule [
+#          gviz:hasSymbol [ a symb:Symbol ;
+#                           dct:title "Compatible Location Area (Village / Visibility)" ;
+#                           symblzr:hasSymbolizer :SymbCLA-Village-Visibility ;
+#                         ] ;
+#          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+#                                       cvkd:and (:constraintRelationVisibility :constraintVillage)
+#                         ] ;
+#      ] ;
+#    gviz:hasPortrayalRule [
+#          gviz:hasSymbol [ a symb:Symbol ;
+#                           dct:title "Compatible Location Area (Village / Proximity)" ;
+#                           symblzr:hasSymbolizer :SymbCLA-Village-Proximity ;
+#                         ] ;
+#          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+#                                       cvkd:and (:constraintRelationProximity :constraintVillage)
+#                         ] ;
+#      ] ;
+#    gviz:hasPortrayalRule [
+#          gviz:hasSymbol [ a symb:Symbol ;
+#                           dct:title "Compatible Location Area (Pathway / Visibility)" ;
+#                           symblzr:hasSymbolizer :SymbCLA-aPathway-Visibility ;
+#                         ] ;
+#          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+#                                       cvkd:and (:constraintRelationVisibility :constraintPathway)
+#                         ] ;
+#      ] ;
+#    gviz:hasPortrayalRule [
+#          gviz:hasSymbol [ a symb:Symbol ;
+#                           dct:title "Compatible Location Area (Pathway / Proximity)" ;
+#                           symblzr:hasSymbolizer :SymbCLA-Pathway-Proximity ;
+#                         ] ;
+#          cvkd:hasPropertyConstraint [ a cvkd:PropertyConstraint ;
+#                                       cvkd:and (:constraintRelationProximity :constraintPathway)
+#                         ] ;
+#      ] ;
+#    ion:allowsInteraction :highlightOnOverviewMap .
 
 
 :PortrayalPLAHighScale

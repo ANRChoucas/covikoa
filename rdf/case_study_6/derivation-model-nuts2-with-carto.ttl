@@ -48,7 +48,8 @@
          cvkc:widthPx 1200 ;
          cvkc:heightPx 900 ;
          cvkc:hasBaseMap cvkc:stamenWatercolorBaseMap ;
-         cvkc:hasMappingLibrary cvkc:openlayers .
+         cvkc:hasMappingLibrary cvkc:openlayers ;
+         dct:title "NUTS2, 2013"@en .
 
 :nutsMapLegend a gviz:LegendComponent ;
                gviz:linkedTo :nutsMap .
