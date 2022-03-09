@@ -1,6 +1,6 @@
 # CoViKoa (i.e. *Comment on Visualise Quoi*)
 
-This repository contains CoViKoa version 0.2, as described in my PhD thesis.
+This repository contains CoViKoa version 0.2, as described in my [PhD thesis](https://tel.archives-ouvertes.fr/tel-03578323v1).
 
 It has slightly evolved since version 0.1 which was described in the article *How to derive a geovisualization from an application data model: an approach based on Semantic Web technologies*, Matthieu Viry and Marlène Villanova-Oliver, Mars 2021, International Journal of Digital Earth, 14(7), pp. 874-898. DOI: [10.1080/17538947.2021.1900937](https://doi.org/10.1080/17538947.2021.1900937).  
 If you are looking for this particular version, please go to the [*v0.1.0* git tag](https://github.com/mthh/covikoa/tree/v0.1.0).
